@@ -1,0 +1,30 @@
+# Environment variables
+.env
+
+# Output files
+output/
+*.html
+*.md
+*.json
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+.venv/
+
+# Virtual environment (keep this)
+venv/
+.venv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+

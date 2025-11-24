@@ -1,0 +1,26 @@
+{
+  "name": "sellonllm",
+  "version": "1.0.0",
+  "description": "LLM Marketing Platform - Rank & Sell on ChatGPT, Claude & Perplexity",
+  "main": "index.html",
+  "scripts": {
+    "dev": "vercel dev",
+    "deploy": "vercel --prod"
+  },
+  "keywords": [
+    "llm",
+    "marketing",
+    "chatgpt",
+    "claude",
+    "perplexity",
+    "seo"
+  ],
+  "author": "SellOnLLM",
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "node-fetch": "^2.7.0",
+    "cheerio": "^1.0.0-rc.12"
+  }
+}
+

@@ -1,0 +1,40 @@
+# robots.txt for sellonllm.com
+
+# Allow all search engines
+User-agent: *
+Allow: /
+
+# Disallow admin/private areas (add when you create them)
+# Disallow: /admin/
+# Disallow: /api/
+# Disallow: /private/
+
+# Crawl-delay (optional, prevents aggressive crawling)
+Crawl-delay: 0
+
+# Sitemap location
+Sitemap: https://sellonllm.com/sitemap.xml
+
+# Specific rules for major bots
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 0
+
+User-agent: Slurp
+Allow: /
+Crawl-delay: 0
+
+# Block bad bots (optional)
+User-agent: AhrefsBot
+Crawl-delay: 10
+
+User-agent: SemrushBot
+Crawl-delay: 10
+

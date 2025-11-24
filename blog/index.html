@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+    <!-- Primary SEO Meta Tags -->
+    <title>Blog - SellOnLLM | AI Marketing & ChatGPT SEO Guides</title>
+    <meta name="title" content="Blog - SellOnLLM | AI Marketing & ChatGPT SEO Guides">
+    <meta name="description" content="Learn about ChatGPT SEO, AI marketing, LLM optimization, and e-commerce AI strategies. Comprehensive guides and actionable tips for Shopify merchants.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://sellonllm.com/blog/">
+    
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://sellonllm.com/blog/">
+    <meta property="og:title" content="Blog - SellOnLLM | AI Marketing & ChatGPT SEO Guides">
+    <meta property="og:description" content="Learn about ChatGPT SEO, AI marketing, and LLM optimization strategies.">
+    <meta property="og:image" content="https://sellonllm.com/images/logo.png">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../images/logo.png">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7KK7VYDR9D"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-7KK7VYDR9D');
+    </script>
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .blog-page {
+            padding: 8rem 0 4rem;
+            background: var(--bg-color);
+        }
+        
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .blog-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .blog-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .blog-card__content {
+            padding: 2rem;
+        }
+        
+        .blog-card__title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+        
+        .blog-card__title a {
+            color: inherit;
+            text-decoration: none;
+        }
+        
+        .blog-card__title a:hover {
+            color: var(--primary-color);
+        }
+        
+        .blog-card__meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+        
+        .blog-card__description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+        
+        .blog-card__link {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .blog-card__link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <nav class="nav container">
+            <a href="/" class="nav__logo">
+                <img src="../images/logo.png" alt="SellOnLLM" class="logo__icon" width="32" height="32">
+                <span class="logo-text">Sell<span class="logo-highlight">On</span>LLM</span>
+            </a>
+            
+            <div class="nav__menu" id="nav-menu">
+                <ul class="nav__list">
+                    <li class="nav__item">
+                        <a href="/index.html#features" class="nav__link">Features</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="/index.html#shopify" class="nav__link">Shopify App</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="/index.html#faq" class="nav__link">FAQ</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="/blog/" class="nav__link active">Blog</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="/chrome-extension.html" class="nav__link">Chrome Extension</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="/free-llm-audit.html" class="nav__link">Free LLM Audit</a>
+                    </li>
+                </ul>
+                <div class="nav__close" id="nav-close">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </div>
+            </div>
+            
+            <div class="nav__btns">
+                <a href="https://apps.shopify.com/llm-analytics" target="_blank" rel="noopener noreferrer" class="button button--primary">Try Shopify App</a>
+                <div class="nav__toggle" id="nav-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Blog Page Content -->
+    <section class="blog-page section">
+        <div class="container">
+            <div class="section__header">
+                <span class="section__subtitle">Our Blog</span>
+                <h1 class="section__title">AI Marketing & <span class="gradient-text">ChatGPT SEO Guides</span></h1>
+                <p class="section__description">
+                    Learn everything about ChatGPT SEO, AI marketing strategies, LLM optimization, and how to drive traffic from AI platforms. Comprehensive guides, best practices, and actionable tips for e-commerce merchants.
+                </p>
+            </div>
+            
+            <div class="blog-grid">
+                <article class="blog-card">
+                    <div class="blog-card__content">
+                        <h2 class="blog-card__title">
+                            <a href="/blog/ai-marketing.html">AI marketing: Complete Guide</a>
+                        </h2>
+                        <div class="blog-card__meta">
+                            <time datetime="2025-11-17">November 17, 2025</time>
+                            <span>•</span>
+                            <span>1460 words</span>
+                            <span>•</span>
+                            <span>7 min read</span>
+                        </div>
+                        <p class="blog-card__description">
+                            Learn everything about AI marketing. Comprehensive step-by-step guide with examples, best practices, and actionable tips.
+                        </p>
+                        <a href="/blog/ai-marketing.html" class="blog-card__link">
+                            Read More
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                <polyline points="12 5 19 12 12 19"></polyline>
+                            </svg>
+                        </a>
+                    </div>
+                </article>
+
+                <article class="blog-card">
+                    <div class="blog-card__content">
+                        <h2 class="blog-card__title">
+                            <a href="/blog/chatgpt-seo.html">Unlocking the Power of ChatGPT SEO: Your Ultimate Guide to Boosting E-commerce Success</a>
+                        </h2>
+                        <div class="blog-card__meta">
+                            <time datetime="2025-11-17">November 17, 2025</time>
+                            <span>•</span>
+                            <span>1,421 words</span>
+                            <span>•</span>
+                            <span>1 min read</span>
+                        </div>
+                        <p class="blog-card__description">
+                            Learn everything about ChatGPT SEO. Comprehensive step-by-step guide with examples, best practices, and actionable tips. Perfect for e-commerce mer...
+                        </p>
+                        <a href="/blog/chatgpt-seo.html" class="blog-card__link">
+                            Read More
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                <polyline points="12 5 19 12 12 19"></polyline>
+                            </svg>
+                        </a>
+                    </div>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" id="contact">
+        <div class="container">
+            <div class="footer__content">
+                <div class="footer__section">
+                    <a href="/" class="footer__logo">
+                        <img src="../images/logo.png" alt="SellOnLLM" class="logo__icon" width="40" height="40">
+                        <span class="logo-text">Sell<span class="logo-highlight">On</span>LLM</span>
+                    </a>
+                    <p class="footer__description">
+                        The leading platform for ranking and selling on AI platforms. Optimize your presence on ChatGPT, Claude, Perplexity, and more.
+                    </p>
+                    <div class="footer__social">
+                        <a href="https://twitter.com/sellonllm" class="footer__social-link" aria-label="Twitter">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+                            </svg>
+                        </a>
+                        <a href="https://linkedin.com/company/sellonllm" class="footer__social-link" aria-label="LinkedIn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                                <rect x="2" y="9" width="4" height="12"></rect>
+                                <circle cx="4" cy="4" r="2"></circle>
+                            </svg>
+                        </a>
+                        <a href="https://github.com/sellonllm" class="footer__social-link" aria-label="GitHub">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                            </svg>
+                        </a>
+                        <a href="https://youtube.com/@sellonllm" class="footer__social-link" aria-label="YouTube">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path>
+                                <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="footer__section">
+                    <h4 class="footer__title">Product</h4>
+                    <ul class="footer__list">
+                        <li><a href="/index.html#features">Features</a></li>
+                        <li><a href="/index.html#shopify">Shopify App</a></li>
+                        <li><a href="/free-llm-audit.html">Free LLM Audit</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer__section">
+                    <h4 class="footer__title">Company</h4>
+                    <ul class="footer__list">
+                        <li><a href="/about-us.html">About Us</a></li>
+                        <li><a href="/contact-us.html">Contact Us</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer__section">
+                    <h4 class="footer__title">Legal</h4>
+                    <ul class="footer__list">
+                        <li><a href="/privacy-policy.html">Privacy Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer__bottom">
+                <p class="footer__copy">
+                    &copy; 2025 SellOnLLM. All rights reserved.
+                </p>
+                <div class="footer__badges">
+                    <span class="footer__badge">Made with ❤️ for the AI era</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="../js/script.js"></script>
+</body>
+</html>
+

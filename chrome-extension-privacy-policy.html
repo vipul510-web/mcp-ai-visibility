@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+    <!-- SEO Meta Tags -->
+    <title>Privacy Policy - AEO/GEO Audit Tool Chrome Extension | SellOnLLM</title>
+    <meta name="description" content="Privacy Policy for AEO/GEO Audit Tool Chrome Extension. We collect NO user data. All analysis is performed locally in your browser. 100% privacy-first.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://sellonllm.com/chrome-extension-privacy-policy.html">
+    
+    <!-- Open Graph -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://sellonllm.com/chrome-extension-privacy-policy.html">
+    <meta property="og:title" content="Privacy Policy - AEO/GEO Audit Tool Chrome Extension">
+    <meta property="og:description" content="Privacy Policy for our Chrome extension. We collect NO user data. All analysis is performed locally.">
+    <meta property="og:image" content="https://sellonllm.com/images/logo.png">
+    
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Privacy Policy - AEO/GEO Audit Tool Chrome Extension">
+    <meta name="twitter:description" content="Privacy Policy for our Chrome extension. We collect NO user data. All analysis is performed locally.">
+    <meta name="twitter:image" content="https://sellonllm.com/images/logo.png">
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#6366f1">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="images/logo.png">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7KK7VYDR9D"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-7KK7VYDR9D');
+    </script>
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .privacy-policy {
+            padding: 8rem 0 4rem;
+            background: var(--bg-color);
+        }
+        
+        .privacy-content {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--bg-card);
+            padding: 3rem;
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .privacy-content h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+        
+        .privacy-content .last-updated {
+            font-size: 0.9375rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            font-weight: 600;
+        }
+        
+        .privacy-content h2 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+        
+        .privacy-content h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+        
+        .privacy-content p {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+        
+        .privacy-content ul, .privacy-content ol {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .privacy-content li {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            list-style: disc;
+        }
+        
+        .privacy-content ol li {
+            list-style: decimal;
+        }
+        
+        .privacy-content strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+        
+        .privacy-content code {
+            background: var(--bg-secondary);
+            padding: 0.2rem 0.5rem;
+            border-radius: var(--radius-sm);
+            font-family: monospace;
+            font-size: 0.875rem;
+        }
+        
+        .privacy-highlight {
+            background: var(--bg-secondary);
+            border-left: 4px solid var(--primary-color);
+            padding: 1.5rem;
+            border-radius: var(--radius-md);
+            margin: 2rem 0;
+        }
+        
+        .privacy-highlight h3 {
+            margin-top: 0;
+            color: var(--primary-color);
+        }
+        
+        .privacy-no-data {
+            background: #10b98120;
+            border-left: 4px solid #10b981;
+            padding: 1.5rem;
+            border-radius: var(--radius-md);
+            margin: 2rem 0;
+        }
+        
+        .privacy-no-data h3 {
+            margin-top: 0;
+            color: #10b981;
+        }
+        
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            font-weight: 600;
+            transition: var(--transition);
+            margin-bottom: 2rem;
+        }
+        
+        .back-button:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+            transform: translateX(-5px);
+        }
+        
+        @media screen and (max-width: 768px) {
+            .privacy-policy {
+                padding: 6rem 0 2rem;
+            }
+            
+            .privacy-content {
+                padding: 2rem 1.5rem;
+            }
+            
+            .privacy-content h1 {
+                font-size: 1.75rem;
+            }
+            
+            .privacy-content h2 {
+                font-size: 1.5rem;
+            }
+            
+            .privacy-content h3 {
+                font-size: 1.125rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- Header -->
+    <header class="header" id="header">
+        <nav class="nav container">
+            <a href="/" class="nav__logo">
+                <span class="logo-text">Sell<span class="logo-highlight">On</span>LLM</span>
+            </a>
+            
+            <div class="nav__menu" id="nav-menu">
+                <ul class="nav__list">
+                    <li class="nav__item">
+                        <a href="/#features" class="nav__link">Features</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="/#shopify" class="nav__link">Shopify App</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="/#faq" class="nav__link">FAQ</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="/blog/" class="nav__link">Blog</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="/chrome-extension.html" class="nav__link">Chrome Extension</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="/#contact" class="nav__link">Contact</a>
+                    </li>
+                </ul>
+                <div class="nav__close" id="nav-close">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </div>
+            </div>
+            
+            <div class="nav__btns">
+                <a href="https://apps.shopify.com/llm-analytics" target="_blank" rel="noopener noreferrer" class="button button--primary">Try Shopify App</a>
+                <div class="nav__toggle" id="nav-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Privacy Policy Content -->
+    <section class="privacy-policy">
+        <div class="container">
+            <a href="/" class="back-button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+                Back to Home
+            </a>
+            
+            <div class="privacy-content">
+                <h1>Privacy Policy - AEO/GEO Audit Tool Chrome Extension</h1>
+                <p class="last-updated"><strong>Last Updated:</strong> November 18, 2024</p>
+
+                <div class="privacy-no-data">
+                    <h3>🔒 Zero Data Collection</h3>
+                    <p><strong>This extension does NOT collect, store, or transmit any user data.</strong> All analysis is performed entirely locally in your browser. We take privacy seriously and designed this extension to respect your privacy by default.</p>
+                </div>
+
+                <h2>Introduction</h2>
+                <p>This Privacy Policy describes how the AEO/GEO Audit Tool Chrome Extension ("we," "our," or "the Extension") handles user data. This extension is designed with privacy as a core principle and operates entirely locally without collecting or transmitting any user data.</p>
+
+                <h2>Data Collection</h2>
+                <p><strong>We DO NOT collect any of the following:</strong></p>
+                <ul>
+                    <li><strong>Personally Identifiable Information</strong>: No names, addresses, email addresses, or any other personal identifiers are collected</li>
+                    <li><strong>Location Data</strong>: No IP addresses, GPS coordinates, or region information is collected</li>
+                    <li><strong>Web Browsing History</strong>: No list of web pages visited or associated data is tracked or stored</li>
+                    <li><strong>User Activity</strong>: No monitoring of clicks, mouse position, scrolling, or keystrokes</li>
+                    <li><strong>Authentication Information</strong>: No passwords, credentials, or security questions are accessed</li>
+                    <li><strong>Financial Information</strong>: No payment details or financial data is collected</li>
+                    <li><strong>Health Information</strong>: No health-related data is collected</li>
+                    <li><strong>Personal Communications</strong>: No emails, texts, or chat messages are accessed</li>
+                    <li><strong>Website Content</strong>: Website content is temporarily accessed for analysis but never collected, stored, or transmitted</li>
+                </ul>
+
+                <h2>Data Storage</h2>
+                <p><strong>We DO NOT store any data:</strong></p>
+                <ul>
+                    <li><strong>No localStorage</strong>: The extension does not use browser localStorage</li>
+                    <li><strong>No sessionStorage</strong>: The extension does not use browser sessionStorage</li>
+                    <li><strong>No chrome.storage</strong>: The extension does not use Chrome's storage APIs (neither local nor sync)</li>
+                    <li><strong>Temporary Memory Only</strong>: Audit results exist only temporarily in memory while the extension popup is open. When the popup closes, all data is immediately discarded</li>
+                    <li><strong>Optional PDF Export</strong>: Users can optionally export audit results as a PDF file, which is saved locally by the browser's download mechanism (not stored by the extension)</li>
+                </ul>
+
+                <h2>Data Transmission</h2>
+                <p><strong>We DO NOT transmit any data to external servers:</strong></p>
+                <ul>
+                    <li><strong>No External APIs</strong>: The extension does not send data to any external APIs or services</li>
+                    <li><strong>No Analytics Services</strong>: No analytics or tracking services are used</li>
+                    <li><strong>No Third-Party Services</strong>: No data is shared with third parties or advertisers</li>
+                    <li><strong>No Data Collection Services</strong>: The extension does not communicate with any data collection or storage services</li>
+                </ul>
+
+                <h2>How the Extension Works</h2>
+                <p>The extension performs AI/SEO readiness audits entirely locally in your browser:</p>
+                <ol>
+                    <li><strong>User-Initiated</strong>: Analysis only occurs when you explicitly click the extension icon or request an audit</li>
+                    <li><strong>Local Analysis</strong>: The extension analyzes the current webpage's DOM structure (HTML elements, meta tags, structured data) locally in your browser</li>
+                    <li><strong>File Checks</strong>: The extension makes read-only HTTP GET requests to fetch static files from websites you're auditing:
+                        <ul>
+                            <li><code>robots.txt</code> - To check AI crawler configuration</li>
+                            <li><code>sitemap.xml</code> - To validate sitemap existence</li>
+                            <li><code>llm.txt</code> - To check AI platform configuration file</li>
+                        </ul>
+                        These files are fetched for analysis purposes only and are not stored or transmitted
+                    </li>
+                    <li><strong>Results Display</strong>: Audit results are displayed in the extension popup and exist only in memory</li>
+                    <li><strong>Immediate Discard</strong>: When you close the popup, all audit data is immediately discarded</li>
+                </ol>
+
+                <h2>Extension Permissions</h2>
+                <p>The extension requires the following permissions to function:</p>
+
+                <h3>activeTab Permission</h3>
+                <p><strong>Purpose:</strong> Access the currently active tab's URL when you click the extension icon.</p>
+                <p><strong>Usage:</strong> Used only to display which page is being audited and pass the URL to the content script for analysis. The extension only accesses the active tab when you explicitly trigger an audit.</p>
+                <p><strong>Privacy:</strong> The URL is used locally only and is never stored or transmitted.</p>
+
+                <h3>scripting Permission</h3>
+                <p><strong>Purpose:</strong> Inject a content script into web pages to analyze DOM structure.</p>
+                <p><strong>Usage:</strong> Used to analyze webpage content (meta tags, structured data, Open Graph tags, etc.) for SEO/AI readiness checks. The content script runs only when you explicitly click the extension icon.</p>
+                <p><strong>Privacy:</strong> All analysis happens locally. No page content is stored or transmitted.</p>
+
+                <h3>Host Permission (<code>&lt;all_urls&gt;</code>)</h3>
+                <p><strong>Purpose:</strong> Fetch critical SEO/AI configuration files from any website you want to audit.</p>
+                <p><strong>Usage:</strong> Used to fetch <code>robots.txt</code>, <code>sitemap.xml</code>, and <code>llm.txt</code> files from the site root domain. These files must be checked from the site's root domain, not just the current page.</p>
+                <p><strong>Privacy:</strong> These are read-only HTTP GET requests. The files are fetched for analysis purposes only and are not stored or transmitted. The extension only makes these requests when you explicitly trigger an audit.</p>
+
+                <h2>Website Content Access</h2>
+                <p>The extension temporarily accesses webpage content (DOM elements, HTML meta tags, structured data, images) during analysis when you explicitly click the extension icon. This content is:</p>
+                <ul>
+                    <li><strong>Analyzed Locally</strong>: All analysis happens in your browser</li>
+                    <li><strong>Used Only for Audit</strong>: Content is used solely to generate audit results</li>
+                    <li><strong>Immediately Discarded</strong>: Content is discarded immediately after analysis</li>
+                    <li><strong>Never Collected</strong>: Content is never collected, stored, or transmitted</li>
+                </ul>
+
+                <h2>Network Requests</h2>
+                <p>The only network requests made by the extension are read-only HTTP GET requests to fetch static files from websites you're auditing:</p>
+                <ul>
+                    <li><code>https://example.com/robots.txt</code> - To check AI crawler configuration</li>
+                    <li><code>https://example.com/sitemap.xml</code> - To validate sitemap existence</li>
+                    <li><code>https://example.com/llm.txt</code> - To check AI platform configuration file</li>
+                </ul>
+                <p>These requests:</p>
+                <ul>
+                    <li>Are made only when you explicitly trigger an audit</li>
+                    <li>Are read-only (no data is sent, only retrieved)</li>
+                    <li>Fetch files only from domains you're already viewing</li>
+                    <li>Are used for analysis purposes only</li>
+                    <li>Are not stored or transmitted to external servers</li>
+                </ul>
+
+                <h2>Third-Party Services</h2>
+                <p><strong>This extension does NOT use any third-party services for:</strong></p>
+                <ul>
+                    <li>Analytics or tracking</li>
+                    <li>Data collection or storage</li>
+                    <li>Content delivery networks (all code is bundled locally)</li>
+                    <li>External APIs or services</li>
+                </ul>
+                <p>All code (including the jsPDF library for PDF generation) is bundled locally within the extension package and does not require external connections for functionality.</p>
+
+                <h2>Cookies and Tracking</h2>
+                <p>The extension does not set any cookies or use any tracking technologies. It does not track user behavior, browsing patterns, or any other information.</p>
+
+                <h2>Children's Privacy</h2>
+                <p>The extension is not intended for use by individuals under 13 years of age. However, since we do not collect any data, there is no risk of inadvertently collecting data from children.</p>
+
+                <h2>User Rights</h2>
+                <p>Since we do not collect, store, or transmit any data, there is no data to access, modify, or delete. However, you have full control over the extension:</p>
+                <ul>
+                    <li><strong>Use Control</strong>: You decide when to run audits by clicking the extension icon</li>
+                    <li><strong>Uninstall</strong>: You can uninstall the extension at any time through Chrome's extension management</li>
+                    <li><strong>No Account Required</strong>: The extension works without requiring any account or registration</li>
+                    <li><strong>No Persistent Data</strong>: Uninstalling the extension removes it completely with no residual data</li>
+                </ul>
+
+                <h2>GDPR Compliance</h2>
+                <p>For users in the European Economic Area (EEA):</p>
+                <ul>
+                    <li><strong>No Data Processing</strong>: We do not process any personal data, so GDPR data processing requirements do not apply</li>
+                    <li><strong>Privacy by Design</strong>: The extension is designed with privacy as a core principle</li>
+                    <li><strong>No Consent Required</strong>: Since no data is collected, no consent mechanism is needed</li>
+                    <li><strong>Data Minimization</strong>: We collect zero data, which is the ultimate form of data minimization</li>
+                </ul>
+
+                <h2>CCPA Compliance</h2>
+                <p>For California residents:</p>
+                <ul>
+                    <li><strong>No Data Sale</strong>: We do not sell personal information because we do not collect any</li>
+                    <li><strong>No Data Collection</strong>: We do not collect personal information as defined by CCPA</li>
+                    <li><strong>User Rights</strong>: Since no data is collected, there is no data to request, access, or delete</li>
+                </ul>
+
+                <h2>Changes to This Privacy Policy</h2>
+                <p>We may update this Privacy Policy from time to time to reflect changes in our practices or for other operational, legal, or regulatory reasons. We will notify you of any material changes by:</p>
+                <ul>
+                    <li>Updating the "Last Updated" date at the top of this policy</li>
+                    <li>Posting a notice on the extension's Chrome Web Store listing</li>
+                </ul>
+                <p>We encourage you to review this Privacy Policy periodically to stay informed about how we protect your privacy.</p>
+
+                <h2>Contact Us</h2>
+                <p>If you have questions about this Privacy Policy or our privacy practices, please contact us:</p>
+                <p>
+                    <strong>Email</strong>: support@sellonllm.com<br>
+                    <strong>Website</strong>: <a href="https://sellonllm.com/contact-us.html" style="color: var(--primary-color);">https://sellonllm.com/contact-us.html</a><br>
+                    <strong>Location</strong>: Amsterdam, Netherlands
+                </p>
+
+                <div class="privacy-highlight">
+                    <h3>Summary</h3>
+                    <p><strong>What we collect:</strong> Nothing. Zero data collection.</p>
+                    <p><strong>What we store:</strong> Nothing. No persistent storage is used.</p>
+                    <p><strong>What we transmit:</strong> Nothing. No data is sent to external servers.</p>
+                    <p><strong>How it works:</strong> All analysis happens locally in your browser. When the popup closes, all data is discarded.</p>
+                    <p><strong>Your privacy:</strong> Protected by design. We don't collect data because we don't need to.</p>
+                </div>
+
+                <p style="margin-top: 2rem; font-size: 0.875rem; color: var(--text-light); font-style: italic;">
+                    This Privacy Policy is designed to comply with Chrome Web Store requirements, GDPR, CCPA, and other applicable privacy regulations. We recommend having it reviewed by a legal professional before publishing.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" id="contact">
+        <div class="container">
+            <div class="footer__content">
+                <div class="footer__section">
+                    <a href="/" class="footer__logo">
+                        <span class="logo-text">Sell<span class="logo-highlight">On</span>LLM</span>
+                    </a>
+                    <p class="footer__description">
+                        The leading platform for ranking and selling on AI platforms. Optimize your presence on ChatGPT, Claude, Perplexity, and more.
+                    </p>
+                    <div class="footer__social">
+                        <a href="https://twitter.com/sellonllm" class="footer__social-link" aria-label="Twitter">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+                            </svg>
+                        </a>
+                        <a href="https://linkedin.com/company/sellonllm" class="footer__social-link" aria-label="LinkedIn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                                <rect x="2" y="9" width="4" height="12"></rect>
+                                <circle cx="4" cy="4" r="2"></circle>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="footer__section">
+                    <h4 class="footer__title">Product</h4>
+                    <ul class="footer__list">
+                        <li><a href="/#features">Features</a></li>
+                        <li><a href="/#shopify">Shopify App</a></li>
+                        <li><a href="/free-llm-audit.html">Free LLM Audit</a></li>
+                        <li><a href="/blog/">Blog</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer__section">
+                    <h4 class="footer__title">Company</h4>
+                    <ul class="footer__list">
+                        <li><a href="/about-us.html">About Us</a></li>
+                        <li><a href="/contact-us.html">Contact Us</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer__section">
+                    <h4 class="footer__title">Legal</h4>
+                    <ul class="footer__list">
+                        <li><a href="/privacy-policy.html">Privacy Policy (Shopify App)</a></li>
+                        <li><a href="/chrome-extension-privacy-policy.html">Privacy Policy (Chrome Extension)</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer__bottom">
+                <p class="footer__copy">
+                    &copy; 2025 SellOnLLM. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/script.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+    <!-- SEO Meta Tags -->
+    <title>Chrome Extension - AEO/GEO Audit Tool | SellOnLLM</title>
+    <meta name="description" content="Free AI SEO audit tool for Chrome. Instantly check if your website is optimized for ChatGPT, Claude, and Perplexity. 21+ comprehensive AEO/GEO checks with actionable recommendations.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://sellonllm.com/chrome-extension.html">
+    
+    <!-- Open Graph -->
+    <meta property="og:type" content="product">
+    <meta property="og:url" content="https://sellonllm.com/chrome-extension.html">
+    <meta property="og:title" content="Chrome Extension - AEO/GEO Audit Tool | SellOnLLM">
+    <meta property="og:description" content="Free AI SEO audit tool for Chrome. Check your website's AI readiness instantly.">
+    <meta property="og:image" content="https://sellonllm.com/images/logo.png">
+    
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Chrome Extension - AEO/GEO Audit Tool">
+    <meta name="twitter:description" content="Free AI SEO audit tool for Chrome. Check your website's AI readiness instantly.">
+    <meta name="twitter:image" content="https://sellonllm.com/images/logo.png">
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#6366f1">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="images/logo.png">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7KK7VYDR9D"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-7KK7VYDR9D');
+    </script>
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .extension-hero {
+            padding: 8rem 0 4rem;
+            background: var(--bg-color);
+        }
+        
+        .extension-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .extension-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .extension-header .badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-color-dark));
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: var(--radius-full);
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .extension-header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+        
+        .extension-header p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            line-height: 1.7;
+        }
+        
+        .coming-soon-banner {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            padding: 1.5rem 2rem;
+            border-radius: var(--radius-lg);
+            text-align: center;
+            margin: 2rem 0;
+            box-shadow: 0 4px 6px rgba(16, 185, 129, 0.2);
+        }
+        
+        .coming-soon-banner h2 {
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .coming-soon-banner p {
+            color: rgba(255, 255, 255, 0.95);
+            font-size: 1.125rem;
+            margin: 0;
+        }
+        
+        .extension-features {
+            background: var(--bg-card);
+            padding: 3rem;
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-md);
+            margin-top: 2rem;
+        }
+        
+        .extension-features h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .feature-item {
+            padding: 1.5rem;
+            background: var(--bg-secondary);
+            border-radius: var(--radius-lg);
+            border: 2px solid var(--border-color);
+            transition: var(--transition);
+        }
+        
+        .feature-item:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+        
+        .feature-item h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .feature-item h3::before {
+            content: "✓";
+            color: var(--primary-color);
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+        
+        .feature-item p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin: 0;
+        }
+        
+        .cta-section {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 3rem 2rem;
+            background: var(--bg-secondary);
+            border-radius: var(--radius-xl);
+        }
+        
+        .cta-section h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+        
+        .cta-section p {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+        
+        @media screen and (max-width: 768px) {
+            .extension-hero {
+                padding: 6rem 0 2rem;
+            }
+            
+            .extension-header h1 {
+                font-size: 2rem;
+            }
+            
+            .extension-header p {
+                font-size: 1.125rem;
+            }
+            
+            .extension-features {
+                padding: 2rem 1.5rem;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <nav class="nav container">
+            <a href="/" class="nav__logo">
+                <img src="images/logo.png" alt="SellOnLLM" class="logo__icon" width="32" height="32">
+                <span class="logo-text">Sell<span class="logo-highlight">On</span>LLM</span>
+            </a>
+            
+            <div class="nav__menu" id="nav-menu">
+                <ul class="nav__list">
+                    <li class="nav__item">
+                        <a href="/#features" class="nav__link">Features</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="/#shopify" class="nav__link">Shopify App</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="/#faq" class="nav__link">FAQ</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="/blog/" class="nav__link">Blog</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="/chrome-extension.html" class="nav__link">Chrome Extension</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="/free-llm-audit.html" class="nav__link">Free LLM Audit</a>
+                    </li>
+                </ul>
+                <div class="nav__close" id="nav-close">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </div>
+            </div>
+            
+            <div class="nav__btns">
+                <a href="https://chromewebstore.google.com/detail/aeogeo-audit-tool-ai-read/mmiagdcijcmncoifmehfodelnkdbfcoo?authuser=0&hl=en-GB" target="_blank" rel="noopener noreferrer" class="button button--primary">Install Extension</a>
+                <div class="nav__toggle" id="nav-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Extension Hero Section -->
+    <section class="extension-hero">
+        <div class="container">
+            <div class="extension-content">
+                <div class="extension-header">
+                    <span class="badge">FREE CHROME EXTENSION</span>
+                    <h1>AEO/GEO Audit Tool<br><span class="gradient-text">AI Readiness Check</span></h1>
+                    <p>Instantly audit any webpage for AI search engine optimization. Check if your site is optimized for ChatGPT, Claude, and Perplexity with comprehensive 21+ checks.</p>
+                    
+                    <div class="coming-soon-banner" style="background: linear-gradient(135deg, #4a90e2, #357abd);">
+                        <h2>🚀 Try Now on Chrome Web Store</h2>
+                        <p>Install the extension and start auditing any webpage instantly!</p>
+                        <a href="https://chromewebstore.google.com/detail/aeogeo-audit-tool-ai-read/mmiagdcijcmncoifmehfodelnkdbfcoo?authuser=0&hl=en-GB" target="_blank" rel="noopener noreferrer" class="button button--primary button--large" style="margin-top: 1rem; display: inline-block; background: white; color: #4a90e2; border: none;">
+                            Install from Chrome Web Store
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 0.5rem;">
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                <polyline points="12 5 19 12 12 19"></polyline>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="extension-features">
+                    <h2>What You Get</h2>
+                    
+                    <div class="features-grid">
+                        <div class="feature-item">
+                            <h3>21+ Comprehensive Checks</h3>
+                            <p>Meta tags, structured data, robots.txt, sitemap.xml, LLM.txt, canonical URLs, and more.</p>
+                        </div>
+                        
+                        <div class="feature-item">
+                            <h3>Instant Results</h3>
+                            <p>Get your AI readiness score (0-100) in seconds. No signup or account required.</p>
+                        </div>
+                        
+                        <div class="feature-item">
+                            <h3>Actionable Recommendations</h3>
+                            <p>See exactly what's missing and how to fix it with specific, actionable recommendations.</p>
+                        </div>
+                        
+                        <div class="feature-item">
+                            <h3>PDF Reports</h3>
+                            <p>Export comprehensive audit reports as branded PDFs to share with your team or clients.</p>
+                        </div>
+                        
+                        <div class="feature-item">
+                            <h3>Privacy-First</h3>
+                            <p>All analysis happens locally. Zero data collection, storage, or transmission.</p>
+                        </div>
+                        
+                        <div class="feature-item">
+                            <h3>100% Free</h3>
+                            <p>Completely free forever. No trial limits, subscriptions, or hidden costs.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="extension-features" style="margin-top: 2rem;">
+                    <h2>How It Works</h2>
+                    
+                    <div style="display: grid; gap: 2rem; margin-top: 2rem;">
+                        <div style="display: flex; gap: 1.5rem; align-items: start;">
+                            <div style="background: var(--primary-color); color: white; width: 2.5rem; height: 2.5rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.25rem; flex-shrink: 0;">1</div>
+                            <div>
+                                <h3 style="font-size: 1.25rem; font-weight: 600; color: var(--text-primary); margin-bottom: 0.5rem;">Install Extension</h3>
+                                <p style="color: var(--text-secondary); line-height: 1.7; margin: 0;">Add the extension to Chrome with one click. No account or signup required.</p>
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; gap: 1.5rem; align-items: start;">
+                            <div style="background: var(--primary-color); color: white; width: 2.5rem; height: 2.5rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.25rem; flex-shrink: 0;">2</div>
+                            <div>
+                                <h3 style="font-size: 1.25rem; font-weight: 600; color: var(--text-primary); margin-bottom: 0.5rem;">Visit Any Webpage</h3>
+                                <p style="color: var(--text-secondary); line-height: 1.7; margin: 0;">Navigate to any website you want to audit. The extension works on any webpage.</p>
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; gap: 1.5rem; align-items: start;">
+                            <div style="background: var(--primary-color); color: white; width: 2.5rem; height: 2.5rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.25rem; flex-shrink: 0;">3</div>
+                            <div>
+                                <h3 style="font-size: 1.25rem; font-weight: 600; color: var(--text-primary); margin-bottom: 0.5rem;">Click Extension Icon</h3>
+                                <p style="color: var(--text-secondary); line-height: 1.7; margin: 0;">Click the extension icon in your Chrome toolbar to instantly run an audit.</p>
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; gap: 1.5rem; align-items: start;">
+                            <div style="background: var(--primary-color); color: white; width: 2.5rem; height: 2.5rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.25rem; flex-shrink: 0;">4</div>
+                            <div>
+                                <h3 style="font-size: 1.25rem; font-weight: 600; color: var(--text-primary); margin-bottom: 0.5rem;">Get Results & Export</h3>
+                                <p style="color: var(--text-secondary); line-height: 1.7; margin: 0;">View your AI readiness score and detailed checks. Export as PDF if needed.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="cta-section">
+                    <h2>Get Started Now</h2>
+                    <p>Install the extension from Chrome Web Store and start auditing any webpage instantly.</p>
+                    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 1.5rem;">
+                        <a href="https://chromewebstore.google.com/detail/aeogeo-audit-tool-ai-read/mmiagdcijcmncoifmehfodelnkdbfcoo?authuser=0&hl=en-GB" target="_blank" rel="noopener noreferrer" class="button button--primary button--large">
+                            Install from Chrome Web Store
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 0.5rem;">
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                <polyline points="12 5 19 12 12 19"></polyline>
+                            </svg>
+                        </a>
+                        <a href="/free-llm-audit.html" class="button button--ghost button--large">Run Free LLM Audit</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" id="contact">
+        <div class="container">
+            <div class="footer__content">
+                <div class="footer__section">
+                    <a href="/" class="footer__logo">
+                        <span class="logo-text">Sell<span class="logo-highlight">On</span>LLM</span>
+                    </a>
+                    <p class="footer__description">
+                        The leading platform for ranking and selling on AI platforms. Optimize your presence on ChatGPT, Claude, Perplexity, and more.
+                    </p>
+                    <div class="footer__social">
+                        <a href="https://twitter.com/sellonllm" class="footer__social-link" aria-label="Twitter">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+                            </svg>
+                        </a>
+                        <a href="https://linkedin.com/company/sellonllm" class="footer__social-link" aria-label="LinkedIn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                                <rect x="2" y="9" width="4" height="12"></rect>
+                                <circle cx="4" cy="4" r="2"></circle>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="footer__section">
+                    <h4 class="footer__title">Product</h4>
+                    <ul class="footer__list">
+                        <li><a href="/#features">Features</a></li>
+                        <li><a href="/#shopify">Shopify App</a></li>
+                        <li><a href="/chrome-extension.html">Chrome Extension</a></li>
+                        <li><a href="/free-llm-audit.html">Free LLM Audit</a></li>
+                        <li><a href="/blog/">Blog</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer__section">
+                    <h4 class="footer__title">Company</h4>
+                    <ul class="footer__list">
+                        <li><a href="/about-us.html">About Us</a></li>
+                        <li><a href="/contact-us.html">Contact Us</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer__section">
+                    <h4 class="footer__title">Legal</h4>
+                    <ul class="footer__list">
+                        <li><a href="/privacy-policy.html">Privacy Policy (Shopify App)</a></li>
+                        <li><a href="/chrome-extension-privacy-policy.html">Privacy Policy (Chrome Extension)</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer__bottom">
+                <p class="footer__copy">
+                    &copy; 2025 SellOnLLM. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/script.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LLM Audit - SellOnLLM</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+    <div class="popup-container">
+        <!-- Header -->
+        <div class="popup-header">
+            <div class="header-content">
+                <img src="icons/icon32.png" alt="SellOnLLM" class="header-icon">
+                <div>
+                    <h1 class="header-title">LLM Audit</h1>
+                    <p class="header-subtitle">AI Readiness Check</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading State -->
+        <div id="loading-state" class="loading-state">
+            <div class="spinner"></div>
+            <p>Analyzing page...</p>
+        </div>
+
+        <!-- Error State -->
+        <div id="error-state" class="error-state" style="display: none;">
+            <div class="error-icon">⚠️</div>
+            <p id="error-message">Unable to audit this page.</p>
+            <button id="retry-btn" class="button button--primary">Retry</button>
+        </div>
+
+        <!-- Results State -->
+        <div id="results-state" class="results-state" style="display: none;">
+            <!-- Score Display -->
+            <div class="score-section">
+                <div class="score-circle">
+                    <svg class="score-ring" viewBox="0 0 100 100">
+                        <circle class="score-ring-bg" cx="50" cy="50" r="45"></circle>
+                        <circle id="score-progress" class="score-ring-progress" cx="50" cy="50" r="45"></circle>
+                    </svg>
+                    <div class="score-value">
+                        <span id="overall-score">0</span>
+                        <span class="score-max">/100</span>
+                    </div>
+                </div>
+                <h2 id="score-status" class="score-status">Analyzing...</h2>
+                <p class="score-description" id="score-description">Checking your page for LLM readiness</p>
+            </div>
+
+            <!-- Current URL -->
+            <div class="url-display">
+                <span class="url-label">Auditing:</span>
+                <span id="current-url" class="url-text"></span>
+            </div>
+
+            <!-- Checks List -->
+            <div class="checks-container">
+                <h3 class="checks-title">Audit Results</h3>
+                <div id="checks-list" class="checks-list">
+                    <!-- Checks will be inserted here -->
+                </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="actions-section">
+                <a id="full-audit-link" href="https://sellonllm.com/free-llm-audit.html" target="_blank" class="button button--primary button--full">
+                    Run Full Site Audit
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                </a>
+                <button id="export-pdf-btn" class="button button--primary button--full" style="margin-top: 8px;">
+                    Download PDF Report
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                </button>
+                <button id="refresh-btn" class="button button--secondary button--full" style="margin-top: 8px;">
+                    Refresh Audit
+                </button>
+            </div>
+
+            <!-- Footer -->
+            <div class="popup-footer">
+                <a href="https://sellonllm.com" target="_blank" class="footer-link">
+                    <span>Powered by SellOnLLM</span>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="jsPDF.min.js"></script>
+    <script src="popup.js"></script>
+</body>
+</html>
+

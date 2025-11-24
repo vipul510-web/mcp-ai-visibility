@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <meta http-equiv="refresh" content="0; url=/free-llm-audit.html">
+    <title>Redirecting… Free LLM Audit | SellOnLLM</title>
+    <meta name="description" content="Run a free site-wide LLM audit. Check schema, meta tags, robots.txt, sitemap, content quality, mobile readiness, and more. Get actionable fixes for AI discoverability.">
+    <meta name="keywords" content="LLM audit, AI SEO audit, ChatGPT SEO, schema audit, content quality, robots.txt, sitemap, structured data, AI visibility">
+    <link rel="canonical" href="https://sellonllm.com/audit.html">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://sellonllm.com/audit.html">
+    <meta property="og:title" content="Free LLM Audit | Site-wide AI & SEO Readiness Checker">
+    <meta property="og:description" content="Analyze your whole site for AI discoverability. Get a score out of 100 and step-by-step fixes.">
+    <meta property="og:image" content="https://sellonllm.com/images/logo.png">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Free LLM Audit | Site-wide AI & SEO Readiness Checker">
+    <meta name="twitter:description" content="Check schema, metadata, content, and technical files for AI visibility.">
+    <meta name="twitter:image" content="https://sellonllm.com/images/logo.png">
+
+    <script>
+      // JS fallback redirect for older crawlers
+      window.location.replace('/free-llm-audit.html');
+    </script>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/llm-audit-styles.css">
+</head>
+<body>
+    <!-- Header (reuse) -->
+    <header class="header" id="header">
+        <nav class="nav container">
+            <a href="/" class="nav__logo">
+                <img src="images/logo.png" alt="SellOnLLM" class="logo__icon" width="32" height="32">
+                <span class="logo-text">Sell<span class="logo-highlight">On</span>LLM</span>
+            </a>
+            <div class="nav__menu" id="nav-menu">
+                <ul class="nav__list">
+                    <li class="nav__item"><a href="/index.html#features" class="nav__link">Features</a></li>
+                    <li class="nav__item"><a href="/index.html#shopify" class="nav__link">Shopify App</a></li>
+                    <li class="nav__item"><a href="/index.html#faq" class="nav__link">FAQ</a></li>
+                    <li class="nav__item"><a href="/blog/" class="nav__link">Blog</a></li>
+                    <li class="nav__item"><a href="/chrome-extension.html" class="nav__link">Chrome Extension</a></li>
+                    <li class="nav__item"><a href="/audit.html" class="nav__link active">Free LLM Audit</a></li>
+                </ul>
+            </div>
+            <div class="nav__btns">
+                <a href="https://apps.shopify.com/llm-analytics" target="_blank" rel="noopener noreferrer" class="button button--primary">Try Shopify App</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Audit Hero -->
+    <section class="section" style="padding-top: 6rem;">
+        <div class="container">
+            <div class="section__header" style="text-align: left;">
+                <span class="section__subtitle">Free Tool</span>
+                <h1 class="section__title">Run a Site-wide LLM Audit</h1>
+                <p class="section__description">Enter your domain to analyze schema, meta data, content quality, technical files, and mobile readiness across your entire site.</p>
+            </div>
+            <!-- Audit form (reused id so existing JS works) -->
+            <div class="llm-audit-tool">
+                <form class="audit-tool__form" id="llm-audit-form">
+                    <div class="audit-tool__input-group">
+                        <input type="url" id="website-url" placeholder="Enter your website URL (e.g., https://example.com)" class="audit-tool__input" required>
+                        <button type="submit" class="button button--primary button--large audit-tool__button">
+                            <span class="button-text">Start Site Audit</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.35-4.35"></path></svg>
+                        </button>
+                    </div>
+                    <p class="audit-tool__note">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                        Free • No signup required • Analyzes up to 50 pages
+                    </p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Results container (reused so existing JS renders here) -->
+    <section class="audit-results section" id="audit-results" style="display: none;">
+        <div class="container">
+            <div class="audit-results__header">
+                <button class="back-to-audit" id="back-to-audit">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                    Check Another Site
+                </button>
+                <h2 class="audit-results__title">LLM Readiness Report</h2>
+                <p class="audit-results__url" id="audited-url"></p>
+            </div>
+            <!-- The rest of the results UI is injected by js/llm-audit.js as before -->
+        </div>
+    </section>
+
+    <!-- Footer minimal -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__bottom">
+                <p class="footer__copy">&copy; 2025 SellOnLLM. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/script.js"></script>
+    <script src="js/llm-audit.js"></script>
+</body>
+</html>
+
