@@ -395,44 +395,376 @@
                     'image_optimization': 'Image Optimization'
                 };
                 
-                Object.entries(checkMappings).forEach(([checkKey, label]) => {
-                    const check = checks[checkKey];
+                // Helper function to add detailed check information
+                const addDetailedCheck = (checkKey, label, check) => {
                     if (!check) return;
                     
-                    checkNewPage(15);
+                    checkNewPage(20);
                     
                     const percentage = check.percentage || 0;
                     const icon = percentage >= 80 ? '✓' : percentage >= 50 ? '⚠' : '✗';
                     const status = percentage >= 80 ? 'PASS' : percentage >= 50 ? 'WARN' : 'FAIL';
                     
                     // Check header
-                    pdf.setFontSize(11);
+                    pdf.setFontSize(12);
                     pdf.setFont('helvetica', 'bold');
                     const checkHeader = `${icon} ${label} - ${status} (${percentage}%)`;
                     pdf.text(checkHeader, margin, yPos);
-                    yPos += 6;
+                    yPos += 7;
                     
-                    // Details
+                    // Site-wide coverage
                     pdf.setFontSize(9);
                     pdf.setFont('helvetica', 'normal');
-                    const detailsText = `Site-wide Coverage: ${check.passed || 0}/${check.total || 0} pages`;
-                    pdf.text(detailsText, margin + 3, yPos);
+                    pdf.text(`Site-wide Coverage: ${check.passed || 0}/${check.total || 0} pages (${percentage}%)`, margin + 3, yPos);
                     yPos += 5;
                     
-                    // Recommendation if available
-                    if (check.value && check.value.recommendation) {
+                    // Missing pages for meta tags
+                    if ((checkKey === 'meta_titles_present' || checkKey === 'meta_descriptions_present') && check.missingPages && check.missingPages.length > 0) {
+                        checkNewPage(10);
+                        pdf.setFontSize(10);
+                        pdf.setFont('helvetica', 'bold');
+                        pdf.text(`Pages Missing ${checkKey === 'meta_titles_present' ? 'Meta Titles' : 'Meta Descriptions'}:`, margin + 3, yPos);
+                        yPos += 5;
+                        pdf.setFontSize(8);
+                        pdf.setFont('helvetica', 'normal');
+                        check.missingPages.slice(0, 10).forEach((url, idx) => {
+                            checkNewPage(4);
+                            const urlText = pdf.splitTextToSize(`${idx + 1}. ${url}`, maxWidth - 6);
+                            pdf.text(urlText, margin + 6, yPos);
+                            yPos += urlText.length * 3.5 + 1;
+                        });
+                        if (check.missingPages.length > 10) {
+                            pdf.text(`... and ${check.missingPages.length - 10} more pages`, margin + 6, yPos);
+                            yPos += 4;
+                        }
+                        yPos += 3;
+                    }
+                    
+                    // Content Quality detailed breakdown
+                    if (checkKey === 'content_quality' && check.value) {
+                        const contentChecks = check.value.checks || {};
+                        
+                        checkNewPage(10);
+                        pdf.setFontSize(10);
+                        pdf.setFont('helvetica', 'bold');
+                        pdf.text('Content Quality Analysis:', margin + 3, yPos);
+                        yPos += 5;
+                        pdf.setFontSize(9);
+                        pdf.setFont('helvetica', 'normal');
+                        pdf.text(`Overall Score: ${check.value.overallScore || 0}% - ${check.value.summary || 'N/A'}`, margin + 6, yPos);
+                        yPos += 4;
+                        pdf.text(`Analyzed Pages: ${check.pageData ? check.pageData.length : 0}`, margin + 6, yPos);
+                        yPos += 6;
+                        
+                        // Content Length
+                        if (contentChecks.contentLength) {
+                            checkNewPage(15);
+                            pdf.setFontSize(10);
+                            pdf.setFont('helvetica', 'bold');
+                            pdf.text('Content Length:', margin + 6, yPos);
+                            yPos += 5;
+                            pdf.setFontSize(8);
+                            pdf.setFont('helvetica', 'normal');
+                            const avgWordCount = check.pageData ? 
+                                Math.round(check.pageData.reduce((sum, page) => sum + page.wordCount, 0) / check.pageData.length) : 0;
+                            const pagesWithGoodContent = check.pageData ? 
+                                check.pageData.filter(page => page.wordCount >= 300).length : 0;
+                            pdf.text(`Site Average: ${avgWordCount} words per page (${contentChecks.contentLength.score}%)`, margin + 9, yPos);
+                            yPos += 4;
+                            pdf.text(`${pagesWithGoodContent}/${check.pageData ? check.pageData.length : 0} pages have 300+ words`, margin + 9, yPos);
+                            yPos += 5;
+                            
+                            // Page-by-page breakdown (first 10 pages)
+                            if (check.pageData && check.pageData.length > 0) {
+                                pdf.setFontSize(8);
+                                pdf.setFont('helvetica', 'bold');
+                                pdf.text('Page Details (first 10):', margin + 9, yPos);
+                                yPos += 4;
+                                check.pageData.slice(0, 10).forEach((page, idx) => {
+                                    checkNewPage(4);
+                                    const wordStatus = page.wordCount >= 300 ? '✓' : page.wordCount >= 150 ? '⚠' : '✗';
+                                    const pageUrl = page.url.length > 50 ? page.url.substring(0, 50) + '...' : page.url;
+                                    pdf.text(`${idx + 1}. ${wordStatus} ${pageUrl} - ${page.wordCount} words`, margin + 12, yPos);
+                                    yPos += 3.5;
+                                });
+                                if (check.pageData.length > 10) {
+                                    pdf.text(`... and ${check.pageData.length - 10} more pages`, margin + 12, yPos);
+                                    yPos += 4;
+                                }
+                            }
+                            yPos += 3;
+                            
+                            if (contentChecks.contentLength.recommendation) {
+                                pdf.setFont('helvetica', 'italic');
+                                pdf.setTextColor(200, 0, 0);
+                                const recLines = pdf.splitTextToSize(`⚠ ${contentChecks.contentLength.recommendation}`, maxWidth - 12);
+                                pdf.text(recLines, margin + 9, yPos);
+                                yPos += recLines.length * 3.5 + 2;
+                                pdf.setTextColor(0, 0, 0);
+                            }
+                        }
+                        
+                        // FAQ Section
+                        if (contentChecks.hasFaqSection) {
+                            checkNewPage(10);
+                            pdf.setFontSize(10);
+                            pdf.setFont('helvetica', 'bold');
+                            pdf.text('FAQ Section:', margin + 6, yPos);
+                            yPos += 5;
+                            pdf.setFontSize(8);
+                            pdf.setFont('helvetica', 'normal');
+                            const pagesWithFaq = check.pageData ? 
+                                check.pageData.filter(page => page.hasFaqSection).length : 0;
+                            pdf.text(`Status: ${contentChecks.hasFaqSection.hasFaq ? 'Found' : 'Not Found'} (${contentChecks.hasFaqSection.score}%)`, margin + 9, yPos);
+                            yPos += 4;
+                            pdf.text(`${pagesWithFaq}/${check.pageData ? check.pageData.length : 0} pages have FAQ sections`, margin + 9, yPos);
+                            yPos += 5;
+                            
+                            if (contentChecks.hasFaqSection.recommendation) {
+                                pdf.setFont('helvetica', 'italic');
+                                pdf.setTextColor(200, 0, 0);
+                                const recLines = pdf.splitTextToSize(`💡 ${contentChecks.hasFaqSection.recommendation}`, maxWidth - 12);
+                                pdf.text(recLines, margin + 9, yPos);
+                                yPos += recLines.length * 3.5 + 2;
+                                pdf.setTextColor(0, 0, 0);
+                            }
+                        }
+                        
+                        // Heading Structure
+                        if (contentChecks.headingStructure) {
+                            checkNewPage(10);
+                            pdf.setFontSize(10);
+                            pdf.setFont('helvetica', 'bold');
+                            pdf.text('Heading Structure:', margin + 6, yPos);
+                            yPos += 5;
+                            pdf.setFontSize(8);
+                            pdf.setFont('helvetica', 'normal');
+                            const avgH1 = check.pageData ? 
+                                Math.round(check.pageData.reduce((sum, page) => sum + page.headingCount.h1, 0) / check.pageData.length) : 0;
+                            const avgH2 = check.pageData ? 
+                                Math.round(check.pageData.reduce((sum, page) => sum + page.headingCount.h2, 0) / check.pageData.length) : 0;
+                            pdf.text(`Site Averages: H1: ${avgH1} | H2: ${avgH2} (${contentChecks.headingStructure.score}%)`, margin + 9, yPos);
+                            yPos += 4;
+                            
+                            if (contentChecks.headingStructure.recommendation) {
+                                pdf.setFont('helvetica', 'italic');
+                                pdf.setTextColor(200, 0, 0);
+                                const recLines = pdf.splitTextToSize(`⚠ ${contentChecks.headingStructure.recommendation}`, maxWidth - 12);
+                                pdf.text(recLines, margin + 9, yPos);
+                                yPos += recLines.length * 3.5 + 2;
+                                pdf.setTextColor(0, 0, 0);
+                            }
+                        }
+                        
+                        // Internal Linking
+                        if (contentChecks.internalLinking) {
+                            checkNewPage(8);
+                            pdf.setFontSize(10);
+                            pdf.setFont('helvetica', 'bold');
+                            pdf.text('Internal Linking:', margin + 6, yPos);
+                            yPos += 5;
+                            pdf.setFontSize(8);
+                            pdf.setFont('helvetica', 'normal');
+                            const avgInternalLinks = check.pageData ? 
+                                Math.round(check.pageData.reduce((sum, page) => sum + page.internalLinks, 0) / check.pageData.length) : 0;
+                            pdf.text(`Site Average: ${avgInternalLinks} links per page (${contentChecks.internalLinking.score}%)`, margin + 9, yPos);
+                            yPos += 4;
+                            
+                            if (contentChecks.internalLinking.recommendation) {
+                                pdf.setFont('helvetica', 'italic');
+                                pdf.setTextColor(200, 0, 0);
+                                const recLines = pdf.splitTextToSize(`⚠ ${contentChecks.internalLinking.recommendation}`, maxWidth - 12);
+                                pdf.text(recLines, margin + 9, yPos);
+                                yPos += recLines.length * 3.5 + 2;
+                                pdf.setTextColor(0, 0, 0);
+                            }
+                        }
+                        
+                        // Image Optimization
+                        if (contentChecks.imageOptimization) {
+                            checkNewPage(8);
+                            pdf.setFontSize(10);
+                            pdf.setFont('helvetica', 'bold');
+                            pdf.text('Image Optimization:', margin + 6, yPos);
+                            yPos += 5;
+                            pdf.setFontSize(8);
+                            pdf.setFont('helvetica', 'normal');
+                            const totalImages = check.pageData ? 
+                                check.pageData.reduce((sum, page) => sum + page.totalImages, 0) : 0;
+                            const totalImagesWithAlt = check.pageData ? 
+                                check.pageData.reduce((sum, page) => sum + page.imagesWithAlt, 0) : 0;
+                            pdf.text(`Site Totals: ${totalImagesWithAlt}/${totalImages} images have alt tags (${contentChecks.imageOptimization.score}%)`, margin + 9, yPos);
+                            yPos += 4;
+                            
+                            if (contentChecks.imageOptimization.recommendation) {
+                                pdf.setFont('helvetica', 'italic');
+                                pdf.setTextColor(200, 0, 0);
+                                const recLines = pdf.splitTextToSize(`⚠ ${contentChecks.imageOptimization.recommendation}`, maxWidth - 12);
+                                pdf.text(recLines, margin + 9, yPos);
+                                yPos += recLines.length * 3.5 + 2;
+                                pdf.setTextColor(0, 0, 0);
+                            }
+                        }
+                        
+                        // Readability
+                        if (contentChecks.readability) {
+                            checkNewPage(8);
+                            pdf.setFontSize(10);
+                            pdf.setFont('helvetica', 'bold');
+                            pdf.text('Readability:', margin + 6, yPos);
+                            yPos += 5;
+                            pdf.setFontSize(8);
+                            pdf.setFont('helvetica', 'normal');
+                            const avgSentenceLength = check.pageData ? 
+                                Math.round(check.pageData.reduce((sum, page) => sum + page.avgSentenceLength, 0) / check.pageData.length) : 0;
+                            pdf.text(`Site Average: ${avgSentenceLength} words per sentence (${contentChecks.readability.score}%)`, margin + 9, yPos);
+                            yPos += 4;
+                            
+                            if (contentChecks.readability.recommendation) {
+                                pdf.setFont('helvetica', 'italic');
+                                pdf.setTextColor(200, 0, 0);
+                                const recLines = pdf.splitTextToSize(`⚠ ${contentChecks.readability.recommendation}`, maxWidth - 12);
+                                pdf.text(recLines, margin + 9, yPos);
+                                yPos += recLines.length * 3.5 + 2;
+                                pdf.setTextColor(0, 0, 0);
+                            }
+                        }
+                        
+                        // Pages Needing Improvement
+                        if (check.pagesNeedingContent && check.pagesNeedingContent.length > 0) {
+                            checkNewPage(10);
+                            pdf.setFontSize(10);
+                            pdf.setFont('helvetica', 'bold');
+                            pdf.setTextColor(200, 0, 0);
+                            pdf.text('Pages Needing More Content (Under 300 words):', margin + 3, yPos);
+                            yPos += 5;
+                            pdf.setFontSize(8);
+                            pdf.setFont('helvetica', 'normal');
+                            check.pagesNeedingContent.slice(0, 10).forEach((page, idx) => {
+                                checkNewPage(4);
+                                const pageUrl = page.url.length > 60 ? page.url.substring(0, 60) + '...' : page.url;
+                                pdf.text(`${idx + 1}. ${pageUrl} (${page.wordCount} words)`, margin + 6, yPos);
+                                yPos += 3.5;
+                            });
+                            if (check.pagesNeedingContent.length > 10) {
+                                pdf.text(`... and ${check.pagesNeedingContent.length - 10} more pages`, margin + 6, yPos);
+                                yPos += 4;
+                            }
+                            pdf.setTextColor(0, 0, 0);
+                            yPos += 3;
+                        }
+                        
+                        // Overall Recommendations
+                        if (check.value.recommendations && check.value.recommendations.length > 0) {
+                            checkNewPage(10);
+                            pdf.setFontSize(10);
+                            pdf.setFont('helvetica', 'bold');
+                            pdf.setTextColor(200, 150, 0);
+                            pdf.text('Recommendations for Better AI Visibility:', margin + 3, yPos);
+                            yPos += 5;
+                            pdf.setFontSize(8);
+                            pdf.setFont('helvetica', 'normal');
+                            check.value.recommendations.forEach((rec, idx) => {
+                                checkNewPage(4);
+                                const recLines = pdf.splitTextToSize(`${idx + 1}. ${rec}`, maxWidth - 6);
+                                pdf.text(recLines, margin + 6, yPos);
+                                yPos += recLines.length * 3.5 + 1;
+                            });
+                            pdf.setTextColor(0, 0, 0);
+                            yPos += 3;
+                        }
+                    }
+                    
+                    // Structured Data detailed breakdown
+                    if (checkKey === 'structured_data_basic' && check.value) {
+                        checkNewPage(10);
+                        pdf.setFontSize(10);
+                        pdf.setFont('helvetica', 'bold');
+                        pdf.text('Structured Data Details:', margin + 3, yPos);
+                        yPos += 5;
+                        
+                        // Found schemas
+                        if (check.value.jsonLd && check.value.jsonLd.length > 0) {
+                            pdf.setFontSize(9);
+                            pdf.setFont('helvetica', 'bold');
+                            pdf.text('Schema Types Found:', margin + 6, yPos);
+                            yPos += 5;
+                            pdf.setFontSize(8);
+                            pdf.setFont('helvetica', 'normal');
+                            check.value.jsonLd.forEach((schema, idx) => {
+                                checkNewPage(6);
+                                const validation = schema.validation || {};
+                                const score = validation.scorePercentage || 0;
+                                const status = score >= 80 ? 'Excellent' : score >= 60 ? 'Good' : score >= 40 ? 'Needs Work' : 'Poor';
+                                pdf.text(`${idx + 1}. ${schema.type} - ${schema.name || 'N/A'}`, margin + 9, yPos);
+                                yPos += 3.5;
+                                pdf.text(`   Status: ${status} (${score}%)`, margin + 9, yPos);
+                                yPos += 3.5;
+                                
+                                if (validation.warnings && validation.warnings.length > 0) {
+                                    validation.warnings.slice(0, 3).forEach(warning => {
+                                        checkNewPage(3);
+                                        const warnLines = pdf.splitTextToSize(`   ⚠ ${warning}`, maxWidth - 12);
+                                        pdf.text(warnLines, margin + 12, yPos);
+                                        yPos += warnLines.length * 3 + 1;
+                                    });
+                                }
+                                
+                                if (validation.missing && validation.missing.length > 0) {
+                                    validation.missing.slice(0, 3).forEach(missing => {
+                                        checkNewPage(3);
+                                        const missLines = pdf.splitTextToSize(`   ✗ Missing: ${missing}`, maxWidth - 12);
+                                        pdf.text(missLines, margin + 12, yPos);
+                                        yPos += missLines.length * 3 + 1;
+                                    });
+                                    if (validation.missing.length > 3) {
+                                        pdf.text(`   ... and ${validation.missing.length - 3} more missing items`, margin + 12, yPos);
+                                        yPos += 3.5;
+                                    }
+                                }
+                                yPos += 2;
+                            });
+                        }
+                        
+                        // Missing schemas
+                        if (check.value.missing && check.value.missing.length > 0) {
+                            checkNewPage(10);
+                            pdf.setFontSize(9);
+                            pdf.setFont('helvetica', 'bold');
+                            pdf.setTextColor(200, 0, 0);
+                            pdf.text('Missing Schema Types:', margin + 6, yPos);
+                            yPos += 5;
+                            pdf.setFontSize(8);
+                            pdf.setFont('helvetica', 'normal');
+                            check.value.missing.forEach((type, idx) => {
+                                checkNewPage(4);
+                                pdf.text(`${idx + 1}. ${type}`, margin + 9, yPos);
+                                yPos += 3.5;
+                            });
+                            pdf.setTextColor(0, 0, 0);
+                            yPos += 3;
+                            pdf.text('Note: See the online report for detailed implementation guidance and example code.', margin + 6, yPos);
+                            yPos += 4;
+                        }
+                    }
+                    
+                    // Recommendation if available (for other checks)
+                    if (check.value && check.value.recommendation && checkKey !== 'content_quality' && checkKey !== 'structured_data_basic') {
                         pdf.setFont('helvetica', 'italic');
                         pdf.setTextColor(100, 100, 100);
                         const recText = pdf.splitTextToSize(`Recommendation: ${check.value.recommendation}`, maxWidth - 3);
                         pdf.text(recText, margin + 3, yPos);
                         yPos += recText.length * 4 + 3;
                         pdf.setTextColor(0, 0, 0);
-                    } else {
-                        yPos += 2;
                     }
                     
-                    // Add small separator
-                    yPos += 2;
+                    // Add separator
+                    yPos += 3;
+                };
+                
+                // Add all checks with detailed information
+                Object.entries(checkMappings).forEach(([checkKey, label]) => {
+                    addDetailedCheck(checkKey, label, checks[checkKey]);
                 });
                 
                 // Pages Summary if available
