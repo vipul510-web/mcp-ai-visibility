@@ -5,8 +5,77 @@
     },
     "api/audit-site.js": {
       "maxDuration": 60
+    },
+    "api/feedback.js": {
+      "maxDuration": 10
+    },
+    "api/feedback/test.js": {
+      "maxDuration": 10
+    },
+    "api/feedback/list.js": {
+      "maxDuration": 10
+    },
+    "api/generate-llm-txt.js": {
+      "maxDuration": 30
+    },
+    "api/analyze-page.js": {
+      "maxDuration": 30
+    },
+    "api/analyze-prompt-relevance.js": {
+      "maxDuration": 60
+    },
+    "api/track-event.js": {
+      "maxDuration": 10
+    },
+    "api/auth/google.js": {
+      "maxDuration": 10
+    },
+    "api/auth/google/callback.js": {
+      "maxDuration": 15
+    },
+    "api/auth/me.js": {
+      "maxDuration": 10
+    },
+    "api/auth/logout.js": {
+      "maxDuration": 10
+    },
+    "api/user/api-key.js": {
+      "maxDuration": 10
+    },
+    "api/ga/properties.js": {
+      "maxDuration": 20
+    },
+    "api/gsc/sites.js": {
+      "maxDuration": 20
+    },
+    "api/chat.js": {
+      "maxDuration": 60
+    },
+    "api/mcp/index.js": {
+      "maxDuration": 60
+    },
+    "api/mcp/register.js": {
+      "maxDuration": 10
+    },
+    "api/mcp/authorize.js": {
+      "maxDuration": 10
+    },
+    "api/mcp/token.js": {
+      "maxDuration": 10
+    },
+    "api/wellknown/oauth-protected-resource.js": {
+      "maxDuration": 5
+    },
+    "api/wellknown/oauth-authorization-server.js": {
+      "maxDuration": 5
     }
   },
+  "rewrites": [
+    { "source": "/.well-known/oauth-protected-resource", "destination": "/api/wellknown/oauth-protected-resource" },
+    { "source": "/.well-known/oauth-authorization-server", "destination": "/api/wellknown/oauth-authorization-server" },
+    { "source": "/.well-known/oauth-protected-resource/mcp", "destination": "/api/wellknown/oauth-protected-resource" },
+    { "source": "/.well-known/oauth-authorization-server/mcp", "destination": "/api/wellknown/oauth-authorization-server" }
+  ],
   "headers": [
     {
       "source": "/api/(.*)",
