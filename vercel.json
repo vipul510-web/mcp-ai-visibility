@@ -27,54 +27,22 @@
     "api/track-event.js": {
       "maxDuration": 10
     },
-    "api/auth/google.js": {
-      "maxDuration": 10
-    },
-    "api/auth/google/callback.js": {
-      "maxDuration": 15
-    },
-    "api/auth/me.js": {
-      "maxDuration": 10
-    },
-    "api/auth/logout.js": {
-      "maxDuration": 10
-    },
-    "api/user/api-key.js": {
-      "maxDuration": 10
-    },
-    "api/ga/properties.js": {
-      "maxDuration": 20
-    },
-    "api/gsc/sites.js": {
-      "maxDuration": 20
-    },
-    "api/chat.js": {
+    "api/app.js": {
       "maxDuration": 60
-    },
-    "api/mcp/index.js": {
-      "maxDuration": 60
-    },
-    "api/mcp/register.js": {
-      "maxDuration": 10
-    },
-    "api/mcp/authorize.js": {
-      "maxDuration": 10
-    },
-    "api/mcp/token.js": {
-      "maxDuration": 10
-    },
-    "api/wellknown/oauth-protected-resource.js": {
-      "maxDuration": 5
-    },
-    "api/wellknown/oauth-authorization-server.js": {
-      "maxDuration": 5
     }
   },
   "rewrites": [
-    { "source": "/.well-known/oauth-protected-resource", "destination": "/api/wellknown/oauth-protected-resource" },
-    { "source": "/.well-known/oauth-authorization-server", "destination": "/api/wellknown/oauth-authorization-server" },
-    { "source": "/.well-known/oauth-protected-resource/mcp", "destination": "/api/wellknown/oauth-protected-resource" },
-    { "source": "/.well-known/oauth-authorization-server/mcp", "destination": "/api/wellknown/oauth-authorization-server" }
+    { "source": "/api/chat", "destination": "/api/app" },
+    { "source": "/api/auth/:path*", "destination": "/api/app" },
+    { "source": "/api/user/:path*", "destination": "/api/app" },
+    { "source": "/api/ga/:path*", "destination": "/api/app" },
+    { "source": "/api/gsc/:path*", "destination": "/api/app" },
+    { "source": "/api/mcp", "destination": "/api/app" },
+    { "source": "/api/mcp/:path*", "destination": "/api/app" },
+    { "source": "/.well-known/oauth-protected-resource", "destination": "/api/app" },
+    { "source": "/.well-known/oauth-authorization-server", "destination": "/api/app" },
+    { "source": "/.well-known/oauth-protected-resource/:path*", "destination": "/api/app" },
+    { "source": "/.well-known/oauth-authorization-server/:path*", "destination": "/api/app" }
   ],
   "headers": [
     {
@@ -96,4 +64,3 @@
     }
   ]
 }
-

@@ -13,8 +13,13 @@ export const GOOGLE_SCOPES = [
 export function getOAuthClient() {
     const clientId = process.env.GOOGLE_CLIENT_ID;
     const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
-    const redirectUri = process.env.GOOGLE_REDIRECT_URI
-        || 'https://sellonllm.com/api/auth/google/callback';
+    const base = (process.env.PUBLIC_BASE_URL || '').replace(/\/+$/, '');
+    const redirectUri =
+        process.env.GOOGLE_REDIRECT_URI
+        || (base ? `${base}/api/auth/google/callback` : null);
+    if (!redirectUri) {
+        throw new Error('Set GOOGLE_REDIRECT_URI or PUBLIC_BASE_URL (callback will be {PUBLIC_BASE_URL}/api/auth/google/callback)');
+    }
     if (!clientId || !clientSecret) {
         throw new Error('GOOGLE_CLIENT_ID/GOOGLE_CLIENT_SECRET not set');
     }
@@ -62,7 +67,7 @@ export async function assertWebmastersReadonlyScope(userId) {
     }
     if (!scope.includes('webmasters')) {
         throw new Error(
-            'Search Console access is missing on this Google connection (stored scopes do not include webmasters.readonly). Fix: remove SellOnLLM access at https://myaccount.google.com/permissions, disconnect the SellOnLLM connector in Claude, connect again, and on the Google consent screen accept both Analytics and Search Console. Workspace users may need an admin to allow the Search Console scope.',
+            'Search Console access is missing on this Google connection (stored scopes do not include webmasters.readonly). Fix: remove this app at https://myaccount.google.com/permissions, disconnect the MCP connector in Claude, connect again, and on the Google consent screen accept both Analytics and Search Console. Workspace users may need an admin to allow the Search Console scope.',
         );
     }
 }

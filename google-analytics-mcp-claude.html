@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Google Analytics &amp; Search Console MCP for Claude | AEO &amp; SEO Data Connector | SellOnLLM</title>
+    <meta name="title" content="GA4 + GSC MCP for Claude | Connect analytics to AI assistants">
+    <meta name="description" content="Connect Google Analytics 4 and Google Search Console to Claude.ai via SellOnLLM’s MCP connector. Add it from Claude → Connectors → Add custom connector. Live now.">
+    <meta name="keywords" content="Google Analytics MCP, Search Console MCP, Claude MCP connector, GA4 Claude, GSC Claude, AEO tools, GEO SEO, Model Context Protocol, AI SEO assistant, sellonllm">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+    <link rel="canonical" href="https://www.sellonllm.com/google-analytics-mcp-claude.html">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.sellonllm.com/google-analytics-mcp-claude.html">
+    <meta property="og:site_name" content="SellOnLLM">
+    <meta property="og:title" content="GA4 + Search Console MCP for Claude | SellOnLLM">
+    <meta property="og:description" content="Use your GA4 and Search Console data inside Claude with a secure MCP connector—built for SEO, AEO, and GEO workflows.">
+    <meta property="og:image" content="https://www.sellonllm.com/images/logo.png">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="GA4 + GSC MCP for Claude | SellOnLLM">
+    <meta name="twitter:description" content="Connect analytics and Search Console to Claude for AI-native SEO and AEO analysis.">
+    <meta name="twitter:image" content="https://www.sellonllm.com/images/logo.png">
+
+    <link rel="icon" type="image/png" href="images/logo.png">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .mcp-seo-block { margin-bottom: 2.5rem; }
+        .mcp-seo-block h2 { font-size: 1.5rem; text-align: left; margin-bottom: 0.75rem; }
+        .mcp-seo-block h3 { font-size: 1.1rem; text-align: left; margin: 1.25rem 0 0.5rem; color: var(--text-primary); }
+        .mcp-seo-block p, .mcp-seo-block li { color: var(--text-secondary); line-height: 1.75; }
+        .mcp-seo-block ul { padding-left: 1.25rem; margin: 0.75rem 0; }
+        .mcp-seo-block a { color: var(--primary-color, #6366f1); font-weight: 600; text-decoration: underline; }
+        .mcp-related { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+        .mcp-related a {
+            display: inline-block; padding: 8px 14px; background: #fff; border: 1px solid var(--border-color, #e2e8f0);
+            border-radius: 999px; font-size: 0.85rem; text-decoration: none; color: var(--text-primary); font-weight: 600;
+        }
+        .mcp-related a:hover { border-color: var(--primary-color, #6366f1); color: var(--primary-color, #6366f1); }
+        .mcp-faq-wrap { margin-top: 0.5rem; }
+        .mcp-faq-wrap > h2 { font-size: 1.5rem; text-align: left; margin-bottom: 1rem; }
+        .mcp-faq details { background: #fff; border: 1px solid var(--border-color, #e2e8f0); border-radius: var(--radius-md, 12px); margin-bottom: 10px; overflow: hidden; }
+        .mcp-faq summary { cursor: pointer; font-weight: 600; font-size: 0.95rem; color: var(--text-primary); padding: 14px 18px; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+        .mcp-faq summary::-webkit-details-marker { display: none; }
+        .mcp-faq summary::after { content: '+'; font-weight: 800; color: var(--primary-color, #6366f1); font-size: 1.1rem; flex-shrink: 0; }
+        .mcp-faq details[open] summary::after { content: '\2212'; }
+        .mcp-faq .mcp-faq-body { padding: 0 18px 16px; font-size: 0.9rem; color: var(--text-secondary); line-height: 1.65; border-top: 1px solid var(--border-color, #e2e8f0); padding-top: 12px; }
+        .mcp-status-live { margin-top: 1rem; padding: 0.75rem 1rem; background: #ecfdf5; border: 1px solid #a7f3d0; border-radius: var(--radius-md); color: #065f46; font-weight: 600; display: inline-block; }
+        .mcp-connect-steps { margin-top: 1rem; padding: 0; list-style: none; counter-reset: mcpstep; }
+        .mcp-connect-steps li { position: relative; padding-left: 2.5rem; margin-bottom: 1rem; color: var(--text-secondary); line-height: 1.65; }
+        .mcp-connect-steps li::before { counter-increment: mcpstep; content: counter(mcpstep); position: absolute; left: 0; top: 0; width: 1.75rem; height: 1.75rem; border-radius: 50%; background: var(--primary-color, #6366f1); color: #fff; font-size: 0.85rem; font-weight: 800; display: flex; align-items: center; justify-content: center; }
+        .mcp-url-box { margin-top: 1rem; padding: 1rem 1.25rem; background: #fff; border: 1px solid var(--border-color, #e2e8f0); border-radius: var(--radius-md, 12px); display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+        .mcp-url-box input { flex: 1; min-width: 200px; font-family: ui-monospace, monospace; font-size: 0.9rem; padding: 10px 12px; border: 1px solid var(--border-color, #e2e8f0); border-radius: 8px; color: var(--text-primary); background: #f8fafc; }
+        .mcp-url-box button { padding: 10px 18px; border-radius: 8px; border: none; background: var(--primary-color, #6366f1); color: #fff; font-weight: 600; font-size: 0.9rem; cursor: pointer; }
+        .mcp-url-box button:hover { filter: brightness(0.95); }
+        .mcp-fineprint { margin-top: 1rem; font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6; }
+    </style>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "Google Analytics and Search Console MCP for Claude",
+      "url": "https://www.sellonllm.com/google-analytics-mcp-claude.html",
+      "description": "Connect GA4 and Google Search Console to Claude.ai: add SellOnLLM from Claude Settings → Connectors → Add custom connector with the MCP server URL. Available now.",
+      "isPartOf": { "@type": "WebSite", "name": "SellOnLLM", "url": "https://www.sellonllm.com" }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How do I connect SellOnLLM to Claude?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "In Claude.ai open Settings then Connectors. Click the plus icon next to Connectors and choose Add custom connector. Paste the server URL https://www.sellonllm.com/api/mcp and connect. Sign in with Google when prompted and allow Analytics and Search Console read access. Claude discovers OAuth automatically; you do not need to paste any other URLs."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does Claude call Google Analytics or Search Console directly?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Claude calls SellOnLLM MCP tools over HTTPS. Our backend uses your OAuth tokens to query Google’s APIs and returns aggregated results to the model."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What Google OAuth scopes are required?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The connector uses read-only Google Analytics and Google Search Console scopes so Claude can answer with metrics and queries without write access to your properties."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is the MCP connector the same as the web GA + GSC AI SEO chat?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "They read the same Google accounts but integrate differently: the web chat uses your LLM API key through SellOnLLM’s chat API, while MCP exposes tools to Claude.ai with OAuth for the MCP client."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the SellOnLLM MCP server URL?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Use https://www.sellonllm.com/api/mcp as the only URL when adding a custom connector in Claude. Advanced integrations can read OAuth metadata from https://www.sellonllm.com/.well-known/oauth-protected-resource and https://www.sellonllm.com/.well-known/oauth-authorization-server."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can agencies use this for client Google accounts?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Each user signs in with Google and selects the GA4 property and verified Search Console site they can access. Agencies should follow their own client consent and access policies; the product does not bypass Google’s permission model."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does SellOnLLM train machine learning models on my analytics data?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "We use your data to fulfill requests to the product and to operate security and reliability. See the privacy policy for how retention and subprocessors are described; we do not use your GA or GSC exports to fine-tune public foundation models."
+          }
+        }
+      ]
+    }
+    </script>
+</head>
+<body>
+    <header class="header" id="header">
+        <nav class="nav container">
+            <a href="/" class="nav__logo">
+                <img src="images/logo.png" alt="SellOnLLM" class="logo__icon" width="32" height="32">
+                <span class="logo-text">Sell<span class="logo-highlight">On</span>LLM</span>
+            </a>
+            <div class="nav__menu" id="nav-menu">
+                <ul class="nav__list">
+                    <li class="nav__item"><a href="/chat-with-google-analytics.html" class="nav__link">GA + GSC AI SEO</a></li>
+                    <li class="nav__item"><a href="/google-analytics-mcp-claude.html" class="nav__link active">GA + GSC MCP (Claude)</a></li>
+                    <li class="nav__item"><a href="/index.html#shopify" class="nav__link">Shopify App</a></li>
+                </ul>
+                <div class="nav__close" id="nav-close">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </div>
+            </div>
+            <div class="nav__btns">
+                <a href="/chat-with-google-analytics.html" class="button button--ghost">Web: Chat with GA</a>
+                <a href="https://apps.shopify.com/llm-analytics" target="_blank" rel="noopener noreferrer" class="button button--primary">Shopify App</a>
+                <div class="nav__toggle" id="nav-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="section" style="padding-top: 7rem; padding-bottom: 3rem;">
+            <div class="container" style="max-width: 820px;">
+                <span class="section__subtitle">Model Context Protocol · Claude</span>
+                <h1 class="section__title" style="text-align: left;">Google Analytics &amp; Search Console MCP for <span class="gradient-text">Claude</span></h1>
+                <p class="section__description" style="text-align: left; max-width: none;">
+                    Behind every strong <strong>AEO</strong> (answer-engine optimization) and <strong>GEO</strong> (generative-engine optimization) strategy is <strong>technical SEO you can trust</strong>—crawl coverage, queries, CTR, and real traffic—not guesses.
+                    This connector lets Claude read your GA4 and GSC data through a secure remote MCP server so you can plan fixes where they matter.
+                </p>
+                <p class="mcp-status-live">Status: <strong>Available now</strong> — add the connector in Claude and sign in with Google to use GA4 and Search Console tools in chat.</p>
+            </div>
+        </section>
+
+        <section class="section" style="background: var(--bg-secondary); padding-top: 3rem; padding-bottom: 4rem;">
+            <div class="container" style="max-width: 900px;">
+                <h2 class="section__title" style="font-size: 1.75rem; text-align: left;">Why MCP + Claude for SEO &amp; AEO?</h2>
+                <ul style="margin-top: 1.25rem; padding-left: 1.25rem; color: var(--text-secondary); line-height: 1.75;">
+                    <li style="margin-bottom: 0.75rem;"><strong>Grounded answers</strong> — Tools return aggregated GA4 and Search Console metrics so Claude’s recommendations cite your properties, not generic blog advice.</li>
+                    <li style="margin-bottom: 0.75rem;"><strong>GEO-ready workflows</strong> — Compare periods, spot CTR gaps, and prioritize pages losing impressions before you rewrite content for AI surfaces.</li>
+                    <li style="margin-bottom: 0.75rem;"><strong>No spreadsheet export loop</strong> — OAuth once; refresh tokens stay encrypted on SellOnLLM’s side per security best practices.</li>
+                </ul>
+
+                <h2 class="section__title" style="font-size: 1.5rem; margin-top: 2.5rem; text-align: left;">Connect in Claude (three clicks + paste)</h2>
+                <p class="section__description" style="text-align: left; max-width: none; margin-top: 0.75rem;">
+                    You only paste <strong>one</strong> address into Claude. You do <strong>not</strong> need to configure OAuth URLs by hand—Claude reads our public discovery files automatically after you connect.
+                </p>
+                <ol class="mcp-connect-steps">
+                    <li>Open <a href="https://claude.ai" target="_blank" rel="noopener noreferrer">claude.ai</a> → <strong>Settings</strong> (gear) → <strong>Connectors</strong>.</li>
+                    <li>Click the <strong>+</strong> next to “Connectors” → <strong>Add custom connector</strong>.</li>
+                    <li>Paste the server URL below → <strong>Connect</strong> → sign in with Google and approve read-only Analytics + Search Console when asked.</li>
+                </ol>
+                <div class="mcp-url-box">
+                    <input id="mcp-server-url" type="text" readonly value="https://www.sellonllm.com/api/mcp" aria-label="MCP server URL for Claude custom connector">
+                    <button type="button" id="mcp-copy-url">Copy URL</button>
+                </div>
+                <p class="mcp-fineprint">Team or Enterprise? Use the same path under <strong>Organization settings → Connectors</strong> if your admin enabled custom connectors. After connecting, ask Claude for SEO help—it will call tools such as listing your GA4 properties and Search Console sites first.</p>
+
+                <h2 class="section__title" style="font-size: 1.5rem; margin-top: 2rem; text-align: left;">Also on SellOnLLM</h2>
+                <p class="section__description" style="text-align: left; max-width: none;">
+                    <a href="/chat-with-google-analytics.html" class="nav__link" style="display: inline; font-weight: 600;">Chat with GA + GSC in the browser</a> — same Google connection, with your own Claude or OpenAI API key for immediate SEO fix lists.
+                </p>
+            </div>
+        </section>
+
+        <section class="section" style="padding-top: 2rem; padding-bottom: 3rem;">
+            <div class="container" style="max-width: 900px;">
+                <div class="mcp-seo-block" id="what-is-mcp">
+                    <h2 class="section__title" style="font-size: 1.75rem; text-align: left;">What is MCP in plain language?</h2>
+                    <p><strong>Model Context Protocol (MCP)</strong> is an open pattern for connecting an AI assistant to trusted tools and data sources over HTTPS. Instead of pasting screenshots or CSV exports into Claude, the model can call <strong>structured tools</strong> (for example, “pull GA4 sessions by landing page” or “top queries with falling CTR”) and reason on the returned numbers. That keeps answers closer to your <abbr title="Google Analytics 4">GA4</abbr> property and verified <abbr title="Google Search Console">GSC</abbr> site—exactly where technical SEO, <abbr title="Answer engine optimization">AEO</abbr>, and <abbr title="Generative engine optimization">GEO</abbr> work should be grounded.</p>
+                </div>
+
+                <div class="mcp-seo-block" id="mcp-vs-web">
+                    <h2 class="section__title" style="font-size: 1.5rem; text-align: left;">When to use MCP in Claude vs the web chat</h2>
+                    <p>Use <a href="/chat-with-google-analytics.html">GA + GSC AI SEO in the browser</a> when you want a guided UI, preset prompts, and your own LLM API key in one place. Use <strong>this MCP connector</strong> when your team already lives in <strong>Claude.ai</strong> (projects, shared threads, connectors) and you want the same Google signals exposed as <strong>first-class tools</strong> the model can invoke mid-conversation. Both paths are read-only toward Google; they differ in <strong>where the LLM runs</strong> and <strong>how auth is wired</strong> (API key chat vs OAuth for the MCP client).</p>
+                </div>
+
+                <div class="mcp-seo-block" id="oauth-security">
+                    <h2 class="section__title" style="font-size: 1.5rem; text-align: left;">OAuth, tokens, and what stays on your side</h2>
+                    <p>SellOnLLM’s MCP server is an <strong>OAuth 2.1–style protected resource</strong>: Claude obtains an access token through the documented authorization server metadata, then presents it when calling tools. We store <strong>encrypted refresh tokens</strong> so sessions can update without you re-exporting data. Scopes are <strong>read-only</strong> for Analytics and Search Console—no write access to change tags, remove URLs, or edit property settings from this product surface.</p>
+                    <h3>Security practices teams ask about</h3>
+                    <ul>
+                        <li>Google sign-in handles passwords; we never see your Google password.</li>
+                        <li>Tool responses are aggregated for the model; treat Claude outputs as <strong>draft analysis</strong> and verify in-product before large site changes.</li>
+                        <li>Revoke access anytime from your Google account’s third-party app permissions.</li>
+                    </ul>
+                </div>
+
+                <div class="mcp-seo-block" id="example-workflows">
+                    <h2 class="section__title" style="font-size: 1.5rem; text-align: left;">Example SEO and AEO workflows in Claude</h2>
+                    <p>Once the connector shows as connected, strong prompts combine <strong>Search Console queries and CTR</strong> with <strong>GA4 landing-page behavior</strong>. For example: prioritize URLs where impressions are flat but CTR dropped; find landing pages with traffic but weak engagement; compare mobile vs desktop query mix after a template change; or summarize week-over-week deltas before you brief content or engineering. Those are the same investigations that improve classic rankings <em>and</em> the pages AI systems are more likely to cite.</p>
+                </div>
+
+                <div class="mcp-seo-block" id="related-tools">
+                    <h2 class="section__title" style="font-size: 1.5rem; text-align: left;">Related SellOnLLM tools</h2>
+                    <p>Pair MCP-grounded analysis with site-wide checks, LLM-facing hints, and Shopify AI traffic when you run commerce.</p>
+                    <div class="mcp-related">
+                        <a href="/chat-with-google-analytics.html">GA + GSC AI SEO (web)</a>
+                        <a href="/free-llm-audit.html">Free LLM audit</a>
+                        <a href="/llm-txt-generator.html">LLM.txt generator</a>
+                        <a href="/chrome-extension.html">Chrome extension</a>
+                        <a href="/blog/">Blog</a>
+                    </div>
+                </div>
+
+                <div class="mcp-faq-wrap" id="mcp-faq" aria-labelledby="mcp-faq-heading">
+                    <h2 class="section__title" id="mcp-faq-heading" style="font-size: 1.75rem; text-align: left;">Frequently asked questions</h2>
+                    <div class="mcp-faq">
+                        <details>
+                            <summary>How do I add SellOnLLM in Claude?</summary>
+                            <div class="mcp-faq-body">Go to <strong>Settings → Connectors</strong>, click the <strong>+</strong> beside “Connectors”, choose <strong>Add custom connector</strong>, and paste <code style="background: #e2e8f0; padding: 0.15rem 0.4rem; border-radius: 4px;">https://www.sellonllm.com/api/mcp</code>. Click Connect, then complete Google sign-in and allow read-only Analytics and Search Console. You do not need to paste any <code>/.well-known/</code> URLs—Claude picks those up automatically.</div>
+                        </details>
+                        <details>
+                            <summary>Does Claude call Google Analytics or Search Console directly?</summary>
+                            <div class="mcp-faq-body">No. Claude calls SellOnLLM over HTTPS. Our backend uses your OAuth tokens to query Google’s APIs and returns aggregated tool results to the model.</div>
+                        </details>
+                        <details>
+                            <summary>What Google OAuth scopes are required?</summary>
+                            <div class="mcp-faq-body">Read-only scopes for Google Analytics and Google Search Console so the connector can list properties and sites and return metrics and queries—without permission to change your Analytics or Search Console configuration.</div>
+                        </details>
+                        <details>
+                            <summary>Is the MCP connector the same as the web GA + GSC AI SEO chat?</summary>
+                            <div class="mcp-faq-body">Same Google accounts and read-only posture; different integration. The <a href="/chat-with-google-analytics.html">web chat</a> uses your LLM provider API key through our chat API. MCP exposes tools to Claude.ai with OAuth for the MCP client.</div>
+                        </details>
+                        <details>
+                            <summary>What is the MCP server URL (for power users)?</summary>
+                            <div class="mcp-faq-body">Use <code style="background: #e2e8f0; padding: 0.15rem 0.4rem; border-radius: 4px;">https://www.sellonllm.com/api/mcp</code> only. OAuth discovery for custom clients lives at <code style="background: #e2e8f0; padding: 0.15rem 0.4rem; border-radius: 4px;">https://www.sellonllm.com/.well-known/oauth-protected-resource</code> and <code style="background: #e2e8f0; padding: 0.15rem 0.4rem; border-radius: 4px;">https://www.sellonllm.com/.well-known/oauth-authorization-server</code>—you normally never paste those into Claude.</div>
+                        </details>
+                        <details>
+                            <summary>Can agencies use this for client Google accounts?</summary>
+                            <div class="mcp-faq-body">Each user authenticates with Google and can only select GA4 properties and Search Console sites their Google identity can access. Use your agency’s normal client consent and least-privilege practices; the product does not bypass Google’s permission model.</div>
+                        </details>
+                        <details>
+                            <summary>Does SellOnLLM train machine learning models on my analytics data?</summary>
+                            <div class="mcp-faq-body">We process data to run the product and for security and reliability. For retention, subprocessors, and legal terms, see our <a href="/privacy-policy.html">privacy policy</a>. We do not use your GA or GSC data to fine-tune public foundation models.</div>
+                        </details>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer" id="contact">
+        <div class="container">
+            <div class="footer__content">
+                <div class="footer__section">
+                    <a href="/" class="footer__logo">
+                        <img src="images/logo.png" alt="SellOnLLM" class="logo__icon" width="40" height="40" loading="lazy">
+                        <span class="logo-text">Sell<span class="logo-highlight">On</span>LLM</span>
+                    </a>
+                    <p class="footer__description">SEO-first tools for AEO and GEO: fix what’s broken in Google Search Console and Analytics, then win on AI surfaces.</p>
+                    <div class="footer__social">
+                        <a href="https://twitter.com/sellonllm" class="footer__social-link" aria-label="Twitter"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg></a>
+                        <a href="https://linkedin.com/company/sellonllm" class="footer__social-link" aria-label="LinkedIn"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></a>
+                    </div>
+                </div>
+                <div class="footer__section">
+                    <h4 class="footer__title">Product</h4>
+                    <ul class="footer__list">
+                        <li><a href="/chat-with-google-analytics.html">GA + GSC AI SEO (web)</a></li>
+                        <li><a href="/google-analytics-mcp-claude.html">GA + GSC MCP (Claude)</a></li>
+                        <li><a href="/index.html#shopify">Shopify App</a></li>
+                        <li><a href="/free-llm-audit.html">Free LLM Audit</a></li>
+                        <li><a href="/llm-txt-generator.html">LLM.txt Generator</a></li>
+                        <li><a href="/chrome-extension.html">Chrome Extension</a></li>
+                    </ul>
+                </div>
+                <div class="footer__section">
+                    <h4 class="footer__title">Learn</h4>
+                    <ul class="footer__list">
+                        <li><a href="/blog/">Blog</a></li>
+                        <li><a href="/videos.html">Videos</a></li>
+                        <li><a href="/index.html#faq">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer__section">
+                    <h4 class="footer__title">Company &amp; legal</h4>
+                    <ul class="footer__list">
+                        <li><a href="/about-us.html">About Us</a></li>
+                        <li><a href="/contact-us.html">Contact Us</a></li>
+                        <li><a href="/privacy-policy.html">Privacy Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer__bottom">
+                <p class="footer__copy">&copy; 2026 SellOnLLM. All rights reserved.</p>
+                <div class="footer__badges"><span class="footer__badge">SEO · AEO · GEO</span></div>
+            </div>
+        </div>
+    </footer>
+    <script src="js/script.js"></script>
+    <script>
+    (function () {
+        var btn = document.getElementById('mcp-copy-url');
+        var input = document.getElementById('mcp-server-url');
+        if (!btn || !input) return;
+        btn.addEventListener('click', function () {
+            var url = input.value;
+            function done() { btn.textContent = 'Copied!'; setTimeout(function () { btn.textContent = 'Copy URL'; }, 2000); }
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(url).then(done).catch(function () { input.select(); try { document.execCommand('copy'); done(); } catch (e) {} });
+            } else { input.select(); try { document.execCommand('copy'); done(); } catch (e) {} }
+        });
+    })();
+    </script>
+</body>
+</html>

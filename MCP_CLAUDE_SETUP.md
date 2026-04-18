@@ -41,16 +41,16 @@ This turns SellOnLLM into a **remote MCP server** that users can add to claude.a
 
 You already did these when setting up *Chat with GA*:
 - Google Cloud project with Analytics Admin API, Analytics Data API, and Search Console API enabled
-- OAuth 2.0 Web client with redirect URI `https://sellonllm.com/api/auth/google/callback`
+- OAuth 2.0 Web client with redirect URI `https://www.sellonllm.com/api/auth/google/callback` (add the apex `https://sellonllm.com/api/auth/google/callback` too if you redirect both hosts)
 - Vercel env vars: `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `GOOGLE_REDIRECT_URI`, `JWT_SECRET`, `ENCRYPTION_KEY`, `DATABASE_URL`
 
 ### New env var you should add (optional but recommended)
 
 | Key | Value |
 |---|---|
-| `PUBLIC_BASE_URL` | `https://sellonllm.com` |
+| `PUBLIC_BASE_URL` | `https://www.sellonllm.com` |
 
-If omitted, the code defaults to `https://sellonllm.com`. Set it if you're deploying to a different domain or a preview URL.
+Set this to the **exact origin** users hit (production is **www**). If omitted, the Node fallback is `https://sellonllm.com` (apex only)—always set `PUBLIC_BASE_URL` on Vercel so `/.well-known` metadata and JWT issuers match **www**. Use a preview URL here when testing preview deployments.
 
 ---
 
@@ -61,16 +61,16 @@ Commit and push — Vercel deploys automatically. On first request, three new ta
 Verify the two discovery endpoints return 200 JSON:
 
 ```bash
-curl -s https://sellonllm.com/.well-known/oauth-protected-resource | jq
-curl -s https://sellonllm.com/.well-known/oauth-authorization-server | jq
+curl -s https://www.sellonllm.com/.well-known/oauth-protected-resource | jq
+curl -s https://www.sellonllm.com/.well-known/oauth-authorization-server | jq
 ```
 
 And that the MCP endpoint returns 401 + `WWW-Authenticate` when unauthenticated:
 
 ```bash
-curl -i https://sellonllm.com/api/mcp
+curl -i https://www.sellonllm.com/api/mcp
 # Expect:  HTTP/2 401
-#          www-authenticate: Bearer realm="MCP", resource_metadata="https://sellonllm.com/.well-known/oauth-protected-resource"
+#          www-authenticate: Bearer realm="MCP", resource_metadata="https://www.sellonllm.com/.well-known/oauth-protected-resource"
 ```
 
 ---
@@ -79,9 +79,9 @@ curl -i https://sellonllm.com/api/mcp
 
 1. Go to **claude.ai** → **Settings → Connectors** (Team/Enterprise users: **Organization settings → Connectors**).
 2. Click **Add custom connector**.
-3. **Server URL:** `https://sellonllm.com/api/mcp`
+3. **Server URL:** `https://www.sellonllm.com/api/mcp`
 4. Click **Connect**.
-5. Claude opens a browser tab on sellonllm.com asking you to sign in with Google (if you haven't already).
+5. Claude opens a browser tab on **www.sellonllm.com** asking you to sign in with Google (if you haven't already).
 6. Sign in → grant Analytics + Search Console read-only.
 7. On the consent screen click **Allow**.
 8. The tab closes automatically and Claude says **Connected**.
@@ -107,7 +107,7 @@ Claude should call `list_ga4_properties` and `list_search_console_sites` on its 
 npx @modelcontextprotocol/inspector
 ```
 
-Enter `https://sellonllm.com/api/mcp` as the server URL, choose **Streamable HTTP**, and walk through the OAuth flow. You'll see every JSON-RPC call and response.
+Enter `https://www.sellonllm.com/api/mcp` as the server URL, choose **Streamable HTTP**, and walk through the OAuth flow. You'll see every JSON-RPC call and response.
 
 ### Using `mcp-remote` locally for dev
 
@@ -117,7 +117,7 @@ Enter `https://sellonllm.com/api/mcp` as the server URL, choose **Streamable HTT
   "mcpServers": {
     "sellonllm": {
       "command": "npx",
-      "args": ["mcp-remote", "https://sellonllm.com/api/mcp"]
+      "args": ["mcp-remote", "https://www.sellonllm.com/api/mcp"]
     }
   }
 }
@@ -130,7 +130,7 @@ Enter `https://sellonllm.com/api/mcp` as the server URL, choose **Streamable HTT
 ```
 ┌────────────────────┐  1. GET /api/mcp (no auth)
 │                    │ ─────────────────────────────▶ ┌──────────────────────┐
-│   claude.ai        │ ◀───── 401 + WWW-Authenticate   │  sellonllm.com        │
+│   claude.ai        │ ◀───── 401 + WWW-Authenticate   │  www.sellonllm.com    │
 │                    │                                 │                       │
 │                    │  2. GET /.well-known/...        │  Serves metadata      │
 │                    │ ─────────────────────────────▶ │                       │
@@ -189,7 +189,7 @@ Short user-facing message you can post on the site or email:
 > **SellOnLLM Analytics now plugs directly into Claude.**
 >
 > 1. Open claude.ai → Settings → Connectors → Add custom connector.
-> 2. Paste `https://sellonllm.com/api/mcp`.
+> 2. Paste `https://www.sellonllm.com/api/mcp`.
 > 3. Sign in with Google, click Allow.
 >
 > Now you can ask Claude things like *"what are my biggest SEO opportunities this month?"* and it will read your real Analytics + Search Console data to answer.

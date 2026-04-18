@@ -5,24 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>Chat with your Google Analytics & Search Console | AI SEO Recommendations | SellOnLLM</title>
-    <meta name="title" content="Chat with Google Analytics & Search Console | AI SEO Recommendations">
-    <meta name="description" content="Connect Google Analytics and Search Console in one click, plug in your Claude or ChatGPT API key, and get clear, prioritized SEO recommendations grounded in your own data.">
-    <meta name="keywords" content="chat with google analytics, AI SEO recommendations, GA4 insights, GSC analysis, ChatGPT SEO, Claude SEO, analytics chatbot, SEO AI assistant">
+    <title>Chat with GA4 &amp; Google Search Console for SEO Fixes | AEO &amp; GEO Data | SellOnLLM</title>
+    <meta name="title" content="GA4 + Search Console AI SEO chat | SellOnLLM">
+    <meta name="description" content="Sign in with Google, connect GA4 and Search Console (read-only), add your Claude or ChatGPT API key, and get prioritized technical &amp; content SEO fixes grounded in queries, CTR, landing pages, and trends—ideal prep for AEO and GEO programs.">
+    <meta name="keywords" content="GA4 SEO, Search Console SEO, chat with Google Analytics, AEO data, GEO SEO, Claude SEO, ChatGPT SEO assistant, GSC CTR analysis, sellonllm">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://sellonllm.com/chat-with-google-analytics.html">
 
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://sellonllm.com/chat-with-google-analytics.html">
     <meta property="og:site_name" content="SellOnLLM">
-    <meta property="og:title" content="Chat with Google Analytics & Search Console | AI SEO">
-    <meta property="og:description" content="Connect GA4 + GSC, bring your own LLM key, get prioritized SEO fixes grounded in your own data.">
+    <meta property="og:title" content="GA4 + Search Console AI SEO chat | SellOnLLM">
+    <meta property="og:description" content="BYOK Claude or ChatGPT: turn GA4 and GSC metrics into an actionable SEO backlog.">
     <meta property="og:image" content="https://sellonllm.com/images/logo.png">
 
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://sellonllm.com/chat-with-google-analytics.html">
-    <meta name="twitter:title" content="Chat with Google Analytics & Search Console | AI SEO">
-    <meta name="twitter:description" content="Connect GA4 + GSC, bring your own LLM key, get prioritized SEO fixes.">
+    <meta name="twitter:title" content="GA4 + GSC AI SEO chat | SellOnLLM">
+    <meta name="twitter:description" content="Measure SEO issues with your own Analytics and Search Console data.">
     <meta name="twitter:image" content="https://sellonllm.com/images/logo.png">
 
     <link rel="icon" type="image/png" href="images/logo.png">
@@ -35,9 +35,73 @@
     {
       "@context": "https://schema.org",
       "@type": "WebPage",
-      "name": "Chat with Google Analytics & Search Console",
+      "name": "GA4 and Google Search Console AI SEO chat",
       "url": "https://sellonllm.com/chat-with-google-analytics.html",
-      "description": "A conversational SEO assistant that connects to your GA4 + Search Console data and uses your own LLM key (Claude or ChatGPT) to produce prioritized SEO recommendations."
+      "description": "AI SEO assistant that reads GA4 and Google Search Console via OAuth and uses your Claude or OpenAI key to recommend technical and content fixes for stronger AEO and GEO outcomes."
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What Google permissions does SellOnLLM request?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "We use OAuth with read-only scopes for Google Analytics and Google Search Console so the app can aggregate metrics and queries to answer your SEO questions. We do not request write access to your properties."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do you store my Google password?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Google handles sign-in. We store an encrypted refresh token so we can fetch updated GA4 and Search Console data on your behalf until you disconnect."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I use Claude or ChatGPT for the analysis?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. You bring your own Anthropic or OpenAI API key. Our servers call that provider with your question plus aggregated data from your selected GA4 property and Search Console site."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How is this different from Looker Studio or the GA4 interface?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Those tools are great for exploration, but they do not turn charts into a prioritized backlog by themselves. This product pairs your live GA4 and GSC signals with an LLM so you get narrative explanations, hypotheses, and next steps in one flow."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is this the same as the GA4 and Search Console MCP for Claude?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The web chat uses your API key in the browser flow via our backend. The MCP connector is for Claude.ai custom connectors and uses OAuth tokens issued for the MCP client. Both read the same Google sources with different integration styles."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does chatting with GA4 and GSC help AEO or GEO?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Answer-engine and generative placements still reward pages that earn impressions, clicks, and engagement in classic search. By surfacing query/CTR gaps, landing-page declines, and device or geography splits, you fix crawl and relevance issues that also affect whether AI systems cite you."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What if I only have GA4 or only Search Console?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "You can still connect whichever product you have access to. The assistant will highlight missing signals—for example, without Search Console you lose query-level context—so recommendations stay appropriately scoped."
+          }
+        }
+      ]
     }
     </script>
 
@@ -196,6 +260,28 @@
         .cv-badge { display: inline-block; font-size: 0.68rem; padding: 2px 8px; border-radius: 999px; background: #dcfce7; color: #166534; font-weight: 600; margin-left: 6px; }
         .cv-badge.off { background: #fee2e2; color: #991b1b; }
 
+        .cv-seo-below { margin-top: 48px; padding-top: 40px; border-top: 1px solid var(--cv-border); }
+        .cv-seo-block { margin-bottom: 2.5rem; }
+        .cv-seo-block h2 { font-size: 1.35rem; font-weight: 800; color: var(--cv-text); margin-bottom: 12px; letter-spacing: -0.02em; }
+        .cv-seo-block h3 { font-size: 1.05rem; font-weight: 700; color: var(--cv-text); margin: 1.25rem 0 8px; }
+        .cv-seo-block p, .cv-seo-block li { font-size: 0.95rem; color: var(--cv-muted); line-height: 1.7; }
+        .cv-seo-block ul { padding-left: 1.25rem; margin: 10px 0; }
+        .cv-seo-block a { color: var(--cv-primary); font-weight: 600; text-decoration: underline; }
+        .cv-seo-block .cv-related { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+        .cv-seo-block .cv-related a {
+            display: inline-block; padding: 8px 14px; background: #fff; border: 1px solid var(--cv-border);
+            border-radius: 999px; font-size: 0.85rem; text-decoration: none; color: var(--cv-text); font-weight: 600;
+        }
+        .cv-seo-block .cv-related a:hover { border-color: var(--cv-primary); color: var(--cv-primary); }
+        .cv-faq-wrap { margin-top: 0.5rem; }
+        .cv-faq-wrap > h2 { font-size: 1.35rem; font-weight: 800; margin-bottom: 16px; color: var(--cv-text); }
+        .cv-faq details { background: #fff; border: 1px solid var(--cv-border); border-radius: 12px; margin-bottom: 10px; overflow: hidden; }
+        .cv-faq summary { cursor: pointer; font-weight: 600; font-size: 0.92rem; color: var(--cv-text); padding: 14px 18px; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+        .cv-faq summary::-webkit-details-marker { display: none; }
+        .cv-faq summary::after { content: '+'; font-weight: 800; color: var(--cv-primary); font-size: 1.1rem; flex-shrink: 0; }
+        .cv-faq details[open] summary::after { content: '\2212'; }
+        .cv-faq .cv-faq-body { padding: 0 18px 16px; font-size: 0.9rem; color: var(--cv-muted); line-height: 1.65; border-top: 1px solid var(--cv-border); padding-top: 12px; }
+
         @media (max-width: 900px) {
             .cv-app { grid-template-columns: 1fr; }
             .cv-feature-grid { grid-template-columns: 1fr; }
@@ -212,16 +298,20 @@
             </a>
             <div class="nav__menu" id="nav-menu">
                 <ul class="nav__list">
-                    <li class="nav__item"><a href="/index.html#features" class="nav__link">Features</a></li>
+                    <li class="nav__item"><a href="/chat-with-google-analytics.html" class="nav__link active">GA + GSC AI SEO</a></li>
+                    <li class="nav__item"><a href="/google-analytics-mcp-claude.html" class="nav__link">GA + GSC MCP (Claude)</a></li>
                     <li class="nav__item"><a href="/index.html#shopify" class="nav__link">Shopify App</a></li>
-                    <li class="nav__item"><a href="/blog/" class="nav__link">Blog</a></li>
-                    <li class="nav__item"><a href="/chrome-extension.html" class="nav__link">Chrome Extension</a></li>
-                    <li class="nav__item"><a href="/free-llm-audit.html" class="nav__link">Free LLM Audit</a></li>
-                    <li class="nav__item"><a href="/chat-with-google-analytics.html" class="nav__link active">Chat with GA</a></li>
                 </ul>
+                <div class="nav__close" id="nav-close">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </div>
             </div>
             <div class="nav__btns">
-                <a href="https://apps.shopify.com/llm-analytics" target="_blank" rel="noopener noreferrer" class="button button--primary">Try Shopify App</a>
+                <a href="/google-analytics-mcp-claude.html" class="button button--ghost">MCP (Claude)</a>
+                <a href="https://apps.shopify.com/llm-analytics" target="_blank" rel="noopener noreferrer" class="button button--primary">Shopify App</a>
+                <div class="nav__toggle" id="nav-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                </div>
             </div>
         </nav>
     </header>
@@ -230,8 +320,8 @@
         <div class="cv-container">
 
             <section class="cv-hero">
-                <h1>Chat with your <span>Google Analytics &amp; Search Console</span></h1>
-                <p>Connect in one click, bring your own Claude or ChatGPT key, and get clear, prioritized SEO recommendations grounded in your real data.</p>
+                <h1>Turn <span>GA4 &amp; Search Console</span> into an SEO fix list</h1>
+                <p>Know what is broken and how to fix it: connect Google (read-only), pick your property and verified site, add your Claude or ChatGPT API key, and get prioritized technical and content SEO guidance grounded in queries, CTR, and traffic—not generic AI guesses.</p>
             </section>
 
             <div id="cv-auth-error" class="cv-status err" style="text-align:center;margin-bottom:16px;"></div>
@@ -341,6 +431,67 @@
             </section>
 
         </div>
+
+        <div class="cv-container cv-seo-below">
+            <section class="cv-seo-block" aria-labelledby="cv-seo-why-heading">
+                <h2 id="cv-seo-why-heading">Why pair Google Analytics 4 with Search Console for SEO?</h2>
+                <p>GA4 tells you <strong>what happens after the click</strong>—landing pages, engagement, conversions, and segments. Search Console tells you <strong>what happened before the click</strong>—queries, impressions, average position, and CTR. Together they explain whether a ranking problem is demand (impressions), relevance (CTR), or on-site experience (bounce, engagement, or conversion). That is the same signal stack strong <abbr title="Answer engine optimization">AEO</abbr> and <abbr title="Generative engine optimization">GEO</abbr> programs rely on: fix search fundamentals first, then invest in AI-surface experiments.</p>
+                <h3>Technical SEO signals you can explore in chat</h3>
+                <ul>
+                    <li>Queries losing impressions week over week (content decay or competition).</li>
+                    <li>High-impression, low-CTR pages (title/meta or intent mismatch).</li>
+                    <li>Landing pages with traffic but weak engagement (speed, UX, or content depth).</li>
+                    <li>Device or country splits that suggest crawl or hreflang issues worth validating.</li>
+                </ul>
+                <h3>From insights to a prioritized backlog</h3>
+                <p>Use preset prompts or your own questions to turn charts into a <strong>numbered fix list</strong>—what to change, why it matters for Google and for AI citations, and what to measure next. Your API key is only used to call your chosen model; prompts stay tied to the property and site you select.</p>
+            </section>
+
+            <section class="cv-seo-block" aria-labelledby="cv-seo-tools-heading">
+                <h2 id="cv-seo-tools-heading">More SellOnLLM tools for SEO, AEO, and GEO</h2>
+                <p>Layer this chat with other checks: crawl and schema health, LLM-facing hints, Shopify AI traffic when you run commerce, or the same data inside Claude via MCP when your team is ready.</p>
+                <div class="cv-related">
+                    <a href="/free-llm-audit.html">Free site-wide SEO &amp; LLM audit</a>
+                    <a href="/llm-txt-generator.html">LLM.txt generator</a>
+                    <a href="/google-analytics-mcp-claude.html">GA + GSC MCP for Claude</a>
+                    <a href="/chrome-extension.html">Chrome AEO/GEO extension</a>
+                </div>
+            </section>
+
+            <section class="cv-faq-wrap" aria-labelledby="cv-faq-heading">
+                <h2 id="cv-faq-heading">Frequently asked questions</h2>
+                <div class="cv-faq">
+                    <details>
+                        <summary>What Google permissions does SellOnLLM request?</summary>
+                        <div class="cv-faq-body">We use Google OAuth with <strong>read-only</strong> access to Google Analytics and Google Search Console so we can pull metrics, queries, and property lists. We do not ask for write access to your Analytics configuration or Search Console settings.</div>
+                    </details>
+                    <details>
+                        <summary>Do you store my Google password?</summary>
+                        <div class="cv-faq-body">No. Authentication happens with Google. We keep an <strong>encrypted refresh token</strong> so sessions can refresh data until you disconnect or revoke access from your Google account.</div>
+                    </details>
+                    <details>
+                        <summary>Can I use Claude or ChatGPT?</summary>
+                        <div class="cv-faq-body">Yes. Add an <strong>Anthropic</strong> or <strong>OpenAI</strong> API key in the sidebar. Our servers send your question plus aggregated GA4 and GSC context to that provider. You pay the LLM provider directly for usage.</div>
+                    </details>
+                    <details>
+                        <summary>How is this different from Looker Studio or the GA4 reports UI?</summary>
+                        <div class="cv-faq-body">Dashboards help you explore; this product is built to <strong>compress exploration into decisions</strong>—narrative, hypotheses, and prioritized actions grounded in the same numbers, with follow-up questions in natural language.</div>
+                    </details>
+                    <details>
+                        <summary>Is this the same as the GA4 and Search Console MCP for Claude?</summary>
+                        <div class="cv-faq-body">Same Google data sources, different integration: <strong>this page</strong> uses your LLM API key through our chat API. The <a href="/google-analytics-mcp-claude.html">MCP connector</a> lets Claude.ai call tools over the Model Context Protocol with OAuth tokens for the MCP client.</div>
+                    </details>
+                    <details>
+                        <summary>How does this help AEO or GEO?</summary>
+                        <div class="cv-faq-body">AI answers and generative results still lean on authoritative, crawlable pages with strong query performance. Fixing impressions, CTR, and on-page engagement improves the same pages models are likely to cite—so your <abbr title="Answer engine optimization">AEO</abbr> and <abbr title="Generative engine optimization">GEO</abbr> bets rest on measurable SEO, not vibes.</div>
+                    </details>
+                    <details>
+                        <summary>What if I only have GA4 or only Search Console?</summary>
+                        <div class="cv-faq-body">You get the most value when <strong>both</strong> are connected. You can still sign in and select whichever source you have; the assistant will call out blind spots (for example, missing query data without GSC) so you do not over-fit to partial signals.</div>
+                    </details>
+                </div>
+            </section>
+        </div>
     </main>
 
     <footer class="footer" id="contact">
@@ -351,33 +502,38 @@
                         <img src="images/logo.png" alt="SellOnLLM" class="logo__icon" width="40" height="40">
                         <span class="logo-text">Sell<span class="logo-highlight">On</span>LLM</span>
                     </a>
-                    <p class="footer__description">The leading platform for ranking and selling on AI platforms. Optimize your presence on ChatGPT, Claude, Perplexity, and more.</p>
+                    <p class="footer__description">SEO-first tools for AEO and GEO: measure GA4 and Search Console, fix technical issues, and scale AI-surface experiments.</p>
                 </div>
                 <div class="footer__section">
                     <h4 class="footer__title">Product</h4>
                     <ul class="footer__list">
-                        <li><a href="/index.html#features">Features</a></li>
+                        <li><a href="/chat-with-google-analytics.html">GA + GSC AI SEO</a></li>
+                        <li><a href="/google-analytics-mcp-claude.html">GA + GSC MCP (Claude)</a></li>
+                        <li><a href="/index.html#shopify">Shopify App</a></li>
                         <li><a href="/free-llm-audit.html">Free LLM Audit</a></li>
-                        <li><a href="/chat-with-google-analytics.html">Chat with GA</a></li>
-                        <li><a href="/blog/">Blog</a></li>
+                        <li><a href="/llm-txt-generator.html">LLM.txt Generator</a></li>
+                        <li><a href="/chrome-extension.html">Chrome Extension</a></li>
                     </ul>
                 </div>
                 <div class="footer__section">
-                    <h4 class="footer__title">Company</h4>
+                    <h4 class="footer__title">Learn</h4>
+                    <ul class="footer__list">
+                        <li><a href="/blog/">Blog</a></li>
+                        <li><a href="/videos.html">Videos</a></li>
+                        <li><a href="/index.html#faq">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer__section">
+                    <h4 class="footer__title">Company &amp; legal</h4>
                     <ul class="footer__list">
                         <li><a href="/about-us.html">About Us</a></li>
                         <li><a href="/contact-us.html">Contact Us</a></li>
-                    </ul>
-                </div>
-                <div class="footer__section">
-                    <h4 class="footer__title">Legal</h4>
-                    <ul class="footer__list">
                         <li><a href="/privacy-policy.html">Privacy Policy</a></li>
                     </ul>
                 </div>
             </div>
             <div class="footer__bottom">
-                <p class="footer__copy">&copy; 2025 SellOnLLM. All rights reserved.</p>
+                <p class="footer__copy">&copy; 2026 SellOnLLM. All rights reserved.</p>
             </div>
         </div>
     </footer>
@@ -625,5 +781,6 @@
         init();
     })();
     </script>
+    <script src="js/script.js"></script>
 </body>
 </html>

@@ -11,7 +11,11 @@ function getSecret() {
 }
 
 export function publicBase() {
-    return (process.env.PUBLIC_BASE_URL || 'https://sellonllm.com').replace(/\/+$/, '');
+    const b = (process.env.PUBLIC_BASE_URL || '').replace(/\/+$/, '');
+    if (!b) {
+        throw new Error('PUBLIC_BASE_URL must be set to your HTTPS origin (e.g. https://www.example.com)');
+    }
+    return b;
 }
 
 /**
