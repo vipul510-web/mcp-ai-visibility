@@ -13,4 +13,4 @@ The MCP implementation is under **`api/`** (see root [`README.md`](README.md) â€
 
 ## Issues
 
-Use GitHub Issues for bugs or doc gaps. Include: connector URL (`/api/mcp` vs `/api/mcp-ai-visibility`), client (Claude web, Desktop, Inspector), and what you expected vs what happened.
+Use **[GitHub Issues on mcp-ai-visibility](https://github.com/vipul510-web/mcp-ai-visibility/issues)** for bugs or doc gaps. Include: connector URL (`/api/mcp` vs `/api/mcp-ai-visibility`), client (Claude web, Desktop, Inspector), and what you expected vs what happened.

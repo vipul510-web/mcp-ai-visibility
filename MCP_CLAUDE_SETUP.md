@@ -9,6 +9,8 @@ They share the same Google sign-in and OAuth authorization server, but issue **d
 
 User-facing setup: [GA + GSC MCP](https://www.sellonllm.com/google-analytics-mcp-claude.html) and [AI visibility MCP](https://www.sellonllm.com/ai-visibility-mcp-claude.html).
 
+**GitHub (issues, community):** [github.com/vipul510-web/mcp-ai-visibility](https://github.com/vipul510-web/mcp-ai-visibility)
+
 ## What was added
 
 ### New endpoints

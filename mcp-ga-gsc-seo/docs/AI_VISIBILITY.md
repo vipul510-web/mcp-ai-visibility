@@ -2,6 +2,8 @@
 
 **Hosted endpoint:** `https://www.sellonllm.com/api/mcp-ai-visibility`  
 
+**GitHub:** [github.com/vipul510-web/mcp-ai-visibility](https://github.com/vipul510-web/mcp-ai-visibility) — source, issues, and community for this connector.
+
 This is a **separate** SellOnLLM MCP server from the [Analytics MCP](./TOOLS.md) (`/api/mcp`). Add it as a **second** custom connector in Claude if you also use GA4 + Search Console tools—or use it alone if you only need AEO / citation workflows.
 
 | Resource | Link |

@@ -11,4 +11,6 @@ SellOnLLM runs **two hosted** [Model Context Protocol](https://modelcontextproto
 
 **Operator / self-host notes:** see [`MCP_CLAUDE_SETUP.md`](../MCP_CLAUDE_SETUP.md) in this repository (endpoints, JWT audiences, env vars, curl checks).
 
-**Community docs & use cases:** [`mcp-ga-gsc-seo/README.md`](../mcp-ga-gsc-seo/README.md) and [`mcp-ga-gsc-seo/docs/`](../mcp-ga-gsc-seo/docs/) (prompts, security, troubleshooting, AI visibility deep dive).
+**GitHub repo:** [github.com/vipul510-web/mcp-ai-visibility](https://github.com/vipul510-web/mcp-ai-visibility) (issues and discoverability).
+
+**Community docs in this monorepo:** [`mcp-ga-gsc-seo/README.md`](../mcp-ga-gsc-seo/README.md) and [`mcp-ga-gsc-seo/docs/`](../mcp-ga-gsc-seo/docs/) (prompts, security, troubleshooting, AI visibility deep dive).
