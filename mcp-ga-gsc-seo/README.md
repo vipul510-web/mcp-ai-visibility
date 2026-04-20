@@ -8,7 +8,7 @@
 | **AI visibility** — AEO crawl + Perplexity citation tools | `https://www.sellonllm.com/api/mcp-ai-visibility` | [AI Visibility MCP for Claude](https://www.sellonllm.com/ai-visibility-mcp-claude.html) (includes **Perplexity API key** form) |
 | **Web chat** (BYOK to your LLM) | *(not MCP — uses API key in browser)* | [Chat with GA + GSC](https://www.sellonllm.com/chat-with-google-analytics.html) |
 
-This folder (`mcp-ga-gsc-seo/`) in the SellOnLLM monorepo is the **documentation source** for the hosted MCP servers on [SellOnLLM](https://www.sellonllm.com). **GitHub (issues, stars, forks):** **[github.com/vipul510-web/mcp-ai-visibility](https://github.com/vipul510-web/mcp-ai-visibility)**. Operator implementation: parent repo `MCP_CLAUDE_SETUP.md` and `api/`.
+This folder (`mcp-ga-gsc-seo/`) in the SellOnLLM monorepo documents the **Analytics** MCP (GA4 + GSC) and includes cross-links for the **AI visibility** MCP. **AI-visibility-only** docs (mirroring this layout) live in the sibling folder **`mcp-ai-visibility/`** and on GitHub: **[github.com/vipul510-web/mcp-ai-visibility](https://github.com/vipul510-web/mcp-ai-visibility)** (issues for both products currently use that repo). Operator implementation: parent repo `MCP_CLAUDE_SETUP.md` and `api/`.
 
 ---
 
@@ -327,7 +327,10 @@ Claude never holds your **Google** refresh token; it holds **SellOnLLM-issued MC
 
 ## Support & contributing
 
-- **Issues:** [github.com/vipul510-web/mcp-ai-visibility/issues](https://github.com/vipul510-web/mcp-ai-visibility/issues) — include connector (`/api/mcp` vs `/api/mcp-ai-visibility`), client (Claude Web / Desktop / Cursor), time, and what you expected.
+- **Issues (Analytics MCP / GA+GSC):** [github.com/vipul510-web/mcp-ga-gsc-seo/issues](https://github.com/vipul510-web/mcp-ga-gsc-seo/issues)  
+- **Issues (AI visibility MCP):** [github.com/vipul510-web/mcp-ai-visibility/issues](https://github.com/vipul510-web/mcp-ai-visibility/issues)  
+
+Include connector URL, client (Claude Web / Desktop / Cursor), time (UTC), and what you expected.
 - **Product:** [SellOnLLM](https://www.sellonllm.com) · [Contact](https://www.sellonllm.com/contact-us.html) · [Privacy](https://www.sellonllm.com/privacy-policy.html)
 
 Improvements to **documentation** (clearer prompts, FAQs, diagrams) are welcome via PR.

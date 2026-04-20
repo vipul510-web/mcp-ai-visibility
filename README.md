@@ -20,10 +20,12 @@ SellOnLLM hosts **two** [Model Context Protocol](https://modelcontextprotocol.io
 
 | Doc | What it is |
 |-----|------------|
-| **[GitHub: vipul510-web/mcp-ai-visibility](https://github.com/vipul510-web/mcp-ai-visibility)** | Public repo for issues, stars, and MCP discoverability |
+| **[GitHub: vipul510-web/mcp-ai-visibility](https://github.com/vipul510-web/mcp-ai-visibility)** | Public repo for issues, stars, and **AI visibility** MCP docs |
+| **[GitHub: vipul510-web/mcp-ga-gsc-seo](https://github.com/vipul510-web/mcp-ga-gsc-seo)** | Public repo for **GA4 + GSC** MCP docs |
 | **[`docs/MCP_CONNECTORS.md`](docs/MCP_CONNECTORS.md)** | Short hub (tables + links) |
 | **[`MCP_CLAUDE_SETUP.md`](MCP_CLAUDE_SETUP.md)** | Operators: endpoints, env vars, JWT audiences, curl, deploy |
-| **[`mcp-ga-gsc-seo/README.md`](mcp-ga-gsc-seo/README.md)** | Overview, use cases, architecture (synced with docs on GitHub) |
+| **[`mcp-ai-visibility/README.md`](mcp-ai-visibility/README.md)** | AI visibility MCP doc package (mirror for [mcp-ai-visibility](https://github.com/vipul510-web/mcp-ai-visibility) repo) |
+| **[`mcp-ga-gsc-seo/README.md`](mcp-ga-gsc-seo/README.md)** | Analytics MCP + cross-links; mirror for [mcp-ga-gsc-seo](https://github.com/vipul510-web/mcp-ga-gsc-seo) |
 | **[`mcp-ga-gsc-seo/docs/`](mcp-ga-gsc-seo/docs/)** | Prompts, tools, **[`AI_VISIBILITY.md`](mcp-ga-gsc-seo/docs/AI_VISIBILITY.md)**, security, troubleshooting |
 
 ### Use cases at a glance
@@ -84,9 +86,12 @@ sellonllm/
 ├── chat-with-google-analytics.html
 ├── docs/
 │   └── MCP_CONNECTORS.md         # MCP hub doc
-├── mcp-ga-gsc-seo/               # Public docs for GitHub / community
+├── mcp-ai-visibility/            # Doc package for AI Visibility MCP → GitHub mcp-ai-visibility
 │   ├── README.md
-│   └── docs/                     # USE_CASES, AI_VISIBILITY, TOOLS, …
+│   └── docs/
+├── mcp-ga-gsc-seo/               # Doc package for GA+GSC MCP → GitHub mcp-ga-gsc-seo
+│   ├── README.md
+│   └── docs/
 ├── MCP_CLAUDE_SETUP.md           # Operator deep dive
 ├── vercel.json                   # Rewrites to api/app
 ├── package.json

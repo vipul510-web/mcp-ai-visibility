@@ -1,8 +1,10 @@
 # AI Visibility & AEO MCP (Claude)
 
+**Canonical doc package (same content, AI-only):** [github.com/vipul510-web/mcp-ai-visibility](https://github.com/vipul510-web/mcp-ai-visibility) · monorepo folder [`mcp-ai-visibility/`](../../mcp-ai-visibility/README.md).
+
 **Hosted endpoint:** `https://www.sellonllm.com/api/mcp-ai-visibility`  
 
-**GitHub:** [github.com/vipul510-web/mcp-ai-visibility](https://github.com/vipul510-web/mcp-ai-visibility) — source, issues, and community for this connector.
+**GitHub:** [github.com/vipul510-web/mcp-ai-visibility](https://github.com/vipul510-web/mcp-ai-visibility) — issues and community for this connector.
 
 This is a **separate** SellOnLLM MCP server from the [Analytics MCP](./TOOLS.md) (`/api/mcp`). Add it as a **second** custom connector in Claude if you also use GA4 + Search Console tools—or use it alone if you only need AEO / citation workflows.
 

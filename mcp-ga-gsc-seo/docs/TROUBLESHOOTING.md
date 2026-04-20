@@ -92,7 +92,7 @@ This repo documents the **hosted** server URL. Client-specific wiring (config fi
 
 ## Still stuck?
 
-Open an [issue](https://github.com/vipul510-web/mcp-ai-visibility/issues) with:
+Open an issue on the repo that matches your connector: [mcp-ga-gsc-seo/issues](https://github.com/vipul510-web/mcp-ga-gsc-seo/issues) (analytics) or [mcp-ai-visibility/issues](https://github.com/vipul510-web/mcp-ai-visibility/issues) (AI visibility). Include:
 
 - Client (Claude Web / Claude Desktop / Cursor / other)
 - Approximate **timestamp** (UTC)
