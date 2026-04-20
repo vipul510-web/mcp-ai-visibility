@@ -1,270 +1,129 @@
-# SellOnLLM - LLM Marketing Platform
+# SellOnLLM
 
-**Rank Higher & Sell More on ChatGPT, Claude & Perplexity**
+**SEO you can measure → AEO & GEO you can win.**  
+Marketing site, audits, **Chat with GA4 + Google Search Console**, **two Claude MCP connectors**, Shopify app integration, and supporting tools.
 
-A complete landing page with **FREE LLM Readiness Audit Tool** - helping brands optimize for AI platform discovery.
+Live site: **[sellonllm.com](https://www.sellonllm.com)** (use `www` in production for OAuth consistency).
 
-## 🎯 What This Is
+---
 
-A full-stack web application that:
-1. **Educates** brands about LLM marketing
-2. **Audits** websites for LLM readiness (8 technical checks)
-3. **Captures** leads for deeper analysis
-4. **Converts** visitors to Shopify app users
+## Claude MCP connectors (discoverability hub)
 
-## ✨ Key Features
+SellOnLLM hosts **two** [Model Context Protocol](https://modelcontextprotocol.io) servers for [Claude](https://claude.ai) **Settings → Connectors → Add custom connector**. Same Google sign-in; **different server URLs** and **different tools**.
 
-### **Frontend**
-- 🎨 SEO-optimized landing page
-- 🔍 Free LLM audit tool (no signup required)
-- 📱 Fully mobile responsive
-- 🚀 Modern, professional UI
-- 📊 Google Analytics integration
-- ✉️ GetWaitlist email capture
+| Connector | Server URL (paste in Claude) | Public setup page |
+|-----------|------------------------------|-------------------|
+| **Analytics** — GA4 + GSC | `https://www.sellonllm.com/api/mcp` | [GA + GSC MCP for Claude](https://www.sellonllm.com/google-analytics-mcp-claude.html) |
+| **AI visibility** — AEO crawl + Perplexity tools | `https://www.sellonllm.com/api/mcp-ai-visibility` | [AI Visibility MCP for Claude](https://www.sellonllm.com/ai-visibility-mcp-claude.html) |
 
-### **Backend API**
-- ⚡ Serverless functions (Vercel)
-- 🔬 8 technical SEO checks
-- 🌐 Real website analysis
-- 💾 Ready for caching
-- 🔒 Security & rate limiting ready
+**Perplexity API key:** enter it only on the **[AI Visibility setup page](https://www.sellonllm.com/ai-visibility-mcp-claude.html)** (after Google sign-in). Used for citation-style tools; `analyze_website_aeo` does **not** require Perplexity.
 
-### **Audit Checks**
-1. ✅ LLM.txt file exists
-2. ✅ Robots.txt properly configured
-3. ✅ XML Sitemap present
-4. ✅ Meta titles present
-5. ✅ Meta descriptions present
-6. ✅ Structured data (Schema.org)
-7. ✅ SSL/HTTPS enabled
-8. ✅ Mobile-friendly
+| Doc | What it is |
+|-----|------------|
+| **[`docs/MCP_CONNECTORS.md`](docs/MCP_CONNECTORS.md)** | Short hub (tables + links) |
+| **[`MCP_CLAUDE_SETUP.md`](MCP_CLAUDE_SETUP.md)** | Operators: endpoints, env vars, JWT audiences, curl, deploy |
+| **[`mcp-ga-gsc-seo/README.md`](mcp-ga-gsc-seo/README.md)** | GitHub-friendly overview, use cases, architecture |
+| **[`mcp-ga-gsc-seo/docs/`](mcp-ga-gsc-seo/docs/)** | Prompts, tools, **[`AI_VISIBILITY.md`](mcp-ga-gsc-seo/docs/AI_VISIBILITY.md)**, security, troubleshooting |
 
-## 📁 Project Structure
+### Use cases at a glance
+
+**Analytics MCP**
+
+- Weekly organic health: sessions, landing pages, top queries, week-over-week deltas.
+- CTR rescue: high impressions, weak CTR → title/meta variants grounded in GSC.
+- “Almost page one” sprints: positions ~4–15, content and internal linking plans.
+- Post-release checks: GA4 landing-page losses paired with GSC impression/position moves.
+- Stakeholder summaries in plain language with numbers from *your* properties.
+
+**AI visibility MCP**
+
+- AEO readiness: schema, FAQ coverage, depth, trust signals from a live crawl.
+- Prompt-level checks: is your domain cited for specific buyer questions?
+- Auto-generated test prompts from your site copy; gap list for editorial.
+- Competitor comparison on the same small set of strategic prompts.
+
+### Quick test
+
+1. Add the connector URL in Claude → Connect → Google → Allow.  
+2. **Analytics:** *“List my GA4 properties and GSC sites, then a 28-day snapshot.”*  
+3. **AI visibility:** *“Run analyze_website_aeo on https://example.com”* (no Perplexity key).  
+4. Add Perplexity on the [AI Visibility page](https://www.sellonllm.com/ai-visibility-mcp-claude.html), then try `check_ai_visibility` via natural language or **`/` → `ai_visibility_pulse`**.
+
+---
+
+## Other products (same repo)
+
+| Surface | Description |
+|---------|-------------|
+| **[Chat with GA + GSC](https://www.sellonllm.com/chat-with-google-analytics.html)** | Browser UI: Google OAuth + your LLM API key (Claude/OpenAI). Not MCP. |
+| **Free LLM audit** | [`free-llm-audit.html`](free-llm-audit.html) + API |
+| **LLM.txt generator** | [`llm-txt-generator.html`](llm-txt-generator.html) |
+| **Chrome extension** | [`chrome-extension/`](chrome-extension/) |
+| **Shopify** | Linked from homepage; AI-referred traffic attribution |
+
+Setup for the web chat: **[`CHAT_WITH_GA_SETUP.md`](CHAT_WITH_GA_SETUP.md)**.
+
+---
+
+## Repository structure (high level)
 
 ```
 sellonllm/
-├── api/
-│   └── audit.js                  # Backend API (serverless)
-├── css/
-│   ├── style.css                 # Main styles
-│   └── llm-audit-styles.css      # Audit tool styles
-├── js/
-│   ├── script.js                 # Main interactions
-│   └── llm-audit.js              # Audit tool logic
-├── index.html                    # Landing page
-├── privacy-policy.html           # Privacy policy
-├── vercel.json                   # Vercel configuration
-├── package.json                  # Project metadata
-├── DEPLOYMENT-GUIDE.md           # How to deploy
-├── IMPLEMENTATION-GUIDE.md       # Backend implementation
-└── README.md                     # This file
+├── api/                          # Vercel serverless: unified app router
+│   ├── app.js                    # Routes /api/* and /.well-known/*
+│   └── _lib/                     # Auth, DB, Google, MCP, AEO/visibility
+│       ├── routes/mcp/           # Analytics MCP + OAuth authorize/token/register
+│       ├── routes/mcp-ai-visibility/
+│       ├── routes/wellknown/     # oauth-protected-resource (per-resource), AS metadata
+│       ├── aeo-visibility/       # Crawler, AEO scorer, Perplexity checks
+│       └── ...
+├── index.html                    # Homepage (nav + CTAs for both MCPs)
+├── google-analytics-mcp-claude.html
+├── ai-visibility-mcp-claude.html
+├── chat-with-google-analytics.html
+├── docs/
+│   └── MCP_CONNECTORS.md         # MCP hub doc
+├── mcp-ga-gsc-seo/               # Public docs for GitHub / community
+│   ├── README.md
+│   └── docs/                     # USE_CASES, AI_VISIBILITY, TOOLS, …
+├── MCP_CLAUDE_SETUP.md           # Operator deep dive
+├── vercel.json                   # Rewrites to api/app
+├── package.json
+└── css/, js/, images/, blog/, …
 ```
 
-## 🎨 Sections
+Legacy references in older guides to a single `api/audit.js` entrypoint are outdated; MCP and chat routes are handled by **`api/app.js`**.
 
-1. **Header** - Navigation with blog placeholder and CTA button
-2. **Hero** - Compelling headline with statistics and dashboard preview
-3. **Features** - 6 key features showcasing the platform capabilities:
-   - Real-Time Analytics
-   - Competitor Intelligence
-   - LLM Ranking Optimization
-   - Sales Performance Tracking
-   - Multi-Platform Coverage
-   - Actionable Reports
-4. **Shopify App** - Promotion for the upcoming Shopify integration
-5. **FAQ** - 8 frequently asked questions about LLM marketing
-6. **CTA** - Email capture form for waitlist
-7. **Footer** - Comprehensive links and social media
+---
 
-## 🛠️ Setup
+## Local development
 
-### Local Development
+- **Static pages:** open `index.html` in a browser, or use any static server.
+- **API + MCP:** requires Node, env vars (see **`MCP_CLAUDE_SETUP.md`**), and typically **`vercel dev`** for a faithful local `/api` experience.
 
-1. Clone or download this repository
-2. Open `index.html` in your browser
-3. No build process required - it's pure HTML, CSS, and JavaScript!
+Deploy:
 
-### Deployment
-
-#### Option 1: Static Hosting (Recommended)
-
-Deploy to any static hosting service:
-
-- **Vercel**: `vercel --prod`
-- **Netlify**: Drag and drop the folder or connect via Git
-- **GitHub Pages**: Push to repository and enable Pages
-- **AWS S3 + CloudFront**: Upload files to S3 bucket
-- **Cloudflare Pages**: Connect repository or upload directly
-
-#### Option 2: Traditional Web Hosting
-
-1. Upload all files to your web server
-2. Ensure `index.html` is in the root directory
-3. Point your domain to the server
-
-## 🔧 Customization
-
-### Colors
-
-Edit the CSS variables in `css/style.css`:
-
-```css
-:root {
-    --primary-color: #6366f1;
-    --primary-dark: #4f46e5;
-    --secondary-color: #0ea5e9;
-    /* ... more colors */
-}
-```
-
-### Content
-
-All content is in `index.html`. Key sections to update:
-
-- Meta tags (lines 5-50)
-- Navigation links
-- Hero title and description
-- Features content
-- FAQ questions and answers
-- Footer links
-
-### Analytics
-
-Add your analytics code before the closing `</body>` tag in `index.html`:
-
-```html
-<!-- Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
-<script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'GA_MEASUREMENT_ID');
-</script>
-```
-
-### Email Integration
-
-Update the form submission in `js/script.js` to connect with your email service:
-
-```javascript
-// Example with API endpoint
-fetch('/api/waitlist', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email })
-});
-```
-
-## 📈 SEO Checklist
-
-- [x] Semantic HTML structure
-- [x] Meta description and keywords
-- [x] Open Graph tags for social sharing
-- [x] Twitter Card tags
-- [x] Schema.org structured data
-- [x] Canonical URL
-- [x] Mobile-friendly design
-- [x] Fast page load
-- [ ] Add favicon and app icons
-- [ ] Create sitemap.xml
-- [ ] Add robots.txt
-- [ ] Implement SSL certificate
-- [ ] Connect to Google Search Console
-- [ ] Set up Google Analytics
-
-## 🎯 Next Steps
-
-1. **Add Images**: Replace placeholder with actual screenshots and graphics
-2. **Create Favicon**: Add favicon.png and other app icons
-3. **Setup Analytics**: Install Google Analytics or your preferred tool
-4. **Email Service**: Connect form to email marketing platform (Mailchimp, ConvertKit, etc.)
-5. **Blog Section**: Build out the blog section referenced in navigation
-6. **A/B Testing**: Test different headlines and CTAs
-7. **Performance**: Optimize images, implement CDN
-8. **SEO**: Submit sitemap, build backlinks, create content
-
-## 🔐 Security Considerations
-
-- Use HTTPS (SSL certificate)
-- Implement CSP (Content Security Policy)
-- Sanitize form inputs on backend
-- Rate limit form submissions
-- Add reCAPTCHA to prevent spam
-
-## 📱 Browser Support
-
-- Chrome (latest)
-- Firefox (latest)
-- Safari (latest)
-- Edge (latest)
-- Mobile browsers (iOS Safari, Chrome Mobile)
-
-## 📄 License
-
-This project is proprietary and confidential.
-
-## 🚀 **DEPLOYMENT (IMPORTANT!)**
-
-### **Your site has REAL backend now!**
-
-**Quick Deploy:**
 ```bash
-cd /Users/vipulagarwal/Documents/sellonllm
 vercel --prod
 ```
 
-**What happens:**
-- Frontend deployed to global CDN
-- Backend API deployed as serverless function
-- Available at `https://sellonllm.com/api/audit`
-- **Real audit checks**, not demo data!
-
-📖 **Full guide**: See `DEPLOYMENT-GUIDE.md`
+Use the Vercel project tied to **`PUBLIC_BASE_URL`** (production: `https://www.sellonllm.com`).
 
 ---
 
-## 🏗️ Architecture
+## Contributing
 
-```
-User → sellonllm.com (Vercel CDN)
-         ↓
-    Audit Form (Frontend)
-         ↓
-    POST /api/audit (Serverless Function)
-         ↓
-    Real Checks:
-    - Fetch LLM.txt
-    - Check robots.txt
-    - Validate sitemap
-    - Parse meta tags
-    - Verify SSL
-    - Test mobile-friendly
-         ↓
-    Results → User sees score (X/8)
-```
+See **[`CONTRIBUTING.md`](CONTRIBUTING.md)** — documentation PRs for MCP are especially welcome under **`mcp-ga-gsc-seo/docs/`**.
 
 ---
 
-## 💰 Cost
+## License & support
 
-**FREE tier (Vercel Hobby):**
-- ✅ Unlimited page views
-- ✅ ~3,000 audits/month
-- ✅ Custom domain
-- ✅ SSL certificate
-- ✅ Global CDN
-
-**Upgrade when needed:**
-- Vercel Pro: $20/month (unlimited)
+- **Repository:** proprietary unless individual subfolders state otherwise (e.g. **`mcp-ga-gsc-seo/LICENSE`** is MIT for that documentation package).
+- **Support:** [Contact](https://www.sellonllm.com/contact-us.html) · [Privacy](https://www.sellonllm.com/privacy-policy.html)
 
 ---
 
-## 🤝 Support
+### Suggested GitHub topics (root repo)
 
-For questions or support, contact: support@sellonllm.com
-
----
-
-**Built with ❤️ for the AI era**
-
+`seo` `aeo` `geo` `google-analytics` `ga4` `google-search-console` `claude` `mcp` `model-context-protocol` `llm` `ai-search` `ai-visibility` `perplexity` `vercel` `shopify`
