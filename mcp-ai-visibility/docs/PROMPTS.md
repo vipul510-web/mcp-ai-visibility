@@ -68,3 +68,34 @@ Run discover_ranking_prompts on https://example.com with industry hint "ecommerc
 
 Then: group failures by theme (trust, comparisons, how-to), and propose 3 net-new URL ideas or FAQ expansions—not generic advice.
 ```
+
+---
+
+## Research-first workflow (use with browsing if available)
+
+This is the “skill” pattern: **research → MCP → recommendations**. If browsing isn’t available in your Claude environment, skip Phase 1 and infer context from on-site content and your own assumptions.
+
+```text
+Do this in three phases:
+
+Phase 1 — Research (if browsing is available):
+- Look up my company using the URL I provide next.
+- Infer: what we sell (offerings), target audience/persona, geographic focus, and 2–5 close competitors.
+- Identify 8–12 realistic buyer-intent prompts people would type into ChatGPT/Claude/Perplexity (pricing, alternatives, reviews, vs competitor, best-for-persona, local intent).
+
+Phase 2 — MCP testing:
+- Use discover_ranking_prompts on my URL with:
+  - offerings (3–6 items)
+  - audience (1 short phrase)
+  - geo (if relevant)
+  - competitors (2–5)
+  - seed_prompts (your best 6–8 buyer-intent prompts)
+  - max_prompts 8
+- Then run check_ai_visibility on the top 3 most important prompts.
+
+Phase 3 — Output:
+- Provide a table: prompt | visible? | who is cited instead | 1 specific fix.
+- End with a prioritized 14-day action plan (impact × effort).
+
+I will paste the website URL next.
+```

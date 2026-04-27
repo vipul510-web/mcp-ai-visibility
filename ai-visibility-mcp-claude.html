@@ -237,7 +237,7 @@
 
                 <div class="mcp-seo-block" id="copy-paste-prompts">
                     <h2 class="section__title" style="font-size: 1.5rem; text-align: left;">Copy/paste prompts</h2>
-                    <p class="section__description" style="text-align: left; max-width: none;">After connecting, Claude can also use <strong>/</strong> → <code>aeo_site_audit</code> or <code>ai_visibility_pulse</code>.</p>
+                    <p class="section__description" style="text-align: left; max-width: none;">After connecting, Claude can also use <strong>/</strong> → <code>aeo_site_audit</code>, <code>ai_visibility_pulse</code>, or <code>research_first_visibility</code> (recommended for realistic buyer prompts).</p>
                     <div class="mcp-prompts">
                         <div class="mcp-prompt">
                             <div class="mcp-prompt-header">
@@ -261,6 +261,39 @@
                             </div>
                             <div class="mcp-prompt-body">
                                 <textarea id="aiv-prompt-pulse" readonly>I will give you my site URL and 2–3 customer questions we care about. Use check_ai_visibility for each question and tell me if we are cited, what citations look like, and what to change if we are not visible.</textarea>
+                            </div>
+                        </div>
+                        <div class="mcp-prompt">
+                            <div class="mcp-prompt-header">
+                                <div>
+                                    <p class="mcp-prompt-title">Research-first visibility (recommended)</p>
+                                    <p class="mcp-prompt-meta">If browsing is available: research business + competitors, then test realistic prompts</p>
+                                </div>
+                                <button type="button" class="mcp-prompt-copy" data-copy-target="aiv-prompt-research">Copy</button>
+                            </div>
+                            <div class="mcp-prompt-body">
+                                <textarea id="aiv-prompt-research" readonly>Do this in three phases:
+
+Phase 1 — Research (if browsing is available):
+- Look up my company using the URL I provide next.
+- Infer: what we sell (offerings), target audience/persona, geographic focus, and 2–5 close competitors.
+- Identify 8–12 realistic buyer-intent prompts people would type into ChatGPT/Claude/Perplexity (pricing, alternatives, reviews, vs competitor, best-for-persona, local intent).
+
+Phase 2 — MCP testing:
+- Use discover_ranking_prompts on my URL with:
+  - offerings (3–6 items)
+  - audience (1 short phrase)
+  - geo (if relevant)
+  - competitors (2–5)
+  - seed_prompts (your best 6–8 buyer-intent prompts)
+  - max_prompts 8
+- Then run check_ai_visibility on the top 3 most important prompts.
+
+Phase 3 — Output:
+- Provide a table: prompt | visible? | who is cited instead | 1 specific fix.
+- End with a prioritized 14-day action plan (impact × effort).
+
+I will paste the website URL next.</textarea>
                             </div>
                         </div>
                     </div>

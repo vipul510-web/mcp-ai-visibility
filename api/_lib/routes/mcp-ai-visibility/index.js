@@ -60,13 +60,36 @@ const TOOLS = [
     {
         name: 'discover_ranking_prompts',
         description:
-            'Crawl the site, generate test prompts from headings/FAQ/title, then check each with Perplexity (rate-limited). Returns where you are cited vs missed opportunities.',
+            'Crawl the site, generate realistic buyer-intent prompts (services, pricing, alternatives, comparisons) and optional seeds, then check each with Perplexity (rate-limited). Returns where you are cited vs missed opportunities.',
         inputSchema: {
             type: 'object',
             required: ['url'],
             properties: {
                 url: { type: 'string' },
                 industry: { type: 'string', description: 'Optional niche hint (e.g. SaaS, ecommerce)' },
+                offerings: {
+                    type: 'array',
+                    items: { type: 'string' },
+                    description: 'Optional. List of your core services/products (e.g. \"background removal\", \"AI photo editor\") to generate more realistic prompts.',
+                },
+                audience: {
+                    type: 'string',
+                    description: 'Optional. Target buyer/persona (e.g. \"small business owners\", \"marketers\", \"developers\"). Used in prompt templates.',
+                },
+                geo: {
+                    type: 'string',
+                    description: 'Optional. Location hint (e.g. \"Austin\", \"UK\", \"near me\"). Used in local-intent templates.',
+                },
+                competitors: {
+                    type: 'array',
+                    items: { type: 'string' },
+                    description: 'Optional. Competitor brands/domains for comparison prompts (e.g. \"remove.bg\", \"canva\").',
+                },
+                seed_prompts: {
+                    type: 'array',
+                    items: { type: 'string' },
+                    description: 'Optional. Exact prompts you care about; these are tested first (subject to caps).',
+                },
                 max_prompts: { type: 'integer', minimum: 3, maximum: 8, default: 6, description: 'Hosted cap 8' },
             },
             additionalProperties: false,
@@ -121,6 +144,11 @@ const PROMPTS = [
         name: 'ai_visibility_pulse',
         description: 'Quick AI visibility check for 2–3 prompts vs my domain.',
         template: () => 'I will give you my site URL and 2–3 customer questions we care about. Use check_ai_visibility for each question and tell me if we are cited, what position/citations look like, and what to change if we are not visible.',
+    },
+    {
+        name: 'research_first_visibility',
+        description: 'Research-first workflow: infer offerings, audience, and competitors, then run realistic AI visibility prompts.',
+        template: () => `Do this in three phases:\n\nPhase 1 — Research (if browsing is available):\n- Look up my company using the URL I provide next.\n- Infer: what we sell (offerings), target audience/persona, geographic focus, and 2–5 close competitors.\n- Identify 8–12 realistic buyer-intent prompts people would type into ChatGPT/Claude/Perplexity (pricing, alternatives, reviews, vs competitor, best-for-persona, local intent).\n\nPhase 2 — MCP testing:\n- Use discover_ranking_prompts on my URL with:\n  - offerings (3–6 items)\n  - audience (1 short phrase)\n  - geo (if relevant)\n  - competitors (2–5)\n  - seed_prompts (your best 6–8 buyer-intent prompts)\n  - max_prompts 8\n- Then run check_ai_visibility on the top 3 most important prompts.\n\nPhase 3 — Output:\n- Provide a table: prompt | visible? | who is cited instead | 1 specific fix.\n- End with a prioritized 14-day action plan (impact × effort).\n\nI will paste the website URL next.`,
     },
 ];
 
