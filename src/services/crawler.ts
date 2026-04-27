@@ -81,20 +81,32 @@ function extractFAQItems(
   return items.slice(0, 20);
 }
 
+// Recursively collect all @type values from a JSON-LD object tree so that
+// nested schemas (e.g. Organization inside WebSite) are not missed.
+function collectTypes(obj: unknown, types: string[], depth = 0): void {
+  if (!obj || typeof obj !== "object" || depth > 6) return;
+  if (Array.isArray(obj)) {
+    obj.forEach((item) => collectTypes(item, types, depth + 1));
+    return;
+  }
+  const record = obj as Record<string, unknown>;
+  if (record["@type"]) {
+    const t = Array.isArray(record["@type"])
+      ? (record["@type"] as string[])
+      : [record["@type"] as string];
+    types.push(...t);
+  }
+  for (const val of Object.values(record)) {
+    if (val && typeof val === "object") collectTypes(val, types, depth + 1);
+  }
+}
+
 function extractStructuredDataTypes($: cheerio.CheerioAPI): string[] {
   const types: string[] = [];
   $('script[type="application/ld+json"]').each((_, el) => {
     try {
       const data = JSON.parse($(el).text());
-      const schemas = Array.isArray(data) ? data : [data];
-      for (const schema of schemas) {
-        if (schema["@type"]) {
-          const t = Array.isArray(schema["@type"])
-            ? schema["@type"]
-            : [schema["@type"]];
-          types.push(...t);
-        }
-      }
+      collectTypes(Array.isArray(data) ? data : [data], types);
     } catch {
       // ignore
     }
@@ -103,19 +115,28 @@ function extractStructuredDataTypes($: cheerio.CheerioAPI): string[] {
 }
 
 function extractAuthorInfo($: cheerio.CheerioAPI): string | null {
-  // JSON-LD author
   let author: string | null = null;
+
+  // JSON-LD — recurse to find author.name or creator.name anywhere in the tree
   $('script[type="application/ld+json"]').each((_, el) => {
     if (author) return;
     try {
       const data = JSON.parse($(el).text());
-      const schemas = Array.isArray(data) ? data : [data];
-      for (const schema of schemas) {
-        if (schema.author?.name) {
-          author = schema.author.name;
-          return;
+      const findAuthor = (obj: unknown): string | null => {
+        if (!obj || typeof obj !== "object") return null;
+        const rec = obj as Record<string, unknown>;
+        const nameVal = (rec.author as Record<string, unknown>)?.name
+          ?? (rec.creator as Record<string, unknown>)?.name;
+        if (typeof nameVal === "string") return nameVal;
+        for (const val of Object.values(rec)) {
+          if (val && typeof val === "object") {
+            const found = findAuthor(val);
+            if (found) return found;
+          }
         }
-      }
+        return null;
+      };
+      author = findAuthor(Array.isArray(data) ? { items: data } : data);
     } catch {
       // ignore
     }
@@ -128,9 +149,18 @@ function extractAuthorInfo($: cheerio.CheerioAPI): string | null {
     $('meta[property="article:author"]').attr("content");
   if (metaAuthor) return metaAuthor;
 
+  // Semantic / microdata
+  const itemPropAuthor = $('[itemprop="author"]').first().text().trim();
+  if (itemPropAuthor) return itemPropAuthor;
+
   // rel=author link
   const relAuthor = $('a[rel="author"]').first().text().trim();
   if (relAuthor) return relAuthor;
+
+  // Class-name heuristics (.author, .byline, .written-by)
+  const bylineText = $('[class*="author"],[class*="byline"],[class*="written-by"]')
+    .first().text().trim();
+  if (bylineText && bylineText.length < 120) return bylineText;
 
   return null;
 }

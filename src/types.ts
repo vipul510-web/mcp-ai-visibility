@@ -11,12 +11,21 @@ export interface AEOSignal {
   recommendation?: string;
 }
 
+export interface CrawledPageSummary {
+  url: string;
+  wordCount: number;
+  schemaTypes: string[];
+  hasAuthor: boolean;
+  hasFAQ: boolean;
+}
+
 export interface AEOAnalysis {
   url: string;
   overallScore: number;   // 0–100
   grade: "A" | "B" | "C" | "D" | "F";
   signals: AEOSignal[];
   topRecommendations: string[];
+  crawledPages: CrawledPageSummary[];
   analyzedAt: string;     // ISO timestamp
 }
 

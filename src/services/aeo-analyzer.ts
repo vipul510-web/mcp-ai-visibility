@@ -1,4 +1,4 @@
-import type { CrawledPage, AEOSignal, AEOAnalysis } from "../types.js";
+import type { CrawledPage, AEOSignal, AEOAnalysis, CrawledPageSummary } from "../types.js";
 
 // ---------------------------------------------------------------------------
 // AEO scoring: 100-point rubric based on signals LLMs use to surface content
@@ -105,15 +105,20 @@ function scoreContentClarity(pages: CrawledPage[]): AEOSignal {
 function scoreEEAT(pages: CrawledPage[]): AEOSignal {
   let score = 0;
 
+  // Check both crawled URLs *and* internal links found on any page — this
+  // means a page counts as "exists" even if it fell outside the crawl cap.
+  const allKnownUrls = [
+    ...pages.map((p) => p.url),
+    ...pages.flatMap((p) => p.internalLinks),
+  ];
+
   const hasAuthor = pages.some((p) => p.authorInfo !== null);
-  const hasAboutPage = pages.some((p) =>
-    /\/about/i.test(p.url)
-  );
-  const hasContactPage = pages.some((p) =>
-    /\/contact/i.test(p.url)
-  );
-  const hasOrgSchema = pages.some((p) =>
-    p.structuredDataTypes.includes("Organization")
+  const hasAboutPage = allKnownUrls.some((u) => /\/about/i.test(u));
+  const hasContactPage = allKnownUrls.some((u) => /\/contact/i.test(u));
+  const hasOrgSchema = pages.some(
+    (p) =>
+      p.structuredDataTypes.includes("Organization") ||
+      p.structuredDataTypes.includes("LocalBusiness"),
   );
   const hasPersonSchema = pages.some((p) =>
     p.structuredDataTypes.includes("Person")
@@ -125,16 +130,23 @@ function scoreEEAT(pages: CrawledPage[]): AEOSignal {
   if (hasOrgSchema || hasPersonSchema) score += 3;
   if (hasAboutPage && hasAuthor) score += 3;
 
+  const aboutStatus = hasAboutPage
+    ? pages.some((p) => /\/about/i.test(p.url)) ? "crawled ✓" : "linked (not crawled) ✓"
+    : "not found";
+  const contactStatus = hasContactPage
+    ? pages.some((p) => /\/contact/i.test(p.url)) ? "crawled ✓" : "linked (not crawled) ✓"
+    : "not found";
+
   return {
     name: "E-E-A-T Signals (Expertise, Authority, Trust)",
     score,
     maxScore: 15,
     passed: score >= 8,
     details: [
-      `Author info: ${hasAuthor ? "found" : "missing"}`,
-      `About page: ${hasAboutPage ? "found" : "missing"}`,
-      `Contact page: ${hasContactPage ? "found" : "missing"}`,
-      `Organization schema: ${hasOrgSchema ? "yes" : "no"}`,
+      `Author info: ${hasAuthor ? "found ✓" : "missing"}`,
+      `About page: ${aboutStatus}`,
+      `Contact page: ${contactStatus}`,
+      `Organization/LocalBusiness schema: ${hasOrgSchema ? "yes ✓" : "no"}`,
     ].join(". "),
     recommendation:
       score < 8
@@ -205,7 +217,6 @@ function scoreMetaInformation(pages: CrawledPage[]): AEOSignal {
   ).length;
   const hasCanonical = pages.filter((p) => p.canonical !== null).length;
 
-  const pct = pages.length ? 1 / pages.length : 0;
   let score = 0;
   if (hasTitle / pages.length >= 0.8) score += 3;
   if (hasDescription / pages.length >= 0.6) score += 3;
@@ -278,12 +289,21 @@ export function analyzeAEO(pages: CrawledPage[], rootUrl: string): AEOAnalysis {
     .slice(0, 5)
     .map((s) => s.recommendation!);
 
+  const crawledPages: CrawledPageSummary[] = pages.map((p) => ({
+    url: p.url,
+    wordCount: p.wordCount,
+    schemaTypes: p.structuredDataTypes,
+    hasAuthor: p.authorInfo !== null,
+    hasFAQ: p.faqItems.length > 0,
+  }));
+
   return {
     url: rootUrl,
     overallScore,
     grade: calculateGrade(overallScore),
     signals,
     topRecommendations,
+    crawledPages,
     analyzedAt: new Date().toISOString(),
   };
 }
@@ -294,9 +314,30 @@ export function formatAEOReport(analysis: AEOAnalysis): string {
     `**Overall Score: ${analysis.overallScore}/100 (Grade: ${analysis.grade})**`,
     `Analyzed at: ${analysis.analyzedAt}`,
     "",
-    "## Signal Breakdown",
-    "",
   ];
+
+  if (analysis.crawledPages?.length) {
+    lines.push(`## Pages crawled (${analysis.crawledPages.length})`);
+    lines.push("");
+    for (const p of analysis.crawledPages) {
+      const badges: string[] = [];
+      if (p.schemaTypes.length) badges.push(`schema: ${p.schemaTypes.join(", ")}`);
+      if (p.hasAuthor) badges.push("author ✓");
+      if (p.hasFAQ) badges.push("FAQ ✓");
+      lines.push(
+        `- \`${p.url}\` — ${p.wordCount} words${badges.length ? " | " + badges.join(" | ") : ""}`
+      );
+    }
+    lines.push("");
+    lines.push(
+      "> **Note for Claude:** Recommendations below are based only on the pages listed above. " +
+      "If you believe a signal (e.g. About page, Organization schema) is already present but not listed, " +
+      "tell the user their page likely fell outside the crawl cap — they can re-run with a higher `max_pages` value to confirm."
+    );
+    lines.push("");
+  }
+
+  lines.push("## Signal Breakdown", "");
 
   for (const signal of analysis.signals) {
     const bar = "█".repeat(Math.round((signal.score / signal.maxScore) * 10));
