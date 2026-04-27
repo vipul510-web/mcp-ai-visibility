@@ -7,9 +7,11 @@
 | Setup, Perplexity BYOK   | [AI Visibility MCP for Claude](https://www.sellonllm.com/ai-visibility-mcp-claude.html) |
 | GA4 + Search Console MCP (separate product) | [mcp-ga-gsc-seo](https://github.com/vipul510-web/mcp-ga-gsc-seo) · [GA + GSC MCP page](https://www.sellonllm.com/google-analytics-mcp-claude.html) |
 
-This repository is the **public documentation and community surface** for the **hosted** AI visibility MCP. Source code for SellOnLLM’s backend is not required to use the connector.
+This repository is the **public documentation and community surface** for the **hosted** AI visibility MCP. Source code for SellOnLLM's backend is not required to use the connector.
 
 **GitHub:** [github.com/vipul510-web/mcp-ai-visibility](https://github.com/vipul510-web/mcp-ai-visibility) (this repo) — issues, stars, and discoverability.
+
+> **Skill included** — [`SKILL.md`](SKILL.md) teaches Claude to research the business first (browse or AEO crawl), build realistic buyer-intent prompts, then run MCP tools with proper context. Paste it into a **Claude Project** as a custom instruction for best results. See [Using the Skill](#using-the-skill-for-best-results) below.
 
 ---
 
@@ -17,23 +19,24 @@ This repository is the **public documentation and community surface** for the **
 
 1. [Why this exists](#why-this-exists)
 2. [Who it helps](#who-it-helps)
-3. [What you get in practice](#what-you-get-in-practice)
-4. [Quick start (Claude.ai)](#quick-start-claudeai)
-5. [Perplexity API key (BYOK)](#perplexity-api-key-byok)
-6. [Built-in prompts (`/` menu)](#built-in-prompts--menu)
-7. [Tools reference](#tools-reference)
-8. [Example workflows](#example-workflows)
-9. [How this differs from the Analytics MCP](#how-this-differs-from-the-analytics-mcp)
-10. [Security & privacy (summary)](#security--privacy-summary)
-11. [What you do *not* need to run](#what-you-do-not-need-to-run)
-12. [Troubleshooting & FAQ](#troubleshooting--faq)
-13. [For agencies and teams](#for-agencies-and-teams)
-14. [Architecture (high level)](#architecture-high-level)
-15. [Repository layout](#repository-layout)
-16. [Support & contributing](#support--contributing)
-17. [License](#license)
+3. [Using the skill (for best results)](#using-the-skill-for-best-results)
+4. [What you get in practice](#what-you-get-in-practice)
+5. [Quick start (Claude.ai)](#quick-start-claudeai)
+6. [Perplexity API key (BYOK)](#perplexity-api-key-byok)
+7. [Built-in prompts (`/` menu)](#built-in-prompts--menu)
+8. [Tools reference](#tools-reference)
+9. [Example workflows](#example-workflows)
+10. [How this differs from the Analytics MCP](#how-this-differs-from-the-analytics-mcp)
+11. [Security & privacy (summary)](#security--privacy-summary)
+12. [What you do *not* need to run](#what-you-do-not-need-to-run)
+13. [Troubleshooting & FAQ](#troubleshooting--faq)
+14. [For agencies and teams](#for-agencies-and-teams)
+15. [Architecture (high level)](#architecture-high-level)
+16. [Repository layout](#repository-layout)
+17. [Support & contributing](#support--contributing)
+18. [License](#license)
 
-**Deep dives:** [`docs/USE_CASES.md`](docs/USE_CASES.md) · [`docs/TOOLS.md`](docs/TOOLS.md) · [`docs/PROMPTS.md`](docs/PROMPTS.md) · [`docs/ADVANCED.md`](docs/ADVANCED.md)
+**Deep dives:** [`SKILL.md`](SKILL.md) · [`docs/USE_CASES.md`](docs/USE_CASES.md) · [`docs/TOOLS.md`](docs/TOOLS.md) · [`docs/PROMPTS.md`](docs/PROMPTS.md) · [`docs/ADVANCED.md`](docs/ADVANCED.md)
 
 ---
 
@@ -41,7 +44,7 @@ This repository is the **public documentation and community surface** for the **
 
 Answer engines and AI-assisted search reward pages that are **clear, trustworthy, structured, and easy to cite**. The hard part is turning that into **repeatable checks**: crawl signals (schema, FAQ, depth), then **whether your domain actually appears** in model-powered citation flows for the prompts your buyers use.
 
-This MCP exposes **tools** so Claude can call SellOnLLM’s hosted crawler and (when you add a key) **Perplexity** — so recommendations cite **tool output**, not generic SEO blog advice.
+This MCP exposes **tools** so Claude can call SellOnLLM's hosted crawler and (when you add a key) **Perplexity** — so recommendations cite **tool output**, not generic SEO blog advice.
 
 ---
 
@@ -50,9 +53,47 @@ This MCP exposes **tools** so Claude can call SellOnLLM’s hosted crawler and (
 | Role | How it helps |
 |------|----------------|
 | **SEO / growth** | Prioritize AEO fixes (schema, FAQ, depth) with a scorecard tied to your live site. |
-| **Content & comms** | Test 2–20 “money prompts” for citation visibility; brief writers on gaps. |
-| **Founders & PMs** | Short, evidence-backed readouts for “are we visible in AI search for X?” |
+| **Content & comms** | Test 2–20 "money prompts" for citation visibility; brief writers on gaps. |
+| **Founders & PMs** | Short, evidence-backed readouts for "are we visible in AI search for X?" |
 | **Agencies** | Repeatable playbooks per client domain (each user connects their own Google account for OAuth identity). |
+
+---
+
+## Using the skill (for best results)
+
+The MCP alone generates **generic prompts** if Claude has no context about your business. The **[`SKILL.md`](SKILL.md)** fixes this by instructing Claude to:
+
+1. **Research the business first** — browse the URL or run `analyze_website_aeo` to infer offerings, audience, geo, and competitors.
+2. **Build buyer-intent prompts** — not "what should I know about X?" but "best X for Y 2026", "X vs competitor", "X pricing", "X reviews".
+3. **Call MCP tools with context** — pass those prompts as `seed_prompts` to `discover_ranking_prompts` for relevant, realistic results.
+
+### How to activate the skill
+
+**Option A — Claude Project (recommended):**
+1. Create a new Claude Project → **Instructions** (or "Custom instructions").
+2. Paste the full contents of [`SKILL.md`](SKILL.md) into the instructions box.
+3. Add the MCP connector URL in the project's connector settings.
+4. Every chat in that project automatically uses the research-first workflow.
+
+**Option B — One-shot prompt (no Project needed):**
+
+Paste this at the start of any conversation:
+
+```
+I want to check AI visibility for [WEBSITE URL].
+
+Do this:
+1. Research the site (browse if you can, or use analyze_website_aeo with max_pages 5).
+2. Write a brief: offering, audience, geo, competitors.
+3. Generate 8 buyer-intent prompts (pricing, alternatives, reviews, vs competitor, best-for-persona).
+4. Run discover_ranking_prompts with those as seed_prompts.
+5. Run check_ai_visibility on the top 3 most important prompts.
+6. Output: business brief + table (prompt | visible | who is cited) + 14-day action plan.
+```
+
+**Option C — Cursor / local agent:**
+
+Drop `SKILL.md` in your project's `.cursor/skills/ai-visibility-mcp/` folder and Cursor will apply it automatically when AI visibility tasks come up.
 
 ---
 
@@ -73,7 +114,7 @@ After you [connect the MCP](#quick-start-claudeai), you can ask Claude to:
 1. Open [claude.ai](https://claude.ai) → **Settings** → **Connectors** (Team/Enterprise: **Organization settings → Connectors**).
 2. **Add custom connector** → **Server URL:** `https://www.sellonllm.com/api/mcp-ai-visibility`
 3. **Connect** → complete **Google** sign-in → **Allow** on the SellOnLLM consent screen.
-4. In chat: *“Run `analyze_website_aeo` on https://example.com and give me the top 5 fixes.”* (No Perplexity key required for this tool.)
+4. In chat: *"Run `analyze_website_aeo` on https://example.com and give me the top 5 fixes."* (No Perplexity key required for this tool.)
 
 **Optional:** Save a **Perplexity API key** on the [setup page](https://www.sellonllm.com/ai-visibility-mcp-claude.html) (same Google session) before using citation tools.
 
@@ -94,7 +135,7 @@ Not required for **`analyze_website_aeo`** (HTML crawl only).
 
 ## Built-in prompts (`/` menu)
 
-| Prompt | What it’s for |
+| Prompt | What it's for |
 |--------|----------------|
 | **aeo_site_audit** | Crawl + AEO scorecard for a URL you provide next |
 | **ai_visibility_pulse** | Quick Perplexity checks for a few prompts you care about |
@@ -155,7 +196,7 @@ Full notes: [`docs/SECURITY.md`](docs/SECURITY.md).
 ## What you do *not* need to run
 
 - No Vercel/Neon/database of your own to **use** the hosted connector.
-- No clone of SellOnLLM’s application repo required for end users.
+- No clone of SellOnLLM's application repo required for end users.
 
 ---
 
@@ -200,6 +241,7 @@ flowchart LR
 
 | Path | Contents |
 |------|----------|
+| [`SKILL.md`](SKILL.md) | **Research-first skill** — paste into Claude Project instructions |
 | [`README.md`](README.md) | This file |
 | [`docs/TOOLS.md`](docs/TOOLS.md) | Tool behavior and limits |
 | [`docs/USE_CASES.md`](docs/USE_CASES.md) | Playbooks and prompt ideas |
@@ -222,7 +264,7 @@ Documentation improvements (clearer prompts, FAQs, diagrams) are welcome via PR.
 
 ## License
 
-Documentation in this repository is licensed under the **MIT License** — see [`LICENSE`](LICENSE). The **hosted MCP service** is operated by SellOnLLM; usage is subject to SellOnLLM’s terms and privacy policy on the website.
+Documentation in this repository is licensed under the **MIT License** — see [`LICENSE`](LICENSE). The **hosted MCP service** is operated by SellOnLLM; usage is subject to SellOnLLM's terms and privacy policy on the website.
 
 ---
 
