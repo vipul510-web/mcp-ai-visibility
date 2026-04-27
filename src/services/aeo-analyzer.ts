@@ -1,4 +1,10 @@
-import type { CrawledPage, AEOSignal, AEOAnalysis, CrawledPageSummary } from "../types.js";
+import type {
+  CrawledPage,
+  AEOSignal,
+  AEOAnalysis,
+  CrawledPageSummary,
+  SpaDetection,
+} from "../types.js";
 
 // ---------------------------------------------------------------------------
 // AEO scoring: 100-point rubric based on signals LLMs use to surface content
@@ -102,15 +108,25 @@ function scoreContentClarity(pages: CrawledPage[]): AEOSignal {
   };
 }
 
+function getAllKnownUrls(pages: CrawledPage[]): string[] {
+  return [
+    ...pages.map((p) => p.url),
+    ...pages.flatMap((p) => p.internalLinks),
+    ...(pages[0]?.sitemapUrls ?? []),
+  ];
+}
+
+function pageStatus(pages: CrawledPage[], regex: RegExp): string {
+  if (pages.some((p) => regex.test(p.url))) return "crawled ✓";
+  if (pages.some((p) => p.internalLinks.some((l) => regex.test(l)))) return "linked from site ✓";
+  if ((pages[0]?.sitemapUrls ?? []).some((u) => regex.test(u))) return "in sitemap ✓";
+  return "not found";
+}
+
 function scoreEEAT(pages: CrawledPage[]): AEOSignal {
   let score = 0;
 
-  // Check both crawled URLs *and* internal links found on any page — this
-  // means a page counts as "exists" even if it fell outside the crawl cap.
-  const allKnownUrls = [
-    ...pages.map((p) => p.url),
-    ...pages.flatMap((p) => p.internalLinks),
-  ];
+  const allKnownUrls = getAllKnownUrls(pages);
 
   const hasAuthor = pages.some((p) => p.authorInfo !== null);
   const hasAboutPage = allKnownUrls.some((u) => /\/about/i.test(u));
@@ -130,13 +146,6 @@ function scoreEEAT(pages: CrawledPage[]): AEOSignal {
   if (hasOrgSchema || hasPersonSchema) score += 3;
   if (hasAboutPage && hasAuthor) score += 3;
 
-  const aboutStatus = hasAboutPage
-    ? pages.some((p) => /\/about/i.test(p.url)) ? "crawled ✓" : "linked (not crawled) ✓"
-    : "not found";
-  const contactStatus = hasContactPage
-    ? pages.some((p) => /\/contact/i.test(p.url)) ? "crawled ✓" : "linked (not crawled) ✓"
-    : "not found";
-
   return {
     name: "E-E-A-T Signals (Expertise, Authority, Trust)",
     score,
@@ -144,8 +153,8 @@ function scoreEEAT(pages: CrawledPage[]): AEOSignal {
     passed: score >= 8,
     details: [
       `Author info: ${hasAuthor ? "found ✓" : "missing"}`,
-      `About page: ${aboutStatus}`,
-      `Contact page: ${contactStatus}`,
+      `About page: ${pageStatus(pages, /\/about/i)}`,
+      `Contact page: ${pageStatus(pages, /\/contact/i)}`,
       `Organization/LocalBusiness schema: ${hasOrgSchema ? "yes ✓" : "no"}`,
     ].join(". "),
     recommendation:
@@ -153,6 +162,19 @@ function scoreEEAT(pages: CrawledPage[]): AEOSignal {
         ? "Add author bios with credentials, an About page explaining your expertise, and Organization JSON-LD schema. AI models heavily weight authoritativeness."
         : undefined,
   };
+}
+
+function detectSPA(pages: CrawledPage[]): SpaDetection | null {
+  if (!pages.length) return null;
+  const main = pages[0];
+  const wordCount = main.wordCount ?? 0;
+  const linkCount = main.internalLinks?.length ?? 0;
+  const hasSitemap = (main.sitemapUrls?.length ?? 0) > 0;
+
+  if (wordCount < 100 && linkCount < 3) {
+    return { isSpa: true, wordCount, linkCount, hasSitemap };
+  }
+  return { isSpa: false, wordCount, linkCount, hasSitemap };
 }
 
 function scoreCitations(pages: CrawledPage[]): AEOSignal {
@@ -297,6 +319,9 @@ export function analyzeAEO(pages: CrawledPage[], rootUrl: string): AEOAnalysis {
     hasFAQ: p.faqItems.length > 0,
   }));
 
+  const spaDetection = detectSPA(pages);
+  const sitemapUrls = pages[0]?.sitemapUrls ?? [];
+
   return {
     url: rootUrl,
     overallScore,
@@ -304,6 +329,9 @@ export function analyzeAEO(pages: CrawledPage[], rootUrl: string): AEOAnalysis {
     signals,
     topRecommendations,
     crawledPages,
+    sitemapUrls: sitemapUrls.slice(0, 25),
+    sitemapCount: sitemapUrls.length,
+    spaDetection,
     analyzedAt: new Date().toISOString(),
   };
 }
@@ -315,6 +343,37 @@ export function formatAEOReport(analysis: AEOAnalysis): string {
     `Analyzed at: ${analysis.analyzedAt}`,
     "",
   ];
+
+  if (analysis.spaDetection?.isSpa) {
+    lines.push("## ⚠️ Client-side rendered site detected");
+    lines.push("");
+    lines.push(
+      `The homepage returned only **${analysis.spaDetection.wordCount} words** of body text and ` +
+      `**${analysis.spaDetection.linkCount} internal links** in its initial HTML. ` +
+      `This site appears to use JavaScript rendering (React/Vue/Next.js SPA). ` +
+      `Our crawler reads the raw HTML — it does not execute JavaScript, and **neither do most AI crawlers** ` +
+      `(ChatGPT browsing, Perplexity, Anthropic, GoogleBot for AI Overviews often work from the same raw HTML).`
+    );
+    lines.push("");
+    if (analysis.spaDetection.hasSitemap) {
+      lines.push(
+        `✅ **Good news:** your sitemap was found (${analysis.sitemapCount} URLs). ` +
+        `We used those URLs for existence checks (About / Contact / etc.) below — so those signals are accurate.`
+      );
+    } else {
+      lines.push(
+        `❌ **No sitemap found** at \`/sitemap.xml\`. AI crawlers and our analyzer cannot discover your pages. ` +
+        `**Top priority fix:** add a sitemap.xml and pre-render at least your key landing pages (Next.js \`getStaticProps\`, ISR, or full SSR).`
+      );
+    }
+    lines.push("");
+    lines.push("**Recommendations specifically for SPA sites:**");
+    lines.push("- Pre-render or SSR all marketing/landing pages (about, contact, pricing, blog, key features).");
+    lines.push("- Ensure raw HTML contains the page's main heading, body copy, and `<a href>` navigation links.");
+    lines.push("- Add Organization, WebSite, and FAQPage JSON-LD inline in HTML, not injected via JS.");
+    lines.push("- Test your pages in `view-source:` — if the body looks empty, AI crawlers see the same.");
+    lines.push("");
+  }
 
   if (analysis.crawledPages?.length) {
     lines.push(`## Pages crawled (${analysis.crawledPages.length})`);
@@ -329,10 +388,27 @@ export function formatAEOReport(analysis: AEOAnalysis): string {
       );
     }
     lines.push("");
+  }
+
+  if (analysis.sitemapCount > 0) {
+    lines.push(`## URLs discovered from sitemap (${analysis.sitemapCount})`);
+    lines.push("");
+    for (const u of analysis.sitemapUrls) {
+      lines.push(`- \`${u}\``);
+    }
+    if (analysis.sitemapCount > analysis.sitemapUrls.length) {
+      lines.push(`- … and ${analysis.sitemapCount - analysis.sitemapUrls.length} more`);
+    }
+    lines.push("");
     lines.push(
-      "> **Note for Claude:** Recommendations below are based only on the pages listed above. " +
-      "If you believe a signal (e.g. About page, Organization schema) is already present but not listed, " +
-      "tell the user their page likely fell outside the crawl cap — they can re-run with a higher `max_pages` value to confirm."
+      "> **Note for Claude:** Existence checks (About / Contact / etc.) below use BOTH crawled pages AND these sitemap URLs. " +
+      "If a signal is still flagged as missing, the page genuinely is not in the sitemap or is named non-conventionally."
+    );
+    lines.push("");
+  } else if (analysis.crawledPages?.length) {
+    lines.push(
+      "> **Note for Claude:** Recommendations below are based only on the crawled pages and any internal links found. " +
+      "If a signal seems wrong, the user can re-run with a higher `max_pages` value, or check if their site has a `/sitemap.xml`."
     );
     lines.push("");
   }

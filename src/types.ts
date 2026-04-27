@@ -26,7 +26,10 @@ export interface AEOAnalysis {
   signals: AEOSignal[];
   topRecommendations: string[];
   crawledPages: CrawledPageSummary[];
-  analyzedAt: string;     // ISO timestamp
+  sitemapUrls: string[];      // truncated for display
+  sitemapCount: number;       // total discovered
+  spaDetection: SpaDetection | null;
+  analyzedAt: string;         // ISO timestamp
 }
 
 export interface CrawledPage {
@@ -49,6 +52,14 @@ export interface CrawledPage {
   canonical: string | null;
   statusCode: number;
   loadedAt: string;
+  sitemapUrls?: string[];   // attached to first page only — discovered via sitemap.xml
+}
+
+export interface SpaDetection {
+  isSpa: boolean;
+  wordCount: number;
+  linkCount: number;
+  hasSitemap: boolean;
 }
 
 export interface VisibilityResult {
