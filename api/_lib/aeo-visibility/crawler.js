@@ -251,10 +251,79 @@ export async function crawlPage(url) {
     };
 }
 
+/**
+ * Fetch and parse common sitemap locations. Returns up to 200 absolute URLs
+ * that belong to the same hostname. This is essential for SPA sites where
+ * the initial HTML contains no <a href> links.
+ */
+export async function discoverSitemapUrls(rootUrl) {
+    const out = new Set();
+    let base;
+    try {
+        base = new URL(rootUrl);
+    } catch {
+        return [];
+    }
+
+    const candidates = [
+        `${base.protocol}//${base.host}/sitemap.xml`,
+        `${base.protocol}//${base.host}/sitemap_index.xml`,
+        `${base.protocol}//${base.host}/sitemap-index.xml`,
+        `${base.protocol}//${base.host}/sitemap/sitemap.xml`,
+    ];
+
+    async function fetchXml(url, depth = 0) {
+        if (depth > 2 || out.size >= 200) return;
+        try {
+            const controller = new AbortController();
+            const t = setTimeout(() => controller.abort(), DEFAULT_TIMEOUT);
+            const res = await fetch(url, {
+                signal: controller.signal,
+                headers: { 'User-Agent': USER_AGENT },
+                redirect: 'follow',
+            });
+            clearTimeout(t);
+            if (!res.ok) return;
+            const xml = await res.text();
+
+            // <loc>...</loc> matches both urlset (pages) and sitemapindex (nested sitemaps)
+            const locMatches = xml.match(/<loc>\s*([^<\s]+)\s*<\/loc>/gi) || [];
+            const isIndex = /<sitemapindex/i.test(xml);
+
+            for (const raw of locMatches) {
+                const url = raw.replace(/<\/?loc>/gi, '').trim();
+                if (!url) continue;
+                if (isIndex && url.endsWith('.xml')) {
+                    await fetchXml(url, depth + 1);
+                } else {
+                    try {
+                        const u = new URL(url);
+                        if (u.hostname.replace(/^www\./, '') === base.hostname.replace(/^www\./, '')) {
+                            out.add(normalizeUrl(url));
+                        }
+                    } catch { /* skip */ }
+                }
+                if (out.size >= 200) break;
+            }
+        } catch { /* skip */ }
+    }
+
+    for (const candidate of candidates) {
+        if (out.size >= 200) break;
+        await fetchXml(candidate);
+        if (out.size > 0) break; // first one that works is enough
+    }
+
+    return [...out];
+}
+
 export async function crawlSite(rootUrl, maxPages = MAX_CRAWL_PAGES) {
     const visited = new Set();
     const queue = [normalizeUrl(rootUrl)];
     const pages = [];
+
+    // Discover URLs from sitemap up front so SPAs don't end the crawl at page 1.
+    const sitemapUrls = await discoverSitemapUrls(rootUrl);
 
     while (queue.length > 0 && pages.length < maxPages) {
         const url = queue.shift();
@@ -266,7 +335,15 @@ export async function crawlSite(rootUrl, maxPages = MAX_CRAWL_PAGES) {
             if (page.statusCode >= 500) continue;
             pages.push(page);
 
-            for (const link of page.internalLinks) {
+            // Enqueue both: links found on the page AND remaining sitemap URLs.
+            const candidates = [...page.internalLinks];
+            for (const su of sitemapUrls) {
+                if (!visited.has(su) && !queue.includes(su) && !candidates.includes(su)) {
+                    candidates.push(su);
+                }
+            }
+
+            for (const link of candidates) {
                 if (
                     !visited.has(link) &&
                     !queue.includes(link) &&
@@ -278,6 +355,12 @@ export async function crawlSite(rootUrl, maxPages = MAX_CRAWL_PAGES) {
         } catch {
             /* skip unreachable */
         }
+    }
+
+    // Attach sitemap URLs to the first page so the analyzer can use them for
+    // existence checks (About/Contact) even if they were never visited.
+    if (pages.length > 0) {
+        pages[0].sitemapUrls = sitemapUrls;
     }
 
     return pages;
