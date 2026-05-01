@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Free LLM.txt Generator | Technical SEO &amp; AEO Crawl Hints | SellOnLLM</title>
+    <meta name="title" content="Free LLM.txt Generator | SEO &amp; AEO | SellOnLLM">
+    <meta name="description" content="Generate a free LLM.txt (llms.txt) file from your sitemap and key URLs—give ChatGPT, Claude, and other assistants a concise map of what to cite after technical SEO is sound.">
+    <meta name="keywords" content="LLM.txt generator, free AI visibility tool, llms.txt, AEO, AI visibility, ChatGPT SEO, crawl hints, sellonllm">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+    <link rel="canonical" href="https://www.sellonllm.com/llm-txt-generator.html">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.sellonllm.com/llm-txt-generator.html">
+    <meta property="og:site_name" content="SellOnLLM">
+    <meta property="og:title" content="Free LLM.txt Generator | Create LLM.txt File for Your Website">
+    <meta property="og:description" content="Generate a free LLM.txt file for your website. Help AI platforms discover your content.">
+    <meta property="og:image" content="https://www.sellonllm.com/images/logo.png">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://www.sellonllm.com/llm-txt-generator.html">
+    <meta name="twitter:title" content="Free LLM.txt Generator | Create LLM.txt File">
+    <meta name="twitter:description" content="Generate a free LLM.txt file for your website. Help AI platforms discover your content.">
+    <meta name="twitter:image" content="https://www.sellonllm.com/images/logo.png">
+
+    <!-- Schema.org - WebPage -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "Free LLM.txt Generator",
+      "url": "https://www.sellonllm.com/llm-txt-generator.html",
+      "description": "Free LLM.txt generator for SEO and AEO programs: summarize canonical URLs and policies for AI crawlers.",
+      "breadcrumb": {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.sellonllm.com/"},
+          {"@type": "ListItem", "position": 2, "name": "LLM.txt Generator", "item": "https://www.sellonllm.com/llm-txt-generator.html"}
+        ]
+      }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is LLM.txt?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "LLM.txt (sometimes llms.txt) is a small text file at your site root that lists priority URLs and guidance so AI crawlers can understand what to cite. It complements—not replaces—your sitemap and on-page SEO."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is LLM.txt the same as an XML sitemap?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. A sitemap is the crawl inventory; LLM.txt is a human- and model-readable brief of what matters most. Many sites publish both."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Where should I host the generated file?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Upload it to your domain root as llm.txt or llms.txt so it is reachable at https://yourdomain.com/llm.txt (or /llms.txt), then re-run your technical audit to confirm discovery."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does this tool require an account?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. The generator is free and runs in the browser without signup; it pulls structure from your public sitemap and key URLs."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/llm-audit-styles.css">
+    
+    <style>
+        .generator-section {
+            padding: 6rem 0 4rem;
+        }
+        
+        .generator-form {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--bg-card);
+            padding: 3rem;
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-lg);
+            border: 2px solid var(--border-color);
+        }
+        
+        .generator-result {
+            display: none;
+            max-width: 800px;
+            margin: 2rem auto 0;
+            background: var(--bg-card);
+            padding: 2rem;
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-lg);
+            border: 2px solid var(--border-color);
+        }
+        
+        .generator-result.active {
+            display: block;
+        }
+        
+        .llm-txt-preview {
+            background: var(--bg-dark);
+            color: var(--text-white);
+            padding: 1.5rem;
+            border-radius: var(--radius-md);
+            font-family: 'Courier New', monospace;
+            font-size: 0.875rem;
+            line-height: 1.8;
+            max-height: 500px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            margin: 1.5rem 0;
+        }
+        
+        .download-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--primary-color);
+            color: var(--text-white);
+            border-radius: var(--radius-lg);
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .download-button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .info-box {
+            background: rgba(99, 102, 241, 0.1);
+            border-left: 4px solid var(--primary-color);
+            padding: 1rem 1.5rem;
+            border-radius: var(--radius-md);
+            margin: 1.5rem 0;
+        }
+        
+        .info-box p {
+            margin: 0;
+            color: var(--text-secondary);
+            font-size: 0.9375rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <nav class="nav container">
+            <a href="/" class="nav__logo">
+                <img src="images/logo.png" alt="SellOnLLM" class="logo__icon" width="32" height="32" fetchpriority="high" loading="eager">
+                <span class="logo-text">Sell<span class="logo-highlight">On</span>LLM</span>
+            </a>
+            <div class="nav__menu" id="nav-menu">
+                <ul class="nav__list">
+                    <li class="nav__item"><a href="/chat-with-google-analytics.html" class="nav__link">GA + GSC AI SEO</a></li>
+                    <li class="nav__item"><a href="/google-analytics-mcp-claude.html" class="nav__link">GA + GSC MCP (Claude)</a></li>
+                    <li class="nav__item"><a href="/index.html#shopify" class="nav__link">Shopify App</a></li>
+                </ul>
+                <div class="nav__close" id="nav-close">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </div>
+            </div>
+            <div class="nav__btns">
+                <a href="/chat-with-google-analytics.html" class="button button--primary">Fix your SEO</a>
+                <a href="https://apps.shopify.com/llm-analytics" target="_blank" rel="noopener noreferrer" class="button button--ghost">Shopify App</a>
+                <div class="nav__toggle" id="nav-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Generator Section -->
+    <section class="generator-section">
+        <div class="container">
+            <div class="section__header">
+                <span class="section__subtitle">Free tool · SEO &amp; AEO</span>
+                <h1 class="section__title">LLM.txt generator for <span class="gradient-text">crawl-ready</span> brands</h1>
+                <p class="section__description">
+                    Publish a machine-readable brief so assistants understand what to cite—best paired with healthy Search Console coverage and on-page SEO. Paste your homepage URL; we pull structure from your sitemap and key pages.
+                </p>
+            </div>
+
+            <div class="generator-form">
+                <form id="llm-txt-generator-form">
+                    <div class="audit-tool__input-group">
+                        <input 
+                            type="text" 
+                            inputmode="url" 
+                            id="website-url" 
+                            placeholder="Enter your website URL (e.g., example.com or https://example.com)" 
+                            class="audit-tool__input" 
+                            required
+                        >
+                        <button type="submit" class="button button--primary button--large audit-tool__button">
+                            <span class="button-text">Generate LLM.txt</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                <polyline points="7 10 12 15 17 10"></polyline>
+                                <line x1="12" y1="15" x2="12" y2="3"></line>
+                            </svg>
+                        </button>
+                    </div>
+                    <p class="audit-tool__note">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                        </svg>
+                        Free • No signup required • Analyzes your sitemap and site structure
+                    </p>
+                </form>
+            </div>
+
+            <div class="generator-result" id="generator-result">
+                <h3 style="margin-bottom: 1rem;">Your LLM.txt File</h3>
+                <div class="info-box">
+                    <p><strong>What's next?</strong> Download the file and upload it to your website's root directory as <code>llm.txt</code> or <code>llms.txt</code>. Make sure it's accessible at <code>https://yourdomain.com/llm.txt</code></p>
+                </div>
+                <div class="llm-txt-preview" id="llm-txt-preview"></div>
+                <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                    <a href="#" id="download-link" class="download-button" download="llm.txt">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="7 10 12 15 17 10"></polyline>
+                            <line x1="12" y1="15" x2="12" y2="3"></line>
+                        </svg>
+                        Download LLM.txt
+                    </a>
+                    <button type="button" class="button button--secondary" onclick="copyToClipboard()">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                        Copy to Clipboard
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="faq section" id="faq">
+        <div class="container">
+            <div class="section__header">
+                <span class="section__subtitle">FAQ</span>
+                <h2 class="section__title">LLM.txt generator</h2>
+            </div>
+            <div class="faq__container">
+                <div class="faq__item">
+                    <div class="faq__question">
+                        <h3>What is LLM.txt?</h3>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </div>
+                    <div class="faq__answer"><p>LLM.txt (sometimes llms.txt) is a small text file at your site root that lists priority URLs and guidance so AI crawlers understand what to cite. It complements—not replaces—your sitemap and on-page SEO.</p></div>
+                </div>
+                <div class="faq__item">
+                    <div class="faq__question">
+                        <h3>Is LLM.txt the same as an XML sitemap?</h3>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </div>
+                    <div class="faq__answer"><p>No. A sitemap is the crawl inventory; LLM.txt is a human- and model-readable brief of what matters most. Many sites publish both.</p></div>
+                </div>
+                <div class="faq__item">
+                    <div class="faq__question">
+                        <h3>Where should I host the generated file?</h3>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </div>
+                    <div class="faq__answer"><p>Upload it to your domain root as <code>llm.txt</code> or <code>llms.txt</code> so it is reachable at <code>https://yourdomain.com/llm.txt</code>, then confirm discovery with a technical audit.</p></div>
+                </div>
+                <div class="faq__item">
+                    <div class="faq__question">
+                        <h3>Does this tool require an account?</h3>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </div>
+                    <div class="faq__answer"><p>No. The generator is free and runs without signup; it pulls structure from your public sitemap and key URLs.</p></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" id="contact"></footer>
+
+    <!-- Scripts -->
+    <script src="js/script.js"></script>
+    <script src="js/llm-txt-generator.js"></script>
+</body>
+</html>
+

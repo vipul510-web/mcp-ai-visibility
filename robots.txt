@@ -13,7 +13,7 @@ Allow: /
 Crawl-delay: 0
 
 # Sitemap location
-Sitemap: https://sellonllm.com/sitemap.xml
+Sitemap: https://www.sellonllm.com/sitemap.xml
 
 # Specific rules for major bots
 User-agent: Googlebot

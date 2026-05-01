@@ -34,39 +34,145 @@
 
         <!-- Results State -->
         <div id="results-state" class="results-state" style="display: none;">
-            <!-- Score Display -->
-            <div class="score-section">
-                <div class="score-circle">
-                    <svg class="score-ring" viewBox="0 0 100 100">
-                        <circle class="score-ring-bg" cx="50" cy="50" r="45"></circle>
-                        <circle id="score-progress" class="score-ring-progress" cx="50" cy="50" r="45"></circle>
+            <!-- Compact Score Display -->
+            <div class="score-section-compact">
+                <div class="score-circle-compact">
+                    <svg class="score-ring-compact" viewBox="0 0 100 100">
+                        <circle class="score-ring-bg-compact" cx="50" cy="50" r="45"></circle>
+                        <circle id="score-progress" class="score-ring-progress-compact" cx="50" cy="50" r="45"></circle>
                     </svg>
-                    <div class="score-value">
+                    <div class="score-value-compact">
                         <span id="overall-score">0</span>
-                        <span class="score-max">/100</span>
                     </div>
                 </div>
-                <h2 id="score-status" class="score-status">Analyzing...</h2>
-                <p class="score-description" id="score-description">Checking your page for LLM readiness</p>
-            </div>
-
-            <!-- Current URL -->
-            <div class="url-display">
-                <span class="url-label">Auditing:</span>
-                <span id="current-url" class="url-text"></span>
-            </div>
-
-            <!-- Checks List -->
-            <div class="checks-container">
-                <h3 class="checks-title">Audit Results</h3>
-                <div id="checks-list" class="checks-list">
-                    <!-- Checks will be inserted here -->
+                <div class="score-info-compact">
+                    <h2 id="score-status" class="score-status-compact">Analyzing...</h2>
                 </div>
+            </div>
+
+            <!-- Tabs -->
+            <div class="tabs-container">
+                <div class="tabs-header">
+                    <button class="tab-button active" data-tab="overview">Overview</button>
+                    <button class="tab-button" data-tab="technical">Technical</button>
+                    <button class="tab-button" data-tab="content">Content</button>
+                    <button class="tab-button" data-tab="prompts">Prompt Relevance</button>
+                </div>
+
+                <!-- Tab Content -->
+                <div class="tab-content active" id="tab-overview">
+                    <div class="checks-container">
+                        <h3 class="checks-title">Quick Summary</h3>
+                        <div id="overview-checks" class="checks-list">
+                            <!-- Overview checks will be inserted here -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="tab-technical">
+                    <div class="checks-container">
+                        <h3 class="checks-title">Technical SEO</h3>
+                        <div id="technical-checks" class="checks-list">
+                            <!-- Technical checks will be inserted here -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="tab-content">
+                    <div class="checks-container">
+                        <h3 class="checks-title">Content Quality & Structure</h3>
+                        <div id="content-checks" class="checks-list">
+                            <!-- Content checks will be inserted here -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="tab-prompts">
+                    <div class="prompt-relevance-container">
+                        <h3 class="checks-title">Analyze Content Relevance</h3>
+                        <p class="prompt-description">Enter prompts/queries to see how well your content matches them. This helps you understand if your content will appear in AI responses.</p>
+                        
+                        <!-- API Key Section -->
+                        <div class="api-key-section">
+                            <label for="openai-api-key" class="api-key-label">
+                                OpenAI API Key
+                                <span class="api-key-info" title="Your API key is stored securely in your browser and never sent to our servers. It's only used to make API calls to OpenAI.">ℹ️</span>
+                            </label>
+                            <div class="api-key-input-wrapper">
+                                <input 
+                                    type="password" 
+                                    id="openai-api-key" 
+                                    class="api-key-input" 
+                                    placeholder="sk-..."
+                                    autocomplete="off"
+                                />
+                                <button id="save-api-key-btn" class="button button--secondary" style="margin-left: 8px; white-space: nowrap;">
+                                    Save
+                                </button>
+                            </div>
+                            <p class="api-key-note">
+                                🔒 Your API key is stored locally in your browser and never saved on our servers. 
+                                <a href="https://platform.openai.com/api-keys" target="_blank" class="api-key-link">Get your API key</a>
+                            </p>
+                            <div id="api-key-status" class="api-key-status" style="display: none;"></div>
+                        </div>
+                        
+                        <div class="prompt-input-section" style="margin-top: 16px;">
+                            <label for="prompt-input" class="prompt-label">Enter prompts (one per line):</label>
+                            <textarea 
+                                id="prompt-input" 
+                                class="prompt-input" 
+                                placeholder="e.g., best running shoes for beginners&#10;how to choose running shoes&#10;running shoe buying guide"
+                                rows="4"
+                            ></textarea>
+                            <button id="analyze-prompts-btn" class="button button--primary button--full" style="margin-top: 8px;">
+                                Analyze Relevance
+                            </button>
+                        </div>
+
+                        <div id="prompt-results" class="prompt-results" style="display: none;">
+                            <div class="prompt-overall-score">
+                                <h4>Overall Relevance Score</h4>
+                                <div class="prompt-score-circle">
+                                    <span id="prompt-overall-score-value">0</span>
+                                    <span class="prompt-score-max">/100</span>
+                                </div>
+                            </div>
+                            <div id="prompt-results-list" class="prompt-results-list">
+                                <!-- Results will be inserted here -->
+                            </div>
+                        </div>
+
+                        <div id="prompt-loading" class="prompt-loading" style="display: none;">
+                            <div class="spinner-small"></div>
+                            <p>Analyzing content relevance...</p>
+                        </div>
+
+                        <div id="prompt-error" class="prompt-error" style="display: none;">
+                            <p id="prompt-error-message"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Feedback Section -->
+            <div class="feedback-section">
+                <label for="feedback-input" class="feedback-label">What's missing for you?</label>
+                <textarea 
+                    id="feedback-input" 
+                    class="feedback-input" 
+                    placeholder="Tell us what features or improvements you'd like to see..."
+                    rows="3"
+                ></textarea>
+                <button id="submit-feedback-btn" class="button button--primary button--full" style="margin-top: 8px;">
+                    Submit Feedback
+                </button>
+                <p id="feedback-message" class="feedback-message" style="display: none;"></p>
             </div>
 
             <!-- Actions -->
             <div class="actions-section">
-                <a id="full-audit-link" href="https://sellonllm.com/free-llm-audit.html" target="_blank" class="button button--primary button--full">
+                <a id="full-audit-link" href="https://www.sellonllm.com/free-llm-audit.html" target="_blank" class="button button--primary button--full">
                     Run Full Site Audit
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -88,7 +194,7 @@
 
             <!-- Footer -->
             <div class="popup-footer">
-                <a href="https://sellonllm.com" target="_blank" class="footer-link">
+                <a href="https://www.sellonllm.com/" target="_blank" class="footer-link">
                     <span>Powered by SellOnLLM</span>
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <line x1="5" y1="12" x2="19" y2="12"></line>
