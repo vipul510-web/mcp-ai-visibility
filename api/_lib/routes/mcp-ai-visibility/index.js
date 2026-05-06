@@ -159,9 +159,11 @@ export default async function handler(req, res) {
     const resourceUrl = `${base}/api/mcp-ai-visibility`.replace(/\/+$/, '');
     const resourceMetadataUrl = `${base}/.well-known/oauth-protected-resource?resource=${encodeURIComponent(resourceUrl)}`;
 
-    if (req.method === 'OPTIONS') {
+    const method = String(req.method || 'GET').toUpperCase();
+
+    if (method === 'OPTIONS') {
         res.setHeader('Access-Control-Allow-Origin', '*');
-        res.setHeader('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, DELETE');
+        res.setHeader('Access-Control-Allow-Methods', 'POST, GET, HEAD, OPTIONS, DELETE');
         res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, Mcp-Session-Id, MCP-Protocol-Version');
         return res.status(204).end();
     }
@@ -173,7 +175,7 @@ export default async function handler(req, res) {
 
     if (!payload) {
         res.setHeader('WWW-Authenticate', `Bearer realm="MCP", resource_metadata="${resourceMetadataUrl}"`);
-        if (req.method === 'GET') {
+        if (method === 'GET') {
             res.setHeader('Content-Type', 'text/html; charset=utf-8');
             return res.status(401).send(`<!DOCTYPE html><html><body style="font-family:system-ui;padding:32px;max-width:640px;margin:0 auto;color:#0f172a">
 <h2>SellOnLLM — AI Visibility MCP</h2>
@@ -189,25 +191,25 @@ export default async function handler(req, res) {
         });
     }
 
-    // Streamable HTTP (MCP): authenticated GET with SSE opens the server→client stream.
-    if (req.method === 'GET') {
-        const accept = (req.headers.accept || '').toLowerCase();
-        if (accept.includes('text/event-stream')) {
-            res.statusCode = 200;
-            res.setHeader('Content-Type', 'text/event-stream; charset=utf-8');
-            res.setHeader('Cache-Control', 'no-cache, no-transform');
-            res.setHeader('Connection', 'keep-alive');
-            res.setHeader('X-Accel-Buffering', 'no');
-            // Priming event (MCP streamable HTTP); we have no async server-push on this channel.
-            res.write('id: 0\ndata:\n\n');
-            return res.end();
-        }
-        res.setHeader('Allow', 'POST, GET, OPTIONS');
-        return res.status(405).json({ error: 'method_not_allowed' });
+    // Streamable HTTP (MCP): any authenticated GET/HEAD on the MCP path should offer the SSE
+    // listen channel. Some clients (e.g. Smithery) omit text/event-stream in Accept — still return SSE.
+    if (method === 'HEAD') {
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'text/event-stream; charset=utf-8');
+        return res.end();
+    }
+    if (method === 'GET') {
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'text/event-stream; charset=utf-8');
+        res.setHeader('Cache-Control', 'no-cache, no-transform');
+        res.setHeader('Connection', 'keep-alive');
+        res.setHeader('X-Accel-Buffering', 'no');
+        res.write('id: 0\ndata:\n\n');
+        return res.end();
     }
 
-    if (req.method !== 'POST') {
-        res.setHeader('Allow', 'POST, GET, DELETE, OPTIONS');
+    if (method !== 'POST') {
+        res.setHeader('Allow', 'POST, GET, HEAD, DELETE, OPTIONS');
         return res.status(405).json({ error: 'method_not_allowed' });
     }
 
