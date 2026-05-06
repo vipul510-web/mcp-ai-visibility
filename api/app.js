@@ -13,11 +13,13 @@ import userApiKey from './_lib/routes/user/api-key.js';
 import gaProperties from './_lib/routes/ga/properties.js';
 import gscSites from './_lib/routes/gsc/sites.js';
 import mcpIndex from './_lib/routes/mcp/index.js';
+import mcpAiVisibilityIndex from './_lib/routes/mcp-ai-visibility/index.js';
 import mcpRegister from './_lib/routes/mcp/register.js';
 import mcpAuthorize from './_lib/routes/mcp/authorize.js';
 import mcpToken from './_lib/routes/mcp/token.js';
 import wellknownProtectedResource from './_lib/routes/wellknown/oauth-protected-resource.js';
 import wellknownAuthServer from './_lib/routes/wellknown/oauth-authorization-server.js';
+import wellknownMcpServerCard from './_lib/routes/wellknown/mcp-server-card.js';
 
 // Order matters: put more-specific patterns before less-specific ones.
 const ROUTES = [
@@ -36,12 +38,14 @@ const ROUTES = [
     [/^\/api\/chat\/?$/, chat],
 
     // MCP OAuth + JSON-RPC endpoints
+    [/^\/api\/mcp-ai-visibility\/?$/, mcpAiVisibilityIndex],
     [/^\/api\/mcp\/register\/?$/, mcpRegister],
     [/^\/api\/mcp\/authorize\/?$/, mcpAuthorize],
     [/^\/api\/mcp\/token\/?$/, mcpToken],
     [/^\/api\/mcp\/?$/, mcpIndex],
 
     // .well-known discovery (served via rewrites)
+    [/^\/\.well-known\/mcp\/server-card\.json\/?$/, wellknownMcpServerCard],
     [/^\/\.well-known\/oauth-protected-resource\/?$/, wellknownProtectedResource],
     [/^\/\.well-known\/oauth-authorization-server\/?$/, wellknownAuthServer],
 ];

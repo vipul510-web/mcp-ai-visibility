@@ -24,7 +24,9 @@ Tools:
 
 Perplexity: the user must save their own Perplexity API key on SellOnLLM (see resource documentation URL). Optional server PERPLEXITY_API_KEY is a fallback only.
 
-Always cite tool output when making recommendations.`;
+Always cite tool output when making recommendations.
+When Claude supports artifacts, prefer a dashboard-style artifact with KPI cards, clear sections, tables, and concise recommendations.
+If artifact rendering is unavailable, fall back to markdown tables and bullets.`;
 
 const TOOLS = [
     {
@@ -138,17 +140,17 @@ const PROMPTS = [
     {
         name: 'aeo_site_audit',
         description: 'Crawl a URL and return the AEO scorecard (schema, FAQ, depth, trust signals).',
-        template: () => 'Use analyze_website_aeo on my primary marketing domain (I will paste the URL next). Summarize the top 5 fixes that would most improve AI citability, in priority order.',
+        template: () => 'Use analyze_website_aeo on my primary marketing domain (I will paste the URL next). Render the result as a dashboard-style artifact when supported by Claude with KPI cards, a signal breakdown section, a pages-crawled table, and the top 5 fixes in priority order. If artifacts are unavailable, fall back to markdown tables and bullets.',
     },
     {
         name: 'ai_visibility_pulse',
         description: 'Quick AI visibility check for 2–3 prompts vs my domain.',
-        template: () => 'I will give you my site URL and 2–3 customer questions we care about. Use check_ai_visibility for each question and tell me if we are cited, what position/citations look like, and what to change if we are not visible.',
+        template: () => 'I will give you my site URL and 2–3 customer questions we care about. Use check_ai_visibility for each question and render a compact dashboard artifact when supported: KPI cards for visible/not visible, a table of prompts vs citation position, and concise recommendations. If artifacts are unavailable, fall back to markdown tables and bullets.',
     },
     {
         name: 'research_first_visibility',
         description: 'Research-first workflow: infer offerings, audience, and competitors, then run realistic AI visibility prompts.',
-        template: () => `Do this in three phases:\n\nPhase 1 — Research (if browsing is available):\n- Look up my company using the URL I provide next.\n- Infer: what we sell (offerings), target audience/persona, geographic focus, and 2–5 close competitors.\n- Identify 8–12 realistic buyer-intent prompts people would type into ChatGPT/Claude/Perplexity (pricing, alternatives, reviews, vs competitor, best-for-persona, local intent).\n\nPhase 2 — MCP testing:\n- Use discover_ranking_prompts on my URL with:\n  - offerings (3–6 items)\n  - audience (1 short phrase)\n  - geo (if relevant)\n  - competitors (2–5)\n  - seed_prompts (your best 6–8 buyer-intent prompts)\n  - max_prompts 8\n- Then run check_ai_visibility on the top 3 most important prompts.\n\nPhase 3 — Output:\n- Provide a table: prompt | visible? | who is cited instead | 1 specific fix.\n- End with a prioritized 14-day action plan (impact × effort).\n\nI will paste the website URL next.`,
+        template: () => `Do this in three phases:\n\nPhase 1 — Research (if browsing is available):\n- Look up my company using the URL I provide next.\n- Infer: what we sell (offerings), target audience/persona, geographic focus, and 2–5 close competitors.\n- Identify 8–12 realistic buyer-intent prompts people would type into ChatGPT/Claude/Perplexity (pricing, alternatives, reviews, vs competitor, best-for-persona, local intent).\n\nPhase 2 — MCP testing:\n- Use discover_ranking_prompts on my URL with:\n  - offerings (3–6 items)\n  - audience (1 short phrase)\n  - geo (if relevant)\n  - competitors (2–5)\n  - seed_prompts (your best 6–8 buyer-intent prompts)\n  - max_prompts 8\n- Then run check_ai_visibility on the top 3 most important prompts.\n\nPhase 3 — Output:\n- Render a dashboard-style artifact when supported by Claude.\n- Use KPI cards for AEO score / visibility rate / prompts tested / wins.\n- Include a detailed table: prompt | visible? | who is cited instead | 1 specific fix.\n- End with a prioritized 14-day action plan (impact × effort).\n- If artifacts are unavailable, fall back to markdown tables and bullets.\n\nI will paste the website URL next.`,
     },
 ];
 
@@ -187,8 +189,25 @@ export default async function handler(req, res) {
         });
     }
 
+    // Streamable HTTP (MCP): authenticated GET with SSE opens the server→client stream.
+    if (req.method === 'GET') {
+        const accept = (req.headers.accept || '').toLowerCase();
+        if (accept.includes('text/event-stream')) {
+            res.statusCode = 200;
+            res.setHeader('Content-Type', 'text/event-stream; charset=utf-8');
+            res.setHeader('Cache-Control', 'no-cache, no-transform');
+            res.setHeader('Connection', 'keep-alive');
+            res.setHeader('X-Accel-Buffering', 'no');
+            // Priming event (MCP streamable HTTP); we have no async server-push on this channel.
+            res.write('id: 0\ndata:\n\n');
+            return res.end();
+        }
+        res.setHeader('Allow', 'POST, GET, OPTIONS');
+        return res.status(405).json({ error: 'method_not_allowed' });
+    }
+
     if (req.method !== 'POST') {
-        res.setHeader('Allow', 'POST');
+        res.setHeader('Allow', 'POST, GET, DELETE, OPTIONS');
         return res.status(405).json({ error: 'method_not_allowed' });
     }
 
@@ -261,9 +280,11 @@ async function handleRpc(msg, userId) {
                         isError: false,
                     });
                 }
-                const json = JSON.stringify(data, null, 2);
+                const text = typeof data?.markdown === 'string'
+                    ? data.markdown
+                    : JSON.stringify(data, null, 2);
                 return ok(id, {
-                    content: [{ type: 'text', text: json }],
+                    content: [{ type: 'text', text: text }],
                     structuredContent: data,
                     isError: false,
                 });
@@ -316,4 +337,15 @@ function ok(id, result) {
 }
 function err(id, code, message, data) {
     return { jsonrpc: '2.0', id, error: { code, message, data } };
+}
+
+/** Smithery / registry: static metadata when automatic scanning is skipped. */
+export function buildAiVisibilityServerCard() {
+    return {
+        serverInfo: SERVER_INFO,
+        authentication: { required: true, schemes: ['oauth2'] },
+        tools: TOOLS.map(({ name, description, inputSchema }) => ({ name, description, inputSchema })),
+        prompts: PROMPTS.map((p) => ({ name: p.name, description: p.description, arguments: [] })),
+        resources: [],
+    };
 }
