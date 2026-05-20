@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <title>Activate Create Content | SellOnLLM</title>
+    <meta name="description" content="Activate Create Content for the SellOnLLM Chrome extension. Sign in with the email you used at Polar checkout — we link your purchase automatically.">
+    <link rel="canonical" href="https://www.sellonllm.com/extension-connect.html">
+
+    <meta name="theme-color" content="#6366f1">
+    <link rel="icon" type="image/png" href="images/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7KK7VYDR9D"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-7KK7VYDR9D');
+    </script>
+
+    <style>
+        .ext-funnel-page { padding: 7rem 0 4rem; background: var(--bg-color); }
+        .ext-funnel__inner { max-width: 680px; margin: 0 auto; }
+        .ext-funnel__inner h1 { font-size: 2rem; font-weight: 800; color: var(--text-primary); line-height: 1.2; margin-bottom: 1rem; }
+        .ext-funnel__panel {
+            background: var(--bg-card); border-radius: var(--radius-xl); padding: 2rem;
+            box-shadow: var(--shadow-md); margin-top: 1.5rem;
+        }
+        .ext-funnel__panel p { color: var(--text-secondary); line-height: 1.65; margin: 0 0 1rem; }
+
+        /* Step list */
+        .ext-steps { list-style: none; padding: 0; margin: 0 0 1.5rem; display: flex; flex-direction: column; gap: 0.85rem; }
+        .ext-step {
+            display: flex; align-items: flex-start; gap: 0.85rem;
+            padding: 0.95rem 1rem; border-radius: var(--radius-md);
+            background: var(--bg-color); border: 1px solid rgba(99, 102, 241, 0.12);
+        }
+        .ext-step.is-done { border-color: rgba(34, 197, 94, 0.35); background: rgba(34, 197, 94, 0.06); }
+        .ext-step.is-active { border-color: rgba(99, 102, 241, 0.6); background: rgba(99, 102, 241, 0.06); }
+        .ext-step.is-blocked { border-color: rgba(245, 158, 11, 0.45); background: rgba(245, 158, 11, 0.06); }
+        .ext-step__icon {
+            flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%;
+            display: inline-flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 0.85rem;
+            background: rgba(99,102,241,0.15); color: var(--text-primary);
+        }
+        .ext-step.is-done .ext-step__icon { background: #16a34a; color: #fff; }
+        .ext-step.is-active .ext-step__icon { background: var(--primary-color); color: #fff; }
+        .ext-step.is-blocked .ext-step__icon { background: #f59e0b; color: #fff; }
+        .ext-step__body { flex: 1; min-width: 0; }
+        .ext-step__title { font-weight: 700; color: var(--text-primary); font-size: 0.98rem; margin-bottom: 0.2rem; }
+        .ext-step__desc { font-size: 0.92rem; color: var(--text-secondary); line-height: 1.55; word-break: break-word; }
+        .ext-step__desc strong { color: var(--text-primary); }
+        .ext-step__actions { margin-top: 0.65rem; display: flex; flex-wrap: wrap; gap: 0.55rem; align-items: center; }
+
+        /* Inline buttons */
+        .cv-google-btn {
+            display: inline-flex; align-items: center; gap: 0.55rem;
+            padding: 0.55rem 1rem; border: 1px solid #dadce0; border-radius: 8px;
+            background: #fff; color: #3c4043; font-weight: 500; text-decoration: none;
+            font-size: 0.92rem; transition: box-shadow 0.15s;
+        }
+        .cv-google-btn:hover { box-shadow: 0 2px 8px rgba(60,64,67,0.15); border-color: #c6c9cd; }
+        .cv-google-btn svg { width: 18px; height: 18px; flex-shrink: 0; }
+        .ext-link { background: none; border: none; padding: 0; color: var(--primary-color); cursor: pointer; font: inherit; text-decoration: underline; }
+        .ext-link:hover { color: #4f46e5; }
+
+        /* Connection code box */
+        .ext-code-box {
+            margin-top: 0.75rem; font-family: ui-monospace, monospace;
+            font-size: 0.78rem; width: 100%; min-height: 5.5rem; padding: 0.7rem;
+            border-radius: var(--radius-md); border: 1px solid var(--border-color, #e5e7eb);
+            background: var(--bg-color); color: var(--text-primary); word-break: break-all;
+            resize: vertical;
+        }
+
+        /* Spinner */
+        .ext-spinner {
+            display: inline-block; width: 14px; height: 14px;
+            border: 2px solid rgba(99,102,241,0.25); border-top-color: var(--primary-color);
+            border-radius: 50%; animation: ext-spin 0.8s linear infinite;
+            vertical-align: -2px; margin-right: 6px;
+        }
+        @keyframes ext-spin { to { transform: rotate(360deg); } }
+
+        /* Auto-import banner */
+        .ext-autoimport {
+            margin-top: 0.85rem; padding: 0.75rem 0.9rem; border-radius: var(--radius-md);
+            background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.35);
+            color: #15803d; font-size: 0.92rem; line-height: 1.5;
+            display: none;
+        }
+        .ext-autoimport.is-shown { display: block; }
+
+        .ext-footnote {
+            margin-top: 1.25rem; padding-top: 1rem;
+            border-top: 1px solid rgba(99,102,241,0.1);
+            font-size: 0.88rem; color: var(--text-secondary);
+            line-height: 1.55;
+        }
+        .ext-footnote a { color: var(--primary-color); }
+        .ext-footnote code { font-size: 0.85em; background: rgba(99,102,241,0.08); padding: 0.05rem 0.35rem; border-radius: 4px; }
+
+        /* Plan management */
+        .ext-manage {
+            margin-top: 1.5rem; padding-top: 1.5rem;
+            border-top: 1px solid rgba(99,102,241,0.1);
+            display: none;
+        }
+        .ext-manage.is-shown { display: block; }
+        .ext-manage h2 { font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin: 0 0 0.85rem; }
+        .ext-manage__grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem 1.25rem;
+            padding: 0.95rem 1.1rem; border-radius: var(--radius-md);
+            background: var(--bg-color); border: 1px solid rgba(99,102,241,0.12);
+            margin-bottom: 0.85rem;
+        }
+        .ext-manage__row { display: flex; flex-direction: column; gap: 0.15rem; }
+        .ext-manage__label { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-secondary); font-weight: 600; }
+        .ext-manage__value { font-size: 0.94rem; color: var(--text-primary); font-weight: 600; }
+        .ext-manage__value--warn { color: #b45309; }
+        .ext-manage__actions { display: flex; flex-wrap: wrap; gap: 0.55rem; }
+        .ext-manage__feedback { margin-top: 0.75rem; font-size: 0.9rem; color: var(--text-secondary); }
+        .ext-manage__feedback.is-success { color: #15803d; }
+        .ext-manage__feedback.is-error { color: #b91c1c; }
+        @media (max-width: 540px) {
+            .ext-manage__grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header" id="header">
+        <nav class="nav container">
+            <a href="/" class="nav__logo">
+                <img src="images/logo.png" alt="SellOnLLM" class="logo__icon" width="32" height="32">
+                <span class="logo-text">Sell<span class="logo-highlight">On</span>LLM</span>
+            </a>
+            <div class="nav__menu" id="nav-menu">
+                <ul class="nav__list">
+                    <li class="nav__item"><a href="/chrome-extension.html" class="nav__link">Chrome Extension</a></li>
+                    <li class="nav__item"><a href="/extension-upgrade.html" class="nav__link">Plans</a></li>
+                    <li class="nav__item"><a href="/blog/" class="nav__link">Blog</a></li>
+                </ul>
+                <div class="nav__close" id="nav-close">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </div>
+            </div>
+            <div class="nav__btns">
+                <div class="nav__toggle" id="nav-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <section class="ext-funnel-page">
+        <div class="container">
+            <div class="ext-funnel__inner">
+                <span class="section__subtitle">Chrome extension</span>
+                <h1>Activate Create Content</h1>
+                <p style="color: var(--text-secondary); line-height: 1.7;">Use the <strong>same Google account</strong> you used at Polar checkout. Once your purchase is confirmed, we show a connection code to link the extension.</p>
+
+                <div class="ext-funnel__panel">
+                    <ul class="ext-steps">
+                        <li class="ext-step" id="step-signin">
+                            <span class="ext-step__icon" id="step-signin-icon">1</span>
+                            <div class="ext-step__body">
+                                <div class="ext-step__title">Sign in to SellOnLLM</div>
+                                <div class="ext-step__desc" id="step-signin-desc">Checking your session…</div>
+                                <div class="ext-step__actions" id="step-signin-actions" style="display: none;"></div>
+                            </div>
+                        </li>
+
+                        <li class="ext-step" id="step-plan">
+                            <span class="ext-step__icon" id="step-plan-icon">2</span>
+                            <div class="ext-step__body">
+                                <div class="ext-step__title">Confirm your purchase</div>
+                                <div class="ext-step__desc" id="step-plan-desc">Waiting for Step&nbsp;1.</div>
+                                <div class="ext-step__actions" id="step-plan-actions" style="display: none;"></div>
+                            </div>
+                        </li>
+
+                        <li class="ext-step" id="step-code">
+                            <span class="ext-step__icon" id="step-code-icon">3</span>
+                            <div class="ext-step__body">
+                                <div class="ext-step__title">Link the extension</div>
+                                <div class="ext-step__desc" id="step-code-desc">We’ll generate your connection code here.</div>
+                                <div class="ext-autoimport" id="autoimport-banner">Extension detected — we just linked this browser automatically. Open the extension popup to start using Create Content.</div>
+                                <div id="code-area" style="display: none;">
+                                    <label for="token-box" style="display:block;margin-top:0.75rem;font-weight:600;color:var(--text-primary);font-size:.88rem;">Your connection code</label>
+                                    <textarea id="token-box" class="ext-code-box" readonly></textarea>
+                                    <div class="ext-step__actions" style="margin-top: 0.55rem;">
+                                        <button type="button" class="button button--primary" id="copy-token">Copy code</button>
+                                        <span id="copy-feedback" style="font-size: 0.88rem; color: var(--text-secondary);"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+
+                    <div class="ext-manage" id="manage-panel">
+                        <h2>Manage your subscription</h2>
+                        <div class="ext-manage__grid">
+                            <div class="ext-manage__row">
+                                <span class="ext-manage__label">Plan</span>
+                                <span class="ext-manage__value" id="manage-plan">—</span>
+                            </div>
+                            <div class="ext-manage__row">
+                                <span class="ext-manage__label">Status</span>
+                                <span class="ext-manage__value" id="manage-status">—</span>
+                            </div>
+                            <div class="ext-manage__row" id="manage-renews-row">
+                                <span class="ext-manage__label" id="manage-renews-label">Renews on</span>
+                                <span class="ext-manage__value" id="manage-renews">—</span>
+                            </div>
+                            <div class="ext-manage__row">
+                                <span class="ext-manage__label">Usage</span>
+                                <span class="ext-manage__value" id="manage-usage">—</span>
+                            </div>
+                        </div>
+                        <div class="ext-manage__actions" id="manage-actions"></div>
+                        <div class="ext-manage__feedback" id="manage-feedback" hidden></div>
+                    </div>
+
+                    <div class="ext-manage" id="manage-panel">
+                        <h2>Manage your subscription</h2>
+                        <div class="ext-manage__grid">
+                            <div class="ext-manage__row">
+                                <span class="ext-manage__label">Plan</span>
+                                <span class="ext-manage__value" id="manage-plan">—</span>
+                            </div>
+                            <div class="ext-manage__row">
+                                <span class="ext-manage__label">Status</span>
+                                <span class="ext-manage__value" id="manage-status">—</span>
+                            </div>
+                            <div class="ext-manage__row" id="manage-renews-row">
+                                <span class="ext-manage__label" id="manage-renews-label">Renews on</span>
+                                <span class="ext-manage__value" id="manage-renews">—</span>
+                            </div>
+                            <div class="ext-manage__row">
+                                <span class="ext-manage__label">Usage</span>
+                                <span class="ext-manage__value" id="manage-usage">—</span>
+                            </div>
+                        </div>
+                        <div class="ext-manage__actions" id="manage-actions"></div>
+                        <div class="ext-manage__feedback" id="manage-feedback" hidden></div>
+                    </div>
+
+                    <p class="ext-footnote">
+                        Need to switch the account? <button type="button" class="ext-link" id="signout-btn">Sign out</button>.
+                        &nbsp;·&nbsp; Stuck? Email <a id="support-email-link" href="mailto:support@sellonllm.com">support@sellonllm.com</a> from your Polar receipt address — we’ll activate you within hours.
+                    </p>
+                </div>
+
+                <p style="margin-top: 1.25rem; font-size: 0.95rem;">
+                    <a href="/extension-upgrade.html">Compare plans</a>
+                    &nbsp;·&nbsp;
+                    <a href="/chrome-extension.html">About the extension</a>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer" id="contact">
+        <div class="container">
+            <div class="footer__bottom" style="padding: 2rem 0;">
+                <p class="footer__copy">&copy; 2025 SellOnLLM. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+    <script>
+    (function () {
+        var supportEmail = 'support@sellonllm.com';
+
+        var els = {
+            signinIcon: document.getElementById('step-signin-icon'),
+            signinStep: document.getElementById('step-signin'),
+            signinDesc: document.getElementById('step-signin-desc'),
+            signinActions: document.getElementById('step-signin-actions'),
+            planIcon: document.getElementById('step-plan-icon'),
+            planStep: document.getElementById('step-plan'),
+            planDesc: document.getElementById('step-plan-desc'),
+            planActions: document.getElementById('step-plan-actions'),
+            codeIcon: document.getElementById('step-code-icon'),
+            codeStep: document.getElementById('step-code'),
+            codeDesc: document.getElementById('step-code-desc'),
+            codeArea: document.getElementById('code-area'),
+            tokenBox: document.getElementById('token-box'),
+            copyBtn: document.getElementById('copy-token'),
+            copyFeedback: document.getElementById('copy-feedback'),
+            autoImport: document.getElementById('autoimport-banner'),
+            supportLink: document.getElementById('support-email-link'),
+            signoutBtn: document.getElementById('signout-btn'),
+            managePanel: document.getElementById('manage-panel'),
+            managePlan: document.getElementById('manage-plan'),
+            manageStatus: document.getElementById('manage-status'),
+            manageRenewsRow: document.getElementById('manage-renews-row'),
+            manageRenewsLabel: document.getElementById('manage-renews-label'),
+            manageRenews: document.getElementById('manage-renews'),
+            manageUsage: document.getElementById('manage-usage'),
+            manageActions: document.getElementById('manage-actions'),
+            manageFeedback: document.getElementById('manage-feedback'),
+        };
+
+        function setStep(step, state, title, descHtml) {
+            var stepEl, iconEl, descEl;
+            if (step === 'signin') { stepEl = els.signinStep; iconEl = els.signinIcon; descEl = els.signinDesc; }
+            else if (step === 'plan') { stepEl = els.planStep; iconEl = els.planIcon; descEl = els.planDesc; }
+            else { stepEl = els.codeStep; iconEl = els.codeIcon; descEl = els.codeDesc; }
+            stepEl.classList.remove('is-done', 'is-active', 'is-blocked');
+            if (state) stepEl.classList.add('is-' + state);
+            if (state === 'done') iconEl.textContent = '✓';
+            else iconEl.textContent = step === 'signin' ? '1' : step === 'plan' ? '2' : '3';
+            descEl.innerHTML = descHtml;
+        }
+
+        function clearActions(node) { node.innerHTML = ''; node.style.display = 'none'; }
+        function showActions(node, html) { node.innerHTML = html; node.style.display = 'flex'; }
+
+        function escHtml(t) {
+            var d = document.createElement('div'); d.textContent = t == null ? '' : String(t); return d.innerHTML;
+        }
+
+        var state = {
+            authenticated: false,
+            email: '',
+            tier: null,
+            active: false,
+            limit: null,
+            used: 0,
+            currentPeriodEnd: null,
+            cancelAtPeriodEnd: false,
+            token: '',
+            pollTimer: null,
+            pollEndsAt: 0,
+            verifying: false,
+            managing: false,
+        };
+
+        function formatDate(iso) {
+            if (!iso) return '';
+            try {
+                var d = new Date(iso);
+                if (isNaN(d.getTime())) return '';
+                return d.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
+            } catch (_) { return ''; }
+        }
+
+        function showManageFeedback(text, kind) {
+            els.manageFeedback.textContent = text || '';
+            els.manageFeedback.classList.remove('is-success', 'is-error');
+            if (kind) els.manageFeedback.classList.add('is-' + kind);
+            els.manageFeedback.hidden = !text;
+        }
+
+        function renderManagePanel() {
+            if (!els.managePanel) return;
+            if (!state.active) {
+                els.managePanel.classList.remove('is-shown');
+                return;
+            }
+            els.managePanel.classList.add('is-shown');
+
+            if (state.tier === 'pro') {
+                els.managePlan.textContent = 'Unlimited (Pro) · $10 / month';
+            } else if (state.tier === 'starter') {
+                els.managePlan.textContent = 'Starter · $5 one-time';
+            } else {
+                els.managePlan.textContent = state.tier || '—';
+            }
+
+            if (state.tier === 'pro' && state.cancelAtPeriodEnd) {
+                els.manageStatus.textContent = 'Cancels at period end';
+                els.manageStatus.classList.add('ext-manage__value--warn');
+                els.manageRenewsLabel.textContent = 'Access until';
+            } else if (state.tier === 'pro') {
+                els.manageStatus.textContent = 'Active · renews monthly';
+                els.manageStatus.classList.remove('ext-manage__value--warn');
+                els.manageRenewsLabel.textContent = 'Renews on';
+            } else {
+                els.manageStatus.textContent = 'Active';
+                els.manageStatus.classList.remove('ext-manage__value--warn');
+                els.manageRenewsLabel.textContent = 'Valid until';
+            }
+
+            if (state.tier === 'pro' && state.currentPeriodEnd) {
+                els.manageRenews.textContent = formatDate(state.currentPeriodEnd);
+                els.manageRenewsRow.style.display = '';
+            } else {
+                els.manageRenewsRow.style.display = 'none';
+            }
+
+            if (state.tier === 'starter') {
+                var l = (typeof state.limit === 'number') ? state.limit : 10;
+                var u = (typeof state.used === 'number') ? state.used : 0;
+                els.manageUsage.textContent = u + ' of ' + l + ' generations used';
+            } else if (state.tier === 'pro') {
+                els.manageUsage.textContent = (typeof state.used === 'number' ? state.used : 0) + ' generations this period';
+            } else {
+                els.manageUsage.textContent = '—';
+            }
+
+            var actionsHtml = '';
+            if (state.tier === 'pro' && !state.cancelAtPeriodEnd) {
+                actionsHtml =
+                    '<button type="button" class="button button--ghost" id="cancel-sub-btn"' +
+                    (state.managing ? ' disabled' : '') + '>' +
+                    (state.managing ? 'Cancelling…' : 'Cancel subscription') +
+                    '</button>';
+            } else if (state.tier === 'pro' && state.cancelAtPeriodEnd) {
+                actionsHtml =
+                    '<button type="button" class="button button--primary" id="renew-sub-btn"' +
+                    (state.managing ? ' disabled' : '') + '>' +
+                    (state.managing ? 'Renewing…' : 'Renew (undo cancellation)') +
+                    '</button>';
+            } else if (state.tier === 'starter') {
+                actionsHtml =
+                    '<a href="/extension-upgrade.html" class="button button--primary">Upgrade to Unlimited</a>';
+            }
+            els.manageActions.innerHTML = actionsHtml;
+            var cancelBtn = document.getElementById('cancel-sub-btn');
+            if (cancelBtn) cancelBtn.addEventListener('click', handleCancel);
+            var renewBtn = document.getElementById('renew-sub-btn');
+            if (renewBtn) renewBtn.addEventListener('click', handleUncancel);
+        }
+
+        function applyEntitlement(ent) {
+            if (!ent) return;
+            state.tier = ent.tier;
+            state.limit = ent.limit;
+            state.used = ent.used;
+            state.active = ent.active;
+            state.currentPeriodEnd = ent.currentPeriodEnd || null;
+            state.cancelAtPeriodEnd = !!ent.cancelAtPeriodEnd;
+            renderManagePanel();
+        }
+
+        function handleCancel() {
+            if (state.managing) return;
+            var endsLabel = state.currentPeriodEnd ? formatDate(state.currentPeriodEnd) : 'the end of your current billing period';
+            var confirmMsg =
+                'Cancel your Unlimited subscription?\n\n' +
+                'You\'ll keep full access until ' + endsLabel + '. After that, no more charges and Create Content will switch to read-only.';
+            if (!window.confirm(confirmMsg)) return;
+            state.managing = true;
+            renderManagePanel();
+            showManageFeedback('Talking to Polar…');
+            fetch('/api/extension/cancel-subscription', {
+                method: 'POST',
+                credentials: 'include',
+                headers: { 'Content-Type': 'application/json' },
+                body: '{}',
+            })
+                .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, status: r.status, j: j || {} }; }); })
+                .then(function (res) {
+                    state.managing = false;
+                    if (res.ok && res.j.entitlement) {
+                        applyEntitlement(res.j.entitlement);
+                        var when = res.j.currentPeriodEnd ? formatDate(res.j.currentPeriodEnd) : 'the end of the current period';
+                        showManageFeedback('Cancellation scheduled. You keep access until ' + when + '.', 'success');
+                    } else {
+                        showManageFeedback(res.j.error || 'Couldn\'t cancel right now. Please try again.', 'error');
+                        renderManagePanel();
+                    }
+                })
+                .catch(function () {
+                    state.managing = false;
+                    showManageFeedback('Network error. Try again in a moment.', 'error');
+                    renderManagePanel();
+                });
+        }
+
+        function handleUncancel() {
+            if (state.managing) return;
+            state.managing = true;
+            renderManagePanel();
+            showManageFeedback('Reverting cancellation with Polar…');
+            fetch('/api/extension/uncancel-subscription', {
+                method: 'POST',
+                credentials: 'include',
+                headers: { 'Content-Type': 'application/json' },
+                body: '{}',
+            })
+                .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, status: r.status, j: j || {} }; }); })
+                .then(function (res) {
+                    state.managing = false;
+                    if (res.ok && res.j.entitlement) {
+                        applyEntitlement(res.j.entitlement);
+                        showManageFeedback('Subscription renewed — it will keep billing monthly.', 'success');
+                    } else {
+                        showManageFeedback(res.j.error || 'Couldn\'t renew right now. Please try again.', 'error');
+                        renderManagePanel();
+                    }
+                })
+                .catch(function () {
+                    state.managing = false;
+                    showManageFeedback('Network error. Try again in a moment.', 'error');
+                    renderManagePanel();
+                });
+        }
+
+        function describePlan(tier, limit, used) {
+            if (tier === 'pro') return 'Unlimited plan · unlimited Create Content generations.';
+            if (tier === 'starter') {
+                var u = (typeof used === 'number') ? used : 0;
+                var l = (typeof limit === 'number') ? limit : 10;
+                var left = Math.max(0, l - u);
+                return 'Starter plan · <strong>' + left + '</strong> of ' + l + ' Create Content generations remaining (' + u + ' used).';
+            }
+            return '';
+        }
+
+        function setSignedIn(email) {
+            state.authenticated = true;
+            state.email = email || '';
+            setStep('signin', 'done', 'Sign in to SellOnLLM',
+                'Signed in as <strong>' + escHtml(email || 'you') + '</strong>.');
+            clearActions(els.signinActions);
+        }
+
+        function setSignedOut(promptCheckoutMatch) {
+            state.authenticated = false;
+            state.email = '';
+            state.active = false;
+            state.tier = null;
+            state.cancelAtPeriodEnd = false;
+            renderManagePanel();
+            var descLines = [
+                'You\'re not signed in. Use the <strong>same Google account</strong> as your Polar receipt.',
+            ];
+            if (promptCheckoutMatch) {
+                descLines.push('If you just paid, the receipt email is shown in Polar\'s confirmation — sign in with that exact account.');
+            }
+            setStep('signin', 'active', 'Sign in to SellOnLLM', descLines.join('<br>'));
+            showActions(
+                els.signinActions,
+                '<a href="/api/auth/google?return_to=/extension-connect.html' +
+                (window.location.search || '') +
+                '" class="cv-google-btn">' +
+                '<svg viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>' +
+                'Sign in with Google</a>'
+            );
+            setStep('plan', '', 'Confirm your purchase', 'Sign in first so we can match your Polar order to this account.');
+            clearActions(els.planActions);
+            setStep('code', '', 'Link the extension', 'We’ll generate your connection code after the first two steps are green.');
+            els.codeArea.style.display = 'none';
+        }
+
+        function renderPlanPending(detail) {
+            var msg = '<span class="ext-spinner"></span>Looking for your Polar purchase on <strong>' + escHtml(state.email) + '</strong>…';
+            if (detail) msg += '<br><span style="font-size:0.9em;">' + detail + '</span>';
+            setStep('plan', 'active', 'Confirm your purchase', msg);
+            var actions =
+                '<button type="button" class="button button--primary" id="verify-now-btn"' +
+                (state.verifying ? ' disabled' : '') + '>' +
+                (state.verifying ? 'Verifying…' : 'Verify my purchase now') +
+                '</button>' +
+                ' <a href="/extension-upgrade.html" class="button button--ghost">Pick a plan</a>';
+            showActions(els.planActions, actions);
+            document.getElementById('verify-now-btn')?.addEventListener('click', verifyPurchase);
+            setStep('code', '', 'Link the extension', 'Waiting for your active plan.');
+            els.codeArea.style.display = 'none';
+        }
+
+        function renderPlanBlocked(msgHtml) {
+            setStep('plan', 'blocked', 'Confirm your purchase', msgHtml);
+            var actions =
+                '<button type="button" class="button button--primary" id="verify-now-btn"' +
+                (state.verifying ? ' disabled' : '') + '>' +
+                (state.verifying ? 'Verifying…' : 'Verify my purchase now') +
+                '</button>' +
+                ' <a href="/extension-upgrade.html" class="button button--ghost">Pick a plan</a>' +
+                ' <a href="mailto:' + escHtml(supportEmail) + '" class="button button--ghost">Contact support</a>';
+            showActions(els.planActions, actions);
+            document.getElementById('verify-now-btn')?.addEventListener('click', verifyPurchase);
+            setStep('code', '', 'Link the extension', 'Waiting for your active plan.');
+            els.codeArea.style.display = 'none';
+        }
+
+        function renderPlanActive() {
+            setStep('plan', 'done', 'Confirm your purchase',
+                describePlan(state.tier, state.limit, state.used));
+            clearActions(els.planActions);
+        }
+
+        function renderCodeReady(token) {
+            state.token = token;
+            setStep('code', 'done', 'Link the extension',
+                'Connection code generated. If the extension is installed, we already saved it automatically — open the popup to start using Create Content.');
+            els.codeArea.style.display = 'block';
+            els.tokenBox.value = token;
+            els.copyBtn.disabled = false;
+
+            // Notify any content script running on this page so it can auto-save the token.
+            try {
+                window.postMessage(
+                    { type: 'sellonllm:extension-token', token: token, source: 'extension-connect-page' },
+                    window.location.origin
+                );
+            } catch (e) { /* ignore */ }
+        }
+
+        function startPolling(intervalMs, totalMs) {
+            stopPolling();
+            state.pollEndsAt = Date.now() + (totalMs || 60000);
+            state.pollTimer = setInterval(function () {
+                if (Date.now() > state.pollEndsAt) { stopPolling(); return; }
+                requestToken({ silent: true });
+            }, intervalMs || 4000);
+        }
+
+        function stopPolling() {
+            if (state.pollTimer) { clearInterval(state.pollTimer); state.pollTimer = null; }
+        }
+
+        function requestToken(opts) {
+            return fetch('/api/auth/extension-token', {
+                method: 'POST',
+                credentials: 'include',
+                headers: { 'Content-Type': 'application/json' },
+                body: '{}',
+            })
+                .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, status: r.status, j: j || {} }; }); })
+                .then(function (res) {
+                    if (res.j && res.j.supportEmail) { supportEmail = res.j.supportEmail; refreshSupportLink(); }
+
+                    if (res.ok && res.j.token) {
+                        stopPolling();
+                        if (res.j.email) setSignedIn(res.j.email);
+                        if (res.j.entitlement) {
+                            state.tier = res.j.entitlement.tier;
+                            state.limit = res.j.entitlement.limit;
+                            state.used = res.j.entitlement.used;
+                            state.active = res.j.entitlement.active;
+                            renderPlanActive();
+                        }
+                        renderCodeReady(res.j.token);
+                        return 'active';
+                    }
+                    if (res.status === 401) {
+                        stopPolling();
+                        setSignedOut(/^.*[?&]fromCheckout=1/.test(window.location.search));
+                        return 'signed_out';
+                    }
+                    if (res.status === 403 && res.j.code === 'SUBSCRIPTION_REQUIRED') {
+                        if (res.j.email) setSignedIn(res.j.email);
+                        if (!opts || !opts.silent) {
+                            renderPlanPending(
+                                'If you just paid, give the webhook a moment, or click <strong>Verify my purchase</strong> below.'
+                            );
+                        } else {
+                            // silent re-poll — leave UI as is unless it's the first time
+                            renderPlanPending(
+                                'If you just paid, give the webhook a moment, or click <strong>Verify my purchase</strong> below.'
+                            );
+                        }
+                        return 'pending';
+                    }
+                    stopPolling();
+                    var errTxt = (res.j && res.j.error) ? String(res.j.error) : 'Something went wrong.';
+                    renderPlanBlocked(escHtml(errTxt));
+                    return 'error';
+                })
+                .catch(function () {
+                    stopPolling();
+                    renderPlanBlocked('Network error checking your plan. Retry in a moment.');
+                    return 'network_error';
+                });
+        }
+
+        function verifyPurchase() {
+            if (state.verifying) return;
+            state.verifying = true;
+            renderPlanPending('<span class="ext-spinner"></span>Asking Polar for your purchase status…');
+            fetch('/api/extension/reconcile', {
+                method: 'POST',
+                credentials: 'include',
+                headers: { 'Content-Type': 'application/json' },
+                body: '{}',
+            })
+                .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, status: r.status, j: j || {} }; }); })
+                .then(function (res) {
+                    state.verifying = false;
+                    if (res.j && res.j.supportEmail) { supportEmail = res.j.supportEmail; refreshSupportLink(); }
+                    if (res.status === 401) {
+                        setSignedOut(false); return;
+                    }
+                    if (res.j && res.j.status === 'active') {
+                        // Refresh the actual token now that the entitlement is in place.
+                        requestToken({});
+                        return;
+                    }
+                    var reason = res.j && res.j.reason;
+                    var msg = (res.j && res.j.message) ? escHtml(res.j.message) : 'No matching active purchase yet.';
+                    if (reason === 'polar_unavailable') {
+                        renderPlanBlocked(
+                            msg + '<br><br><em>If you just paid, also try again in 1–2 minutes — sometimes Polar webhooks just need a moment.</em>'
+                        );
+                    } else if (reason === 'no_customer') {
+                        renderPlanBlocked(
+                            msg + '<br><br>You can also <a href="/extension-upgrade.html">retry checkout</a> using <strong>' + escHtml(state.email) + '</strong>.'
+                        );
+                    } else if (reason === 'no_match') {
+                        renderPlanBlocked(
+                            msg + '<br><br>Or <a href="/extension-upgrade.html">pick a plan</a> if you haven\'t checked out yet.'
+                        );
+                    } else {
+                        renderPlanBlocked(msg);
+                    }
+                })
+                .catch(function () {
+                    state.verifying = false;
+                    renderPlanBlocked('Network error talking to our verifier. Try again in a moment.');
+                });
+        }
+
+        function refreshSupportLink() {
+            if (els.supportLink) {
+                els.supportLink.href = 'mailto:' + supportEmail;
+                els.supportLink.textContent = supportEmail;
+            }
+        }
+
+        els.copyBtn?.addEventListener('click', function () {
+            if (!els.tokenBox.value) return;
+            navigator.clipboard.writeText(els.tokenBox.value).then(function () {
+                els.copyBtn.textContent = 'Copied';
+                els.copyFeedback.textContent = 'Now paste it under "Link this browser" in the extension popup (Create Content tab).';
+                setTimeout(function () { els.copyBtn.textContent = 'Copy code'; }, 1800);
+            });
+        });
+
+        els.signoutBtn?.addEventListener('click', function () {
+            fetch('/api/auth/logout', { method: 'POST', credentials: 'include' })
+                .then(function () { window.location.reload(); })
+                .catch(function () { window.location.reload(); });
+        });
+
+        // Listen for the extension content script signalling that it's installed/active.
+        window.addEventListener('message', function (event) {
+            if (!event.data || event.source !== window) return;
+            if (event.data.type === 'sellonllm:extension-installed') {
+                els.autoImport.classList.add('is-shown');
+            }
+        });
+
+        // Initial flow + auto-poll for ~60s when arriving from checkout.
+        var fromCheckout = /[?&]fromCheckout=1/.test(window.location.search);
+        requestToken({}).then(function (outcome) {
+            if (outcome === 'pending') startPolling(8000, fromCheckout ? 40000 : 24000);
+        });
+    })();
+    </script>
+</body>
+</html>

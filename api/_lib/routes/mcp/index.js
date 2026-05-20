@@ -624,6 +624,10 @@ export default async function handler(req, res) {
         return res.status(202).end();
     }
     res.setHeader('Content-Type', 'application/json; charset=utf-8');
+    // Allow MCP clients (Claude, Smithery) to cache static discovery responses
+    if (body?.method === 'tools/list' || body?.method === 'initialize') {
+        res.setHeader('Cache-Control', 'public, max-age=300');
+    }
     return res.status(200).json(result);
 }
 

@@ -24,14 +24,22 @@
     "api/analyze-prompt-relevance.js": {
       "maxDuration": 60
     },
-    "api/track-event.js": {
-      "maxDuration": 10
-    },
     "api/app.js": {
+      "maxDuration": 60
+    },
+    "api/webhooks/polar.js": {
+      "maxDuration": 30
+    },
+    "api/eeat-scan.js": {
       "maxDuration": 60
     }
   },
   "redirects": [
+    {
+      "source": "/llm.txt",
+      "destination": "/llms.txt",
+      "permanent": true
+    },
     {
       "source": "/blog/what-does-llm-txt-do.html",
       "destination": "/blog/llm-txt.html",
@@ -40,6 +48,15 @@
   ],
   "rewrites": [
     { "source": "/api/chat", "destination": "/api/app" },
+    { "source": "/api/auth/extension-token", "destination": "/api/app" },
+    { "source": "/api/extension/pricing", "destination": "/api/app" },
+    { "source": "/api/extension/status", "destination": "/api/app" },
+    { "source": "/api/extension/generate", "destination": "/api/app" },
+    { "source": "/api/extension/reconcile", "destination": "/api/app" },
+    { "source": "/api/extension/analyze-prompts", "destination": "/api/app" },
+    { "source": "/api/extension/cancel-subscription", "destination": "/api/app" },
+    { "source": "/api/extension/uncancel-subscription", "destination": "/api/app" },
+    { "source": "/api/extension/citability", "destination": "/api/app" },
     { "source": "/api/auth/:path*", "destination": "/api/app" },
     { "source": "/api/user/:path*", "destination": "/api/app" },
     { "source": "/api/ga/:path*", "destination": "/api/app" },
@@ -67,7 +84,52 @@
         },
         {
           "key": "Access-Control-Allow-Headers",
-          "value": "Content-Type, Authorization, Mcp-Session-Id, MCP-Protocol-Version, Accept, Last-Event-ID"
+          "value": "Content-Type, Authorization, Cookie, Mcp-Session-Id, MCP-Protocol-Version, Accept, Last-Event-ID"
+        }
+      ]
+    },
+    {
+      "source": "/(.*)\\.html",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=300, s-maxage=3600, stale-while-revalidate=86400"
+        }
+      ]
+    },
+    {
+      "source": "/(.*)\\.css",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400, s-maxage=604800, stale-while-revalidate=2592000"
+        }
+      ]
+    },
+    {
+      "source": "/(.*)\\.js",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400, s-maxage=604800, stale-while-revalidate=2592000"
+        }
+      ]
+    },
+    {
+      "source": "/images/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=604800, s-maxage=2592000, stale-while-revalidate=31536000"
+        }
+      ]
+    },
+    {
+      "source": "/llms.txt",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800"
         }
       ]
     }
