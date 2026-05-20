@@ -1,11 +1,16 @@
 {
   "manifest_version": 3,
   "name": "AEO/GEO Audit Tool - AI readiness check",
-  "version": "1.0.0",
+  "version": "1.0.13",
   "description": "Quick AI readiness audit for any webpage. Check if your page is optimized for AI platforms like ChatGPT, Claude, and Perplexity.",
   "permissions": [
     "activeTab",
-    "scripting"
+    "scripting",
+    "storage"
+  ],
+  "host_permissions": [
+    "https://sellonllm.com/*",
+    "https://www.sellonllm.com/*"
   ],
   "action": {
     "default_popup": "popup.html",
@@ -23,6 +28,18 @@
     "48": "icons/icon48.png",
     "128": "icons/icon128.png"
   },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://sellonllm.com/extension-connect.html",
+        "https://www.sellonllm.com/extension-connect.html",
+        "https://sellonllm.com/extension-connect.html?*",
+        "https://www.sellonllm.com/extension-connect.html?*"
+      ],
+      "js": ["connect-bridge.js"],
+      "run_at": "document_end"
+    }
+  ],
   "web_accessible_resources": [
     {
       "resources": ["icons/*", "jsPDF.min.js"],
