@@ -5,11 +5,11 @@
 | What you paste in Claude | `https://www.sellonllm.com/api/mcp-ai-visibility` |
 |--------------------------|--------------------------------------------------|
 | Setup, Perplexity BYOK   | [AI Visibility MCP for Claude](https://www.sellonllm.com/ai-visibility-mcp-claude.html) |
-| GA4 + Search Console MCP (separate product) | [mcp-ga-gsc-seo](https://github.com/vipul510-web/mcp-ga-gsc-seo) · [GA + GSC MCP page](https://www.sellonllm.com/google-analytics-mcp-claude.html) |
+| GA4 + Search Console MCP (separate product) | [mcp-ga-gsc-seo](https://github.com/vipulawl/mcp-ga-gsc-seo) · [GA + GSC MCP page](https://www.sellonllm.com/google-analytics-mcp-claude.html) |
 
 This repository is the **public documentation and community surface** for the **hosted** AI visibility MCP. Source code for SellOnLLM's backend is not required to use the connector.
 
-**GitHub:** [github.com/vipul510-web/mcp-ai-visibility](https://github.com/vipul510-web/mcp-ai-visibility) (this repo) — issues, stars, and discoverability.
+**GitHub:** [github.com/vipulawl/mcp-ai-visibility](https://github.com/vipulawl/mcp-ai-visibility) (this repo) — issues, stars, and discoverability.
 
 > **Skill included** — [`SKILL.md`](SKILL.md) teaches Claude to research the business first (browse or AEO crawl), build realistic buyer-intent prompts, then run MCP tools with proper context. Paste it into a **Claude Project** as a custom instruction for best results. See [Using the Skill](#using-the-skill-for-best-results) below.
 
@@ -176,7 +176,7 @@ Full playbooks: [`docs/USE_CASES.md`](docs/USE_CASES.md).
 |--|--------------------------------|---------------------|
 | **Server URL** | `https://www.sellonllm.com/api/mcp-ai-visibility` | `https://www.sellonllm.com/api/mcp` |
 | **Focus** | AEO crawl, Perplexity citation tools | GA4 + Google Search Console metrics |
-| **Docs repo** | [mcp-ai-visibility](https://github.com/vipul510-web/mcp-ai-visibility) (here) | [mcp-ga-gsc-seo](https://github.com/vipul510-web/mcp-ga-gsc-seo) |
+| **Docs repo** | [mcp-ai-visibility](https://github.com/vipulawl/mcp-ai-visibility) (here) | [mcp-ga-gsc-seo](https://github.com/vipulawl/mcp-ga-gsc-seo) |
 
 Same Google OAuth **family** for identity on SellOnLLM; **different** MCP resource and access token audience. Add **both** connectors in Claude if your plan allows multiple custom connectors.
 
@@ -255,7 +255,7 @@ flowchart LR
 
 ## Support & contributing
 
-- **Issues:** [github.com/vipul510-web/mcp-ai-visibility/issues](https://github.com/vipul510-web/mcp-ai-visibility/issues) — include client (Claude Web / Desktop / Cursor), approximate time (UTC), and whether OAuth completed.
+- **Issues:** [github.com/vipulawl/mcp-ai-visibility/issues](https://github.com/vipulawl/mcp-ai-visibility/issues) — include client (Claude Web / Desktop / Cursor), approximate time (UTC), and whether OAuth completed.
 - **Product:** [SellOnLLM](https://www.sellonllm.com) · [Contact](https://www.sellonllm.com/contact-us.html) · [Privacy](https://www.sellonllm.com/privacy-policy.html)
 
 Documentation improvements (clearer prompts, FAQs, diagrams) are welcome via PR.
